@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heron's Bluff — Crossword · #CoastalNoir</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #08121f;
+      color: #c8b89a;
+      font-family: Georgia, 'Times New Roman', serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 36px 20px 48px;
+    }
+
+    .header { text-align: center; margin-bottom: 10px; }
+
+    .series-label {
+      font-size: 10px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #3a6a8f;
+      margin-bottom: 10px;
+      font-family: 'Courier New', monospace;
+    }
+
+    h1 {
+      font-size: 38px;
+      color: #c9a84c;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      font-weight: normal;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      color: #4a7a9f;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-family: 'Courier New', monospace;
+    }
+
+    .divider {
+      width: 280px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #c9a84c66, transparent);
+      margin: 22px auto;
+    }
+
+    .tagline {
+      font-size: 13px;
+      color: #5a8aaa;
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .puzzle-container {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* GRID */
+    .grid-panel { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+
+    .crossword-grid {
+      display: inline-block;
+      border: 1px solid #1a3455;
+      background: #0d1e34;
+      padding: 8px;
+      border-radius: 3px;
+      box-shadow: 0 0 60px rgba(0,0,0,0.7), 0 0 20px rgba(201,168,76,0.05);
+    }
+
+    .grid-row { display: flex; }
+
+    .grid-cell {
+      width: 34px;
+      height: 34px;
+      position: relative;
+    }
+
+    .grid-cell.black {
+      background: #04090f;
+      border: 1px solid #0a1828;
+    }
+
+    .grid-cell.white {
+      background: #d8ccb8;
+      border: 1px solid #9a8a78;
+    }
+
+    .grid-cell.white.active {
+      background: #e8dcc8;
+    }
+
+    .grid-cell.white.highlight {
+      background: rgba(201, 168, 76, 0.45);
+    }
+
+    .grid-cell.white.correct {
+      background: rgba(20, 90, 65, 0.65);
+    }
+
+    .cell-input {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      text-align: center;
+      font-size: 15px;
+      font-weight: bold;
+      color: #1a1008;
+      font-family: Georgia, serif;
+      text-transform: uppercase;
+      cursor: pointer;
+      padding-top: 8px;
+    }
+
+    .cell-input.revealed {
+      color: #5a3a10;
+    }
+
+    .cell-number {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      font-size: 8px;
+      color: #3a2a10;
+      font-family: 'Courier New', monospace;
+      pointer-events: none;
+      line-height: 1;
+      z-index: 1;
+    }
+
+    /* CLUES */
+    .clues-panel {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .clue-group { min-width: 220px; max-width: 280px; }
+
+    .clue-group h3 {
+      font-size: 10px;
+      color: #c9a84c;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1a3455;
+      font-family: 'Courier New', monospace;
+    }
+
+    .clue-item {
+      font-size: 12px;
+      padding: 5px 6px;
+      color: #7a9ab4;
+      border-radius: 2px;
+      cursor: pointer;
+      line-height: 1.5;
+      border-bottom: 1px solid #0f2038;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .clue-item:hover { background: rgba(201,168,76,0.08); color: #c8b89a; }
+    .clue-item.active { background: rgba(201,168,76,0.15); color: #c9a84c; }
+    .clue-item.solved { color: #2a5a3a; }
+
+    .clue-num {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      color: #c9a84c88;
+      margin-right: 4px;
+    }
+
+    /* CONTROLS */
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 7px 18px;
+      background: transparent;
+      border: 1px solid #c9a84c44;
+      color: #c9a84c99;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.2s;
+      font-family: 'Courier New', monospace;
+    }
+
+    .btn:hover {
+      background: rgba(201, 168, 76, 0.12);
+      border-color: #c9a84c88;
+      color: #c9a84c;
+    }
+
+    .status-msg {
+      font-size: 10px;
+      color: #3a6a8f;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-family: 'Courier New', monospace;
+      min-height: 16px;
+    }
+
+    .footer {
+      margin-top: 36px;
+      text-align: center;
+    }
+
+    .hashtag {
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: #1e3a5a;
+      text-transform: uppercase;
+      font-family: 'Courier New', monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="series-label">A Marcus Pruitt Mystery · Book One</div>
+    <h1>Heron's Bluff</h1>
+    <div class="subtitle">Crossword · #CoastalNoir</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="tagline">"Property law is, in many ways, chemistry."</div>
+
+  <div class="puzzle-container">
+    <div class="grid-panel">
+      <div class="crossword-grid" id="crossword"></div>
+      <div class="controls">
+        <button class="btn" id="checkBtn">Check Answers</button>
+        <button class="btn" id="revealBtn">Reveal All</button>
+        <button class="btn" id="clearBtn">Clear</button>
+      </div>
+      <div class="status-msg" id="statusMsg"></div>
+    </div>
+
+    <div>
+      <div class="clues-panel">
+        <div class="clue-group">
+          <h3>Across</h3>
+          <div id="acrossClues"></div>
+        </div>
+        <div class="clue-group">
+          <h3>Down</h3>
+          <div id="downClues"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="hashtag">#CoastalNoir · #HeronsBluff · #BeachRead</div>
+  </div>
+
+<script>
+// ─── SOLUTION GRID (14 rows × 15 cols) ───────────────────────────────────────
+// null = black square
+const SOLUTION = [
+  // col: 0    1    2    3    4    5    6    7    8    9   10   11   12   13   14
+  /* r0 */ ['S',null,'F','O','R','E','N','S','I','C',null,null,null,null,null],
+  /* r1 */ ['A',null,null,null,null,null,null,null,null,'P','B','L','U','F','F'],
+  /* r2 */ ['V',null,'S','E','A','M','A','S','T','E','R',null,null,null,null],
+  /* r3 */ ['A',null,null,null,null,null,null,null,null,'L','P',null,null,null,null],
+  /* r4 */ ['N','M','A','R','S','H',null,null,null,'I','R',null,null,null,null],
+  /* r5 */ ['N',null,null,null,null,null,'B',null,null,'C','E','B','E','A','U'],
+  /* r6 */ ['A',null,null,null,'C','C','O',null,'C','A','N','O',null,null,null],
+  /* r7 */ ['H',null,null,'B','E','A','U','M','O','N','T','A',null,null,null],
+  /* r8 */ [null,null,null,null,'L','R','R',null,'D',null,'I','T',null,null,null],
+  /* r9 */ [null,null,null,null,'E','V','B',null,'I',null,'S','H',null,null,null],
+  /* r10*/ ['R','O','N','A','S','E','O',null,'C',null,'S','O',null,null,null],
+  /* r11*/ ['D','E','E','D','T','R','N',null,'I',null,null,'U',null,null,null],
+  /* r12*/ ['V','O','S','S','E',null,null,null,'L',null,null,'S',null,null,null],
+  /* r13*/ ['H','A','R','B','O','R',null,null,null,null,null,'E',null,null,null],
+];
+
+// ─── CELL NUMBERS ────────────────────────────────────────────────────────────
+const CELL_NUMBERS = {
+  '0,0':1, '0,2':2, '1,9':3, '1,10':4, '2,2':5,
+  '3,10':6, '4,1':7, '5,6':8, '5,11':9,
+  '6,4':10, '6,5':11, '6,8':12, '7,3':13,
+  '10,0':14, '11,0':15, '12,0':16, '13,0':17
+};
+
+// ─── WORDS (for checking) ─────────────────────────────────────────────────────
+const WORDS_ACROSS = [
+  {num:2,  row:0,  col:2,  answer:'FORENSIC'},
+  {num:4,  row:1,  col:10, answer:'BLUFF'},
+  {num:5,  row:2,  col:2,  answer:'SEAMASTER'},
+  {num:7,  row:4,  col:1,  answer:'MARSH'},
+  {num:9,  row:5,  col:11, answer:'BEAU'},
+  {num:13, row:7,  col:3,  answer:'BEAUMONT'},
+  {num:14, row:10, col:0,  answer:'RONA'},
+  {num:15, row:11, col:0,  answer:'DEED'},
+  {num:16, row:12, col:0,  answer:'VOSS'},
+  {num:17, row:13, col:0,  answer:'HARBOR'},
+];
+
+const WORDS_DOWN = [
+  {num:1,  row:0,  col:0,  answer:'SAVANNAH'},
+  {num:3,  row:1,  col:9,  answer:'PELICAN'},
+  {num:6,  row:3,  col:10, answer:'PRENTISS'},
+  {num:8,  row:5,  col:6,  answer:'BOURBON'},
+  {num:9,  row:5,  col:11, answer:'BOATHOUSE'},
+  {num:10, row:6,  col:4,  answer:'CELESTE'},
+  {num:11, row:6,  col:5,  answer:'CARVER'},
+  {num:12, row:6,  col:8,  answer:'CODICIL'},
+];
+
+// ─── CLUE TEXT ────────────────────────────────────────────────────────────────
+const CLUES_ACROSS = {
+  2:  'Marcus\'s professional foundation — where chemistry meets crime scene (8)',
+  4:  'Heron\'s ___ : the coastal height that names this town (5)',
+  5:  'Marcus\'s 1971 timepiece — runs as reliably as his instincts (9)',
+  7:  'The brackish landscape flanking the causeway (5)',
+  9:  'Carver\'s estranged son — wanted what a will wouldn\'t give him (4)',
+  13: 'The land trust at the heart of every secret in Heron\'s Bluff (8)',
+  14: 'Deputy Thibodaux, first name — not fooled for long (4)',
+  15: 'A legal record; once filed, it never forgets (4)',
+  16: 'The Atlanta developer who saw a vacant board and made a fatal move (4)',
+  17: 'The working waterfront visible from Tidewater & Tonic (6)',
+};
+
+const CLUES_DOWN = {
+  1:  'Marcus\'s home city — the Georgia port he drives north from (8)',
+  3:  'The shorebird that names the lighthouse point (7)',
+  6:  'The deaf lighthouse keeper whose log recorded every visitor (8)',
+  8:  'Marcus\'s analytical aid — poured correctly, a reasonable start to any Tuesday (7)',
+  9:  'Marcus\'s converted waterfront rental in Heron\'s Bluff (9)',
+  10: 'The estate attorney — always three moves ahead of the board (7)',
+  11: 'The murdered alderman — he ran everything he could get his hands on (6)',
+  12: 'The legal amendment that removed Carver\'s control over the deed (7)',
+};
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+const ROWS = SOLUTION.length;
+const COLS = SOLUTION[0].length;
+let inputEls = {};   // 'r,c' → <input>
+let cellEls = {};    // 'r,c' → .grid-cell div
+let activeWord = null; // {num, dir}
+
+// ─── BUILD GRID ───────────────────────────────────────────────────────────────
+function buildGrid() {
+  const container = document.getElementById('crossword');
+  container.innerHTML = '';
+
+  for (let r = 0; r < ROWS; r++) {
+    const rowDiv = document.createElement('div');
+    rowDiv.className = 'grid-row';
+
+    for (let c = 0; c < COLS; c++) {
+      const cellDiv = document.createElement('div');
+      const key = `${r},${c}`;
+      const letter = SOLUTION[r][c];
+
+      if (letter === null) {
+        cellDiv.className = 'grid-cell black';
+      } else {
+        cellDiv.className = 'grid-cell white';
+        cellDiv.dataset.row = r;
+        cellDiv.dataset.col = c;
+
+        if (CELL_NUMBERS[key] !== undefined) {
+          const numSpan = document.createElement('span');
+          numSpan.className = 'cell-number';
+          numSpan.textContent = CELL_NUMBERS[key];
+          cellDiv.appendChild(numSpan);
+        }
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.maxLength = 1;
+        input.className = 'cell-input';
+        input.dataset.row = r;
+        input.dataset.col = c;
+        input.autocomplete = 'off';
+        input.spellcheck = false;
+
+        input.addEventListener('keydown', handleKeydown);
+        input.addEventListener('focus', () => handleFocus(r, c));
+        input.addEventListener('input', handleInput);
+        input.addEventListener('click', () => handleClick(r, c));
+
+        cellDiv.appendChild(input);
+        inputEls[key] = input;
+      }
+
+      cellEls[key] = cellDiv;
+      rowDiv.appendChild(cellDiv);
+    }
+
+    container.appendChild(rowDiv);
+  }
+}
+
+// ─── WORD MEMBERSHIP ──────────────────────────────────────────────────────────
+function getWordCells(num, dir) {
+  const words = dir === 'across' ? WORDS_ACROSS : WORDS_DOWN;
+  const word = words.find(w => w.num === num);
+  if (!word) return [];
+  const cells = [];
+  for (let i = 0; i < word.answer.length; i++) {
+    const r = dir === 'across' ? word.row : word.row + i;
+    const c = dir === 'across' ? word.col + i : word.col;
+    cells.push([r, c]);
+  }
+  return cells;
+}
+
+function getWordsAtCell(r, c) {
+  const results = [];
+  for (const w of WORDS_ACROSS) {
+    for (let i = 0; i < w.answer.length; i++) {
+      if (w.row === r && w.col + i === c) { results.push({num:w.num, dir:'across'}); break; }
+    }
+  }
+  for (const w of WORDS_DOWN) {
+    for (let i = 0; i < w.answer.length; i++) {
+      if (w.row + i === r && w.col === c) { results.push({num:w.num, dir:'down'}); break; }
+    }
+  }
+  return results;
+}
+
+// ─── HIGHLIGHTING ─────────────────────────────────────────────────────────────
+function clearHighlights() {
+  for (const key of Object.keys(cellEls)) {
+    cellEls[key].classList.remove('active', 'highlight');
+  }
+  document.querySelectorAll('.clue-item').forEach(el => el.classList.remove('active'));
+}
+
+function highlightWord(num, dir) {
+  clearHighlights();
+  activeWord = {num, dir};
+
+  const cells = getWordCells(num, dir);
+  cells.forEach(([r, c], i) => {
+    const key = `${r},${c}`;
+    cellEls[key].classList.add(i === 0 ? 'active' : 'highlight');
+  });
+
+  const clueEl = document.getElementById(`clue-${dir}-${num}`);
+  if (clueEl) {
+    clueEl.classList.add('active');
+    clueEl.scrollIntoView({block:'nearest', behavior:'smooth'});
+  }
+}
+
+// ─── NAVIGATION ───────────────────────────────────────────────────────────────
+function focusCell(r, c) {
+  const key = `${r},${c}`;
+  if (inputEls[key]) inputEls[key].focus();
+}
+
+function nextCell(r, c, dir) {
+  const dr = dir === 'across' ? 0 : 1;
+  const dc = dir === 'across' ? 1 : 0;
+  let nr = r + dr, nc = c + dc;
+  while (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS) {
+    if (SOLUTION[nr][nc] !== null) { focusCell(nr, nc); return; }
+    nr += dr; nc += dc;
+  }
+}
+
+function prevCell(r, c, dir) {
+  const dr = dir === 'across' ? 0 : -1;
+  const dc = dir === 'across' ? -1 : 0;
+  let nr = r + dr, nc = c + dc;
+  while (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS) {
+    if (SOLUTION[nr][nc] !== null) { focusCell(nr, nc); return; }
+    nr += dr; nc += dc;
+  }
+}
+
+// ─── EVENT HANDLERS ───────────────────────────────────────────────────────────
+let lastFocusedKey = null;
+
+function handleClick(r, c) {
+  const key = `${r},${c}`;
+  if (lastFocusedKey === key && activeWord) {
+    // Toggle direction
+    const words = getWordsAtCell(r, c);
+    if (words.length > 1) {
+      const other = words.find(w => !(w.num === activeWord.num && w.dir === activeWord.dir));
+      if (other) highlightWord(other.num, other.dir);
+    }
+  }
+}
+
+function handleFocus(r, c) {
+  const key = `${r},${c}`;
+  lastFocusedKey = key;
+  const words = getWordsAtCell(r, c);
+  if (words.length > 0) {
+    // Prefer keeping current active word direction if cell belongs to it
+    const keepDir = activeWord && words.find(w => w.dir === activeWord.dir);
+    const word = keepDir || words[0];
+    highlightWord(word.num, word.dir);
+  }
+}
+
+function handleInput(e) {
+  const input = e.target;
+  const r = parseInt(input.dataset.row);
+  const c = parseInt(input.dataset.col);
+  const val = input.value.toUpperCase().replace(/[^A-Z]/g,'');
+  input.value = val;
+  if (val && activeWord) nextCell(r, c, activeWord.dir);
+}
+
+function handleKeydown(e) {
+  const input = e.target;
+  const r = parseInt(input.dataset.row);
+  const c = parseInt(input.dataset.col);
+  const dir = activeWord ? activeWord.dir : 'across';
+
+  if (e.key === 'Backspace') {
+    if (!input.value) { prevCell(r, c, dir); }
+    else { input.value = ''; }
+    e.preventDefault();
+  } else if (e.key === 'ArrowRight') { nextCell(r, c, 'across'); e.preventDefault(); }
+  else if (e.key === 'ArrowLeft')  { prevCell(r, c, 'across'); e.preventDefault(); }
+  else if (e.key === 'ArrowDown')  { nextCell(r, c, 'down'); e.preventDefault(); }
+  else if (e.key === 'ArrowUp')    { prevCell(r, c, 'down'); e.preventDefault(); }
+  else if (e.key === 'Tab') {
+    e.preventDefault();
+    advanceToNextWord(e.shiftKey);
+  }
+}
+
+function advanceToNextWord(backwards) {
+  const allWords = [
+    ...WORDS_ACROSS.map(w => ({num:w.num, dir:'across'})),
+    ...WORDS_DOWN.map(w => ({num:w.num, dir:'down'}))
+  ];
+  if (!activeWord) { highlightWord(allWords[0].num, allWords[0].dir); return; }
+  const idx = allWords.findIndex(w => w.num === activeWord.num && w.dir === activeWord.dir);
+  const next = allWords[(idx + (backwards ? -1 + allWords.length : 1)) % allWords.length];
+  const cells = getWordCells(next.num, next.dir);
+  if (cells.length > 0) {
+    highlightWord(next.num, next.dir);
+    focusCell(cells[0][0], cells[0][1]);
+  }
+}
+
+// ─── CLUE CLICK ───────────────────────────────────────────────────────────────
+function clueClick(num, dir) {
+  highlightWord(num, dir);
+  const cells = getWordCells(num, dir);
+  if (cells.length > 0) focusCell(cells[0][0], cells[0][1]);
+}
+
+// ─── BUILD CLUES ──────────────────────────────────────────────────────────────
+function buildClues() {
+  const acrossEl = document.getElementById('acrossClues');
+  const downEl = document.getElementById('downClues');
+
+  for (const w of WORDS_ACROSS) {
+    const div = document.createElement('div');
+    div.className = 'clue-item';
+    div.id = `clue-across-${w.num}`;
+    div.innerHTML = `<span class="clue-num">${w.num}.</span>${CLUES_ACROSS[w.num]}`;
+    div.addEventListener('click', () => clueClick(w.num, 'across'));
+    acrossEl.appendChild(div);
+  }
+
+  for (const w of WORDS_DOWN) {
+    const div = document.createElement('div');
+    div.className = 'clue-item';
+    div.id = `clue-down-${w.num}`;
+    div.innerHTML = `<span class="clue-num">${w.num}.</span>${CLUES_DOWN[w.num]}`;
+    div.addEventListener('click', () => clueClick(w.num, 'down'));
+    downEl.appendChild(div);
+  }
+}
+
+// ─── CHECK / REVEAL ───────────────────────────────────────────────────────────
+function checkAnswers() {
+  let correct = 0, total = 0;
+  const allWords = [...WORDS_ACROSS, ...WORDS_DOWN];
+  for (const w of allWords) {
+    const dir = WORDS_ACROSS.includes(w) ? 'across' : 'down';
+    const cells = getWordCells(w.num, dir);
+    let wordCorrect = true;
+    for (let i = 0; i < w.answer.length; i++) {
+      const [r, c] = cells[i];
+      const inp = inputEls[`${r},${c}`];
+      if (!inp) continue;
+      const val = inp.value.toUpperCase();
+      if (val === w.answer[i]) { correct++; }
+      else { wordCorrect = false; }
+      total++;
+    }
+    if (wordCorrect && cells.every(([r,c]) => {
+      const inp = inputEls[`${r},${c}`];
+      return inp && inp.value.toUpperCase() === SOLUTION[r][c];
+    })) {
+      const clueEl = document.getElementById(`clue-${dir}-${w.num}`);
+      if (clueEl) clueEl.classList.add('solved');
+    }
+  }
+
+  const pct = Math.round(100 * correct / total);
+  const msg = document.getElementById('statusMsg');
+  if (pct === 100) {
+    msg.textContent = '✦ All correct — case closed.';
+    msg.style.color = '#2a8f5a';
+  } else {
+    msg.textContent = `${pct}% correct — keep digging.`;
+    msg.style.color = '#8f5a2a';
+  }
+}
+
+function revealAll() {
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      const key = `${r},${c}`;
+      if (SOLUTION[r][c] && inputEls[key]) {
+        inputEls[key].value = SOLUTION[r][c];
+        inputEls[key].classList.add('revealed');
+      }
+    }
+  }
+  document.getElementById('statusMsg').textContent = 'Answers revealed. The deed doesn\'t lie.';
+  document.getElementById('statusMsg').style.color = '#5a3a10';
+}
+
+function clearAll() {
+  for (const key of Object.keys(inputEls)) {
+    inputEls[key].value = '';
+    inputEls[key].classList.remove('revealed');
+  }
+  document.querySelectorAll('.clue-item').forEach(el => el.classList.remove('solved'));
+  document.getElementById('statusMsg').textContent = '';
+}
+
+document.getElementById('checkBtn').addEventListener('click', checkAnswers);
+document.getElementById('revealBtn').addEventListener('click', revealAll);
+document.getElementById('clearBtn').addEventListener('click', clearAll);
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+buildGrid();
+buildClues();
+</script>
+</body>
+</html>
