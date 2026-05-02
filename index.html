@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Atlas Valley — Author of the Marcus Pruitt Mystery Series. Coastal noir, Southern Gothic mystery fiction set on the Georgia coast. Pre-order Heron's Bluff, available May 5, 2026.">
+    <meta name="keywords" content="Atlas Valley, Heron's Bluff, Marcus Pruitt, coastal noir mystery, Southern Gothic fiction, amateur sleuth, Georgia mystery novel, Black detective fiction, investigative thriller, beach read mystery, small town mystery, African American fiction, legal thriller">
+    <title>Atlas Valley | Author — Heron's Bluff</title>
+    <!--
+    ╔══════════════════════════════════════════════════════════════╗
+    ║  ATLAS VALLEY — atlasvalleybooks.com                        ║
+    ║  GitHub Pages site — managed via Claude Code                ║
+    ║                                                              ║
+    ║  TO PUSH CHANGES TO LIVE SITE (in your terminal):           ║
+    ║    git add index.html                                        ║
+    ║    git commit -m "Update site content"                      ║
+    ║    git push                                                  ║
+    ║                                                              ║
+    ║  TO ADD COVER IMAGE:                                         ║
+    ║    git add herons-bluff-cover.jpg                            ║
+    ║    git commit -m "Add book cover image"                      ║
+    ║    git push                                                  ║
+    ║                                                              ║
+    ║  TO ADD AD IMAGES (name them ad-1.jpg, ad-2.jpg, etc.):     ║
+    ║    git add ad-1.jpg ad-2.jpg                                 ║
+    ║    git commit -m "Add promo ads"                             ║
+    ║    git push                                                  ║
+    ║                                                              ║
+    ║  Puzzles (already committed):                                ║
+    ║    HeronsBluff_WordSearch.html                               ║
+    ║    HeronsBluff_Crossword.html                                ║
+    ╚══════════════════════════════════════════════════════════════╝
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Playfair+Display:wght@900&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* ===========================
+           CSS VARIABLES
+        =========================== */
+        :root {
+            --bg-deep:       #05080f;
+            --bg-dark:       #0a0e1a;
+            --bg-mid:        #0f1625;
+            --bg-nav:        rgba(5, 8, 15, 0.96);
+            --gold:          #c9a84c;
+            --gold-light:    #e8c96a;
+            --amber:         #d4892a;
+            --parchment:     #f0e6cc;
+            --parchment-dim: #b8a882;
+            --text:          #ddd5be;
+            --text-dim:      #7a6e58;
+            --teal:          #3d7a8a;
+            --teal-light:    #5a9daf;
+            --grid-line:     rgba(201, 168, 76, 0.07);
+        }
+
+        /* ===========================
+           RESET & BASE
+        =========================== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text);
+            font-family: 'Lora', Georgia, serif;
+            overflow-x: hidden;
+        }
+
+        /* Cartographic grid overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 64px 64px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ===========================
+           NAVIGATION
+        =========================== */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: var(--bg-nav);
+            border-bottom: 1px solid rgba(201, 168, 76, 0.18);
+            padding: 0 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-decoration: none;
+            letter-spacing: 0.18em;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .nav-logo .pipe { color: var(--text-dim); font-weight: 400; margin: 0 0.2rem; }
+        .nav-logo .sub { color: var(--parchment-dim); font-weight: 400; font-size: 0.9rem; letter-spacing: 0.1em; }
+
+        .nav-links { display: flex; gap: 2.25rem; list-style: none; }
+        .nav-links a {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--parchment-dim);
+            text-decoration: none;
+            transition: color 0.25s;
+        }
+        .nav-links a:hover { color: var(--gold); }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+        .hamburger span { display: block; width: 24px; height: 2px; background: var(--gold); transition: all 0.3s; }
+
+        /* Mobile nav drawer */
+        #mobile-nav {
+            display: none;
+            position: fixed;
+            top: 64px; left: 0; right: 0;
+            background: rgba(5, 8, 15, 0.98);
+            z-index: 99;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+        }
+        #mobile-nav ul { list-style: none; display: flex; flex-direction: column; gap: 1.25rem; }
+        #mobile-nav a {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--parchment-dim);
+            text-decoration: none;
+        }
+
+        /* ===========================
+           HERO
+        =========================== */
+        #hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 100px 4rem 4rem;
+            overflow: clip; /* clips glow without disrupting scroll containment */
+        }
+        h1.hero-title {
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 68% 50%, rgba(212, 137, 42, 0.09) 0%, transparent 55%),
+                radial-gradient(ellipse at 28% 75%, rgba(61, 122, 138, 0.07) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .hero-series {
+            font-family: 'Cinzel', serif;
+            font-size: 0.68rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--teal-light);
+            margin-bottom: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .hero-series::before, .hero-series::after {
+            content: '';
+            display: inline-block;
+            width: 28px;
+            height: 1px;
+            background: var(--teal-light);
+            opacity: 0.7;
+        }
+
+        h1.hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-weight: 900;
+            color: var(--gold);
+            line-height: 1.0;
+            letter-spacing: 0.01em;
+            margin-bottom: 0.6rem;
+            text-shadow: 0 0 50px rgba(201, 168, 76, 0.25);
+        }
+
+        .hero-author {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            letter-spacing: 0.28em;
+            color: var(--parchment-dim);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero-genre {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            color: var(--text-dim);
+            font-size: 0.88rem;
+            margin-bottom: 2rem;
+            letter-spacing: 0.06em;
+        }
+
+        .hero-synopsis {
+            font-size: 1rem;
+            line-height: 1.85;
+            color: var(--text);
+            margin-bottom: 2.5rem;
+            max-width: 480px;
+        }
+
+        /* Release status area */
+        #release-status { margin-bottom: 1.25rem; }
+
+        .available-now {
+            color: var(--amber);
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .pulse-dot {
+            width: 8px; height: 8px;
+            background: var(--amber);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.35; transform: scale(0.75); }
+        }
+
+        .releasing-label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.62rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 0.6rem;
+        }
+
+        .countdown-display {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.4rem;
+        }
+        .countdown-unit { text-align: center; }
+        .countdown-num {
+            font-family: 'Cinzel', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--amber);
+            display: block;
+            line-height: 1;
+        }
+        .countdown-label {
+            font-size: 0.55rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+        .countdown-sep {
+            color: var(--amber);
+            font-size: 1.6rem;
+            font-weight: 700;
+            line-height: 1;
+            padding-top: 2px;
+            opacity: 0.6;
+        }
+
+        /* CTA Buttons */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            background: var(--gold);
+            color: var(--bg-deep);
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 0.95rem 2rem;
+            border: 2px solid var(--gold);
+            transition: all 0.3s ease;
+            clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+        }
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--gold);
+        }
+        .btn-primary svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s;
+        }
+        .btn-secondary:hover { background: var(--gold); color: var(--bg-deep); }
+
+        /* Cover image */
+        .hero-cover {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .cover-glow {
+            position: absolute;
+            inset: -20%;
+            background: radial-gradient(ellipse, rgba(212, 137, 42, 0.18) 0%, transparent 60%);
+            animation: coverglow 4.5s ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: 0;
+        }
+        @keyframes coverglow {
+            from { opacity: 0.55; transform: scale(0.94); }
+            to   { opacity: 1;    transform: scale(1.06); }
+        }
+        .cover-frame {
+            position: relative;
+            z-index: 1;
+            max-width: 370px;
+            width: 100%;
+            /* Prevents collapse when cover image hasn't been committed yet */
+            aspect-ratio: 0.63;
+            background:
+                linear-gradient(160deg, #0d1a2e 0%, #152810 45%, #2b1a08 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cover-frame img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            box-shadow:
+                0 24px 64px rgba(0, 0, 0, 0.75),
+                0 0  40px rgba(212, 137, 42, 0.12);
+        }
+        /* Fallback shown while cover image is pending */
+        .cover-placeholder {
+            text-align: center;
+            padding: 2rem;
+            pointer-events: none;
+            user-select: none;
+        }
+        .cover-placeholder .cp-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--gold);
+            line-height: 1.1;
+            margin-bottom: 0.75rem;
+            text-shadow: 0 0 30px rgba(201, 168, 76, 0.35);
+        }
+        .cover-placeholder .cp-divider {
+            width: 50px;
+            height: 1px;
+            background: rgba(201, 168, 76, 0.35);
+            margin: 0.75rem auto;
+        }
+        .cover-placeholder .cp-author {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.22em;
+            color: var(--parchment-dim);
+        }
+        .cover-placeholder .cp-series {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            margin-top: 0.5rem;
+        }
+        /* Corner bracket decorations */
+        .cover-frame::before, .cover-frame::after {
+            content: '';
+            position: absolute;
+            width: 22px; height: 22px;
+            border-color: var(--gold);
+            border-style: solid;
+            opacity: 0.55;
+            z-index: 2;
+        }
+        .cover-frame::before { top: -7px; left: -7px; border-width: 2px 0 0 2px; }
+        .cover-frame::after  { bottom: -7px; right: -7px; border-width: 0 2px 2px 0; }
+
+        /* Coordinate decorations */
+        .coord {
+            position: absolute;
+            font-family: 'Cinzel', serif;
+            font-size: 0.58rem;
+            letter-spacing: 0.16em;
+            color: var(--text-dim);
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        /* ===========================
+           SECTION SHARED
+        =========================== */
+        section { position: relative; z-index: 1; }
+
+        .section-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 5.5rem 2rem;
+        }
+
+        .section-label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.62rem;
+            letter-spacing: 0.42em;
+            text-transform: uppercase;
+            color: var(--teal-light);
+            margin-bottom: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, rgba(90, 157, 175, 0.4), transparent);
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.7rem, 3vw, 2.6rem);
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(201, 168, 76, 0.28), transparent);
+            margin: 3rem 0;
+        }
+
+        /* ===========================
+           ABOUT THE BOOK
+        =========================== */
+        #book {
+            background: linear-gradient(to bottom, var(--bg-deep), var(--bg-mid));
+            border-top: 1px solid rgba(201, 168, 76, 0.1);
+        }
+
+        .book-inner {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4.5rem;
+            align-items: start;
+        }
+
+        .book-details { display: flex; flex-direction: column; gap: 1.25rem; }
+
+        .detail-card {
+            border: 1px solid rgba(201, 168, 76, 0.14);
+            padding: 1.1rem 1.25rem;
+            background: rgba(201, 168, 76, 0.025);
+        }
+        .detail-label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.58rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--teal-light);
+            margin-bottom: 0.4rem;
+        }
+        .detail-value {
+            font-family: 'Lora', serif;
+            font-size: 0.95rem;
+            color: var(--parchment);
+        }
+
+        .book-synopsis h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.05rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.1em;
+        }
+        .book-synopsis p {
+            font-size: 1rem;
+            line-height: 1.92;
+            color: var(--text);
+            margin-bottom: 1.25rem;
+        }
+        /* Drop cap */
+        .book-synopsis p:first-of-type::first-letter {
+            font-family: 'Cinzel', serif;
+            font-size: 3.2rem;
+            font-weight: 900;
+            color: var(--gold);
+            float: left;
+            line-height: 0.78;
+            margin: 0.12em 0.1em 0 0;
+            text-shadow: 0 0 20px rgba(201, 168, 76, 0.4);
+        }
+
+        /* ===========================
+           ABOUT ATLAS VALLEY
+        =========================== */
+        #about {
+            background: var(--bg-dark);
+            border-top: 1px solid rgba(201, 168, 76, 0.08);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+
+        .about-text p {
+            font-size: 1rem;
+            line-height: 1.92;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+        }
+        .about-text em { color: var(--parchment-dim); font-style: italic; }
+        .about-text blockquote {
+            border-left: 2px solid var(--gold);
+            padding-left: 1.25rem;
+            margin: 2rem 0;
+            opacity: 0.85;
+        }
+        .about-text blockquote p {
+            color: var(--parchment-dim);
+            font-style: italic;
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+        }
+        .about-text blockquote cite {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: var(--text-dim);
+            font-style: normal;
+        }
+
+        /* Animated compass rose */
+        .compass-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 2rem;
+        }
+        .compass-rose { animation: compassspin 35s linear infinite; opacity: 0.25; }
+        @keyframes compassspin {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+
+        /* ===========================
+           EXTRAS
+        =========================== */
+        #extras {
+            background: linear-gradient(to bottom, var(--bg-mid), var(--bg-dark));
+            border-top: 1px solid rgba(201, 168, 76, 0.08);
+        }
+
+        .extras-layout {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        /* Word search + bonus content */
+        .bonus-card {
+            border: 1px solid rgba(201, 168, 76, 0.18);
+            background: rgba(201, 168, 76, 0.025);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .bonus-card h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            font-size: 1.15rem;
+            margin-bottom: 0.6rem;
+        }
+        .bonus-card p {
+            color: var(--text-dim);
+            font-size: 0.88rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        /* Commit instructions — remove this block once word search is live */
+        .commit-box {
+            border: 1px dashed rgba(90, 157, 175, 0.35);
+            background: rgba(90, 157, 175, 0.04);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .commit-box h4 {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--teal-light);
+            margin-bottom: 1rem;
+        }
+        .commit-box code {
+            display: block;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: var(--parchment-dim);
+            background: rgba(0, 0, 0, 0.35);
+            padding: 0.65rem 1rem;
+            margin-bottom: 0.5rem;
+            border-left: 2px solid var(--teal-light);
+        }
+        .commit-box .note {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            margin-top: 0.75rem;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        /* ===========================
+           ADS SIDEBAR
+        =========================== */
+        .ads-sidebar { display: flex; flex-direction: column; gap: 1.1rem; }
+
+        .ads-title {
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+        }
+
+        .ad-card {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 3 / 2;   /* Facebook / Instagram landscape */
+            border: 1px solid rgba(201, 168, 76, 0.13);
+            overflow: hidden;
+            background: var(--bg-mid);
+        }
+        .ad-card img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+        .ad-card:hover img { transform: scale(1.04); }
+
+        /* Placeholder shown when image not yet committed */
+        .ad-placeholder {
+            width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dim);
+            font-family: 'Cinzel', serif;
+            font-size: 0.68rem;
+            letter-spacing: 0.1em;
+            text-align: center;
+            padding: 1rem;
+            border: 1px dashed rgba(201, 168, 76, 0.18);
+            gap: 0.4rem;
+        }
+        .ad-placeholder .icon { font-size: 1.6rem; opacity: 0.3; }
+        .ad-placeholder small { font-size: 0.58rem; opacity: 0.4; margin-top: 0.2rem; }
+
+        /* How to add ads — remove once live */
+        .ads-how-to {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            font-style: italic;
+            line-height: 1.6;
+            padding: 0.75rem;
+            border: 1px dashed rgba(90, 157, 175, 0.25);
+            background: rgba(90, 157, 175, 0.03);
+        }
+        .ads-how-to strong {
+            font-family: 'Cinzel', serif;
+            font-size: 0.62rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--teal-light);
+            display: block;
+            margin-bottom: 0.5rem;
+            font-style: normal;
+        }
+        .ads-how-to code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.75rem;
+            color: var(--parchment-dim);
+            display: block;
+            background: rgba(0,0,0,0.3);
+            padding: 0.4rem 0.6rem;
+            margin: 0.35rem 0;
+            border-left: 2px solid var(--teal-light);
+        }
+
+        /* ===========================
+           FOOTER
+        =========================== */
+        footer {
+            background: var(--bg-deep);
+            border-top: 1px solid rgba(201, 168, 76, 0.14);
+            padding: 3.5rem 2rem;
+            text-align: center;
+        }
+        .footer-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.22em;
+            margin-bottom: 0.75rem;
+        }
+        .footer-tagline {
+            font-style: italic;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            margin-bottom: 1.75rem;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-links a {
+            font-family: 'Cinzel', serif;
+            font-size: 0.62rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.25s;
+        }
+        .footer-links a:hover { color: var(--gold); }
+        .footer-copy { font-size: 0.72rem; color: var(--text-dim); opacity: 0.45; }
+
+        /* ===========================
+           SCROLL REVEAL
+        =========================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.75s ease, transform 0.75s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ===========================
+           RESPONSIVE
+        =========================== */
+        @media (max-width: 900px) {
+            #hero { padding: 90px 2rem 3rem; }
+            .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+            .hero-cover { order: -1; }
+            .cover-frame { max-width: 260px; }
+            .book-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+            .about-grid { grid-template-columns: 1fr; }
+            .compass-wrap { display: none; }
+            .extras-layout { grid-template-columns: 1fr; }
+            .ads-sidebar { flex-direction: row; flex-wrap: wrap; }
+            .ad-card { width: calc(50% - 0.55rem); }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+        }
+        @media (max-width: 520px) {
+            h1.hero-title { font-size: 2.6rem; }
+            .ads-sidebar { flex-direction: column; }
+            .ad-card { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ==============================
+     NAVIGATION
+============================== -->
+<nav>
+    <a href="#hero" class="nav-logo">
+        <!-- Compass icon -->
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+        </svg>
+        ATLAS VALLEY<span class="pipe"> | </span><span class="sub">Books</span>
+    </a>
+    <ul class="nav-links">
+        <li><a href="#book">The Book</a></li>
+        <li><a href="#about">The Author</a></li>
+        <li><a href="#book2">Coming Soon</a></li>
+        <li><a href="#extras">Extras</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Open menu" onclick="toggleMobileNav()">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<div id="mobile-nav">
+    <ul>
+        <li><a href="#book"  onclick="closeMobileNav()">The Book</a></li>
+        <li><a href="#about" onclick="closeMobileNav()">The Author</a></li>
+        <li><a href="#book2" onclick="closeMobileNav()">Coming Soon</a></li>
+        <li><a href="#extras" onclick="closeMobileNav()">Extras</a></li>
+    </ul>
+</div>
+
+
+<!-- ==============================
+     HERO
+============================== -->
+<section id="hero">
+    <span class="coord" style="top:78px; left:22px;">32°05'N  80°56'W</span>
+    <span class="coord" style="bottom:36px; right:22px;">CHART NO. MPM-001</span>
+
+    <div class="hero-inner">
+
+        <!-- Text side -->
+        <div class="hero-text">
+            <div class="hero-series">#1 in the Marcus Pruitt Mystery Series</div>
+
+            <h1 class="hero-title">Heron's<br>Bluff</h1>
+            <p class="hero-author">by Atlas Valley</p>
+            <p class="hero-genre">A Coastal Noir Mystery</p>
+
+            <p class="hero-synopsis">
+                Marcus Pruitt came to Heron's Bluff for a story. He always does.
+                But in a town where old money controls the waterfront and a rezoning
+                vote has everyone holding their breath, the story has a body in it —
+                and the body didn't get there on its own.
+            </p>
+
+            <!-- Countdown: pre-order until May 5, then Available Now -->
+            <div id="release-status"></div>
+
+            <a href="https://amzn.to/4265sqJ" target="_blank" rel="noopener" class="btn-primary" id="amazon-cta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                </svg>
+                <span id="cta-label">Pre-Order on Amazon</span>
+            </a>
+        </div>
+
+        <!-- Cover image side -->
+        <div class="hero-cover">
+            <div class="cover-glow"></div>
+            <div class="cover-frame" id="cover-frame">
+                <!--
+                    ★ COVER IMAGE SETUP ★
+                    Save your cover image as "herons-bluff-cover.jpg" in the same
+                    folder as this index.html, then commit both files to GitHub:
+                        git add herons-bluff-cover.jpg
+                        git commit -m "Add book cover image"
+                        git push
+                    The placeholder below disappears automatically once the image loads.
+                -->
+                <img src="herons-bluff-cover.jpg"
+                     alt="Heron's Bluff by Atlas Valley — Book Cover"
+                     onload="document.getElementById('cover-placeholder').style.display='none';"
+                     onerror="this.style.display='none';">
+                <!-- Placeholder hidden automatically once cover loads -->
+                <div class="cover-placeholder" id="cover-placeholder" style="display:none;">
+                    <div class="cp-title">HERON'S<br>BLUFF</div>
+                    <div class="cp-divider"></div>
+                    <div class="cp-author">ATLAS VALLEY</div>
+                    <div class="cp-series">#1 Marcus Pruitt Mystery</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ==============================
+     ABOUT THE BOOK
+============================== -->
+<section id="book">
+    <div class="section-inner">
+        <div class="section-label">The Novel</div>
+
+        <div class="book-inner reveal">
+
+            <!-- Quick-facts column -->
+            <div class="book-details">
+                <div class="detail-card">
+                    <div class="detail-label">Title</div>
+                    <div class="detail-value">Heron's Bluff</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Series</div>
+                    <div class="detail-value">Marcus Pruitt Mysteries — Book One</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Genre</div>
+                    <div class="detail-value">Coastal Noir · Southern Gothic</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Also For Fans Of</div>
+                    <div class="detail-value" style="font-size:0.85rem; line-height:1.6;">Amateur Sleuth &nbsp;·&nbsp; Investigative Thriller<br>Legal Mystery &nbsp;·&nbsp; Small Town Noir<br>African American Fiction</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Author</div>
+                    <div class="detail-value">Atlas Valley</div>
+                </div>
+                <a href="https://amzn.to/4265sqJ" target="_blank" rel="noopener"
+                   class="btn-primary" style="margin-top:0.5rem; justify-content:center;">
+                    Get Your Copy
+                </a>
+            </div>
+
+            <!-- Synopsis column -->
+            <div class="book-synopsis">
+                <h3>About the Book</h3>
+                <p>Marcus Pruitt came to Heron's Bluff, Georgia for a story. He always does. A forensic chemist turned investigative journalist, he arrives on the Georgia coast to write about heirs' property — the quiet legal mechanism that has been stripping Black coastal families of their land for generations. A week's work. A few interviews. Some bourbon.</p>
+
+                <p>Then he finds the alderman dead at the base of a decommissioned lighthouse before sunrise. Everything about the scene is wrong — starting with a chemical smell that has no business being anywhere near salt water.</p>
+
+                <p>Marcus notices these things. He can't help it. It's the curse of a forensic mind in a town that has been keeping its secrets since before the Civil War.</p>
+
+                <p>Old families, old deeds, old money — and a woman named Celeste Vaughn Monroe who seems to know exactly where all of it is buried. Someone in this sun-soaked coastal town is counting on Marcus Pruitt to stay in his lane.</p>
+
+                <p>He won't. <em>The man the killer never sees coming has arrived. And the tide is coming in.</em></p>
+
+                <div class="divider"></div>
+
+                <a href="https://amzn.to/4265sqJ" target="_blank" rel="noopener" class="btn-primary">
+                    Order Now on Amazon
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ==============================
+     ABOUT ATLAS VALLEY
+============================== -->
+<section id="about">
+    <div class="section-inner">
+        <div class="section-label">The Author</div>
+        <h2 class="section-title">Atlas Valley</h2>
+
+        <div class="about-grid reveal">
+            <div class="about-text">
+                <p>Atlas Valley writes across worlds — and means that in more than one sense.</p>
+
+                <p>The debut novel, <em>Heron's Bluff</em>, announced what careful readers will immediately recognize: a forensic eye, an unhurried wit, and a sense of place so precise you can smell the spartina grass and the diesel from the shrimp boats. The Georgia coast lives in these pages the way it lives in memory — layered, warm, and deeply unwilling to give up its secrets without a fight.</p>
+
+                <p>But coastal noir is only the beginning. Atlas Valley is equally at home in the vast silence between stars — building worlds where spacetime bends at the right frequency, where two ordinary men follow an iron ladder into something that defies every map ever drawn, and the only way home is through.</p>
+
+                <p>There is also a third register: the wild. A world where the boundary between instinct and identity is paper-thin, where the most dangerous thing in the room has nothing to do with shadows, and where love — real, inconvenient, bone-deep love — turns out to be the most preternatural force of all. That series is coming. Soon.</p>
+
+                <p>Three series. Three worlds. One voice — the kind that notices what a room is doing before anyone opens their mouth, then finds exactly the right word for it.</p>
+
+                <p>The pen name, like the best maps, tells you where you are while reminding you there is still territory left to explore.</p>
+
+                <blockquote>
+                    <p>"Every constellation is a story someone told about the dark. The stars just held their positions long enough for the rest of us to catch up."</p>
+                    <cite>— Atlas Valley</cite>
+                </blockquote>
+            </div>
+
+            <!-- Animated compass rose -->
+            <div class="compass-wrap">
+                <svg class="compass-rose" width="210" height="210" viewBox="0 0 200 200"
+                     fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="92" stroke="#c9a84c" stroke-width="0.5" opacity="0.6"/>
+                    <circle cx="100" cy="100" r="72" stroke="#c9a84c" stroke-width="0.3" opacity="0.35"/>
+                    <circle cx="100" cy="100" r="10" fill="#c9a84c" opacity="0.85"/>
+                    <!-- Cardinal points -->
+                    <polygon points="100,8 93,100 100,82 107,100"  fill="#c9a84c" opacity="0.95"/>
+                    <polygon points="100,192 93,100 100,118 107,100" fill="#8a7e68" opacity="0.7"/>
+                    <polygon points="192,100 100,93 118,100 100,107" fill="#8a7e68" opacity="0.7"/>
+                    <polygon points="8,100 100,93 82,100 100,107"  fill="#8a7e68" opacity="0.7"/>
+                    <!-- Intercardinals -->
+                    <line x1="26" y1="26" x2="174" y2="174" stroke="#c9a84c" stroke-width="0.4" opacity="0.25"/>
+                    <line x1="174" y1="26" x2="26" y2="174" stroke="#c9a84c" stroke-width="0.4" opacity="0.25"/>
+                    <!-- Tick marks -->
+                    <line x1="100" y1="8"   x2="100" y2="18"  stroke="#c9a84c" stroke-width="1" opacity="0.5"/>
+                    <line x1="100" y1="182" x2="100" y2="192" stroke="#c9a84c" stroke-width="1" opacity="0.5"/>
+                    <line x1="8"   y1="100" x2="18"  y2="100" stroke="#c9a84c" stroke-width="1" opacity="0.5"/>
+                    <line x1="182" y1="100" x2="192" y2="100" stroke="#c9a84c" stroke-width="1" opacity="0.5"/>
+                    <!-- Labels -->
+                    <text x="96" y="4"   fill="#c9a84c" font-size="11" font-family="Cinzel, serif" opacity="0.85">N</text>
+                    <text x="96" y="200" fill="#8a7e68" font-size="10" font-family="Cinzel, serif" opacity="0.6">S</text>
+                    <text x="185" y="104" fill="#8a7e68" font-size="10" font-family="Cinzel, serif" opacity="0.6">E</text>
+                    <text x="5"   y="104" fill="#8a7e68" font-size="10" font-family="Cinzel, serif" opacity="0.6">W</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==============================
+     COMING SOON — BOOK 2
+============================== -->
+<section id="book2" style="background: var(--bg-deep); border-top: 1px solid rgba(201,168,76,0.1);">
+    <div class="section-inner">
+        <div class="section-label">Coming Soon</div>
+        <div class="reveal" style="display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; max-width:900px; margin:0 auto;">
+
+            <div>
+                <p style="font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--teal-light); margin-bottom:0.75rem;">Marcus Pruitt Mysteries — Book Two</p>
+                <h2 style="font-family:'Cinzel',serif; font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:900; color:var(--gold); line-height:1.05; margin-bottom:0.5rem; text-shadow:0 0 30px rgba(201,168,76,0.2);">The Probate<br>Theorem</h2>
+                <p style="font-family:'Cinzel',serif; font-size:0.85rem; letter-spacing:0.2em; color:var(--parchment-dim); margin-bottom:1.5rem;">by Atlas Valley</p>
+                <p style="font-size:1rem; line-height:1.88; color:var(--text); margin-bottom:1.5rem;">Marcus Pruitt doesn't stay in one place for long. The Altamaha River delta is waiting — darker than the Atlantic, deeper than it looks, and home to a piece of property that has outlasted every legal challenge thrown at it for three generations.</p>
+                <p style="font-size:1rem; line-height:1.88; color:var(--text); margin-bottom:2rem;">In Darien, Georgia, where the river knows everything and tells nothing, Marcus is about to discover that some inheritances are worth killing for. <em>The manuscript is written. The wait won't be long.</em></p>
+                <div style="display:inline-flex; align-items:center; gap:0.6rem; border:1px solid rgba(201,168,76,0.3); padding:0.75rem 1.25rem; font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--parchment-dim);">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    Notify Me on Release
+                </div>
+            </div>
+
+            <div style="position:relative;">
+                <div style="position:relative; aspect-ratio:0.63; overflow:hidden; background:linear-gradient(145deg,#06101e 0%,#081a12 60%,#0d0d06 100%); border:1px solid rgba(201,168,76,0.15);">
+                    <img src="the-probate-theorem-cover.jpg"
+                         alt="The Probate Theorem by Atlas Valley — Coming Soon"
+                         style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; box-shadow:0 20px 50px rgba(0,0,0,0.7);"
+                         onerror="this.style.display='none'; document.getElementById('pt-placeholder').style.display='flex';">
+                    <!-- Fallback if cover not yet available -->
+                    <div id="pt-placeholder" style="display:none; position:absolute; inset:0; flex-direction:column; align-items:center; justify-content:center; padding:2rem; text-align:center;">
+                        <div style="position:absolute; inset:0; background:radial-gradient(ellipse at 50% 80%, rgba(61,122,138,0.12) 0%, transparent 60%); pointer-events:none;"></div>
+                        <p style="font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--teal-light); margin-bottom:1rem; position:relative;">Darien, Georgia</p>
+                        <p style="font-family:'Lora',serif; font-style:italic; font-size:0.95rem; color:var(--parchment-dim); line-height:1.8; position:relative; max-width:260px;">"Darien in August was not a town you arrived in so much as a town that absorbed you."</p>
+                        <div style="width:40px; height:1px; background:rgba(201,168,76,0.3); margin:1.25rem auto; position:relative;"></div>
+                        <p style="font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.25em; color:var(--text-dim); text-transform:uppercase; position:relative;">The Altamaha River Awaits</p>
+                    </div>
+                </div>
+                <div style="position:absolute; top:-6px; left:-6px; width:18px; height:18px; border-top:1px solid var(--gold); border-left:1px solid var(--gold); opacity:0.5;"></div>
+                <div style="position:absolute; bottom:-6px; right:-6px; width:18px; height:18px; border-bottom:1px solid var(--gold); border-right:1px solid var(--gold); opacity:0.5;"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ==============================
+     EXTRAS
+============================== -->
+<section id="extras">
+    <div class="section-inner">
+        <div class="section-label">Extras</div>
+        <h2 class="section-title reveal">Bonus Content &amp; Promos</h2>
+
+        <div class="extras-layout">
+
+            <!-- Left column: bonus content -->
+            <div class="extras-main">
+
+                <!-- Crossword card -->
+                <div class="bonus-card reveal">
+                    <h3>Heron's Bluff Crossword</h3>
+                    <p>
+                        The clues run across and down — just like the tides, just like the lies.
+                        How well do you know Heron's Bluff?
+                    </p>
+                    <a href="HeronsBluff_Crossword.html" class="btn-secondary">
+                        Solve the Crossword
+                    </a>
+                </div>
+
+                <!-- Word Search card -->
+                <div class="bonus-card reveal">
+                    <h3>Heron's Bluff Word Search</h3>
+                    <p>
+                        Hidden among the marsh grasses, the clues are waiting.
+                        Can you track them all down before the tide comes in?
+                    </p>
+                    <!--
+                        ★ WORD SEARCH LINK ★
+                        Change "wordsearch.html" to the actual filename of your word search.
+                        Once the file is committed to GitHub, this button goes live automatically.
+                    -->
+                    <a href="HeronsBluff_WordSearch.html" class="btn-secondary">
+                        Play the Word Search
+                    </a>
+                </div>
+
+                <!-- Puzzle files HeronsBluff_WordSearch.html + HeronsBluff_Crossword.html
+                     are already in this folder and ready to commit with:
+                     git add HeronsBluff_WordSearch.html HeronsBluff_Crossword.html
+                     git commit -m "Add puzzles"
+                     git push
+                -->
+
+                <!--
+                    ★ ADD MORE BONUS CONTENT HERE ★
+                    Copy the .bonus-card div above and customize for each new item.
+                    Great for: character guides, chapter samplers, playlists, maps, etc.
+                -->
+
+            </div>
+
+            <!-- Right column: Social media ads (3:2 ratio) -->
+            <div class="ads-sidebar reveal">
+                <div class="ads-title">Featured Promos</div>
+
+                <!--
+                ╔═══════════════════════════════════════════════════════╗
+                ║  ★  HOW TO ADD YOUR AD IMAGES  ★                      ║
+                ║  1. Save each ad image to the same folder as index.html║
+                ║     and commit it:                                     ║
+                ║       git add ad-1.jpg                                 ║
+                ║       git commit -m "Add promo ad"                     ║
+                ║       git push                                         ║
+                ║  2. Replace the <div class="ad-placeholder"> inside    ║
+                ║     each .ad-card with:                                ║
+                ║       <img src="ad-1.jpg" alt="Heron's Bluff promo">  ║
+                ║  3. Add more .ad-card divs below as needed.            ║
+                ║  4. Delete this comment block when done.               ║
+                ╚═══════════════════════════════════════════════════════╝
+                -->
+
+                <div class="ad-card">
+                    <!-- Replace this placeholder with: <img src="ad-1.jpg" alt="Promo ad 1"> -->
+                    <div class="ad-placeholder">
+                        <span class="icon">🗺</span>
+                        Ad Image 1
+                        <small>Replace with your ad image file</small>
+                    </div>
+                </div>
+
+                <div class="ad-card">
+                    <!-- Replace with: <img src="ad-2.jpg" alt="Promo ad 2"> -->
+                    <div class="ad-placeholder">
+                        <span class="icon">🌊</span>
+                        Ad Image 2
+                        <small>Replace with your ad image file</small>
+                    </div>
+                </div>
+
+                <div class="ad-card">
+                    <!-- Replace with: <img src="ad-3.jpg" alt="Promo ad 3"> -->
+                    <div class="ad-placeholder">
+                        <span class="icon">🏮</span>
+                        Ad Image 3
+                        <small>Replace with your ad image file</small>
+                    </div>
+                </div>
+
+                <!-- Add more .ad-card divs here as you create more ads -->
+
+                <div class="ads-how-to">
+                    <strong>⚓ To Add Your Real Ads</strong>
+                    Save each image to your repo folder, then:
+                    <code>git add ad-1.jpg</code>
+                    <code>git commit -m "Add promo ad"</code>
+                    <code>git push</code>
+                    Replace each ad-placeholder block with an &lt;img&gt; tag. Delete this box when done.
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==============================
+     FOOTER
+============================== -->
+<footer>
+    <div class="footer-logo">ATLAS VALLEY</div>
+    <p class="footer-tagline">"Stories from the edge of the map."</p>
+    <nav class="footer-links">
+        <a href="#hero">Home</a>
+        <a href="#book">The Book</a>
+        <a href="#about">The Author</a>
+        <a href="#book2">Coming Soon</a>
+        <a href="#extras">Extras</a>
+        <a href="https://amzn.to/4265sqJ" target="_blank" rel="noopener">Amazon</a>
+    </nav>
+    <p class="footer-copy">&copy; 2026 Atlas Valley. All rights reserved. &nbsp;|&nbsp; atlasvalleybooks.com</p>
+</footer>
+
+
+<script>
+// ================================
+// RELEASE DATE COUNTDOWN
+// Pre-order mode until May 5, 2026 — then Available Now
+// ================================
+const RELEASE = new Date('2026-05-05T00:00:00');
+
+function pad(n) { return String(n).padStart(2, '0'); }
+
+function updateStatus() {
+    const el       = document.getElementById('release-status');
+    const ctaLabel = document.getElementById('cta-label');
+    if (!el) return;
+    const now  = new Date();
+    const diff = RELEASE - now;
+
+    if (diff <= 0) {
+        // Book is out — flip to Available Now
+        el.innerHTML = `
+            <div class="available-now">
+                <div class="pulse-dot"></div>
+                Available Now
+            </div>`;
+        if (ctaLabel) ctaLabel.textContent = 'Order on Amazon';
+    } else {
+        // Pre-order countdown
+        const days  = Math.floor(diff / 86400000);
+        const hours = Math.floor((diff % 86400000) / 3600000);
+        const mins  = Math.floor((diff % 3600000)  / 60000);
+        const secs  = Math.floor((diff % 60000)    / 1000);
+
+        el.innerHTML = `
+            <p class="releasing-label">Pre-Order Now &nbsp;·&nbsp; Releases May 5, 2026</p>
+            <div class="countdown-display">
+                <div class="countdown-unit">
+                    <span class="countdown-num">${pad(days)}</span>
+                    <span class="countdown-label">Days</span>
+                </div>
+                <span class="countdown-sep">:</span>
+                <div class="countdown-unit">
+                    <span class="countdown-num">${pad(hours)}</span>
+                    <span class="countdown-label">Hrs</span>
+                </div>
+                <span class="countdown-sep">:</span>
+                <div class="countdown-unit">
+                    <span class="countdown-num">${pad(mins)}</span>
+                    <span class="countdown-label">Min</span>
+                </div>
+                <span class="countdown-sep">:</span>
+                <div class="countdown-unit">
+                    <span class="countdown-num">${pad(secs)}</span>
+                    <span class="countdown-label">Sec</span>
+                </div>
+            </div>`;
+        if (ctaLabel) ctaLabel.textContent = 'Pre-Order on Amazon';
+    }
+}
+
+updateStatus();
+setInterval(updateStatus, 1000);
+
+
+// ================================
+// SCROLL REVEAL
+// ================================
+const observer = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.1 }
+);
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+
+// ================================
+// MOBILE NAV
+// ================================
+function toggleMobileNav() {
+    const nav = document.getElementById('mobile-nav');
+    nav.style.display = (nav.style.display === 'block') ? 'none' : 'block';
+}
+function closeMobileNav() {
+    document.getElementById('mobile-nav').style.display = 'none';
+}
+</script>
+
+</body>
+</html>
