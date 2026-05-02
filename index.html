@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Heron's Bluff — Word Search · #CoastalNoir</title>
+  <title>Heron's Bluff — Crossword · #CoastalNoir</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -59,56 +59,140 @@
       font-style: italic;
       text-align: center;
       margin-bottom: 28px;
-      letter-spacing: 0.5px;
     }
 
     .puzzle-container {
       display: flex;
-      gap: 36px;
+      gap: 40px;
       align-items: flex-start;
       flex-wrap: wrap;
       justify-content: center;
     }
 
-    .grid-panel { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    /* GRID */
+    .grid-panel { display: flex; flex-direction: column; align-items: center; gap: 14px; }
 
-    .grid {
-      display: inline-grid;
-      grid-template-columns: repeat(20, 27px);
-      gap: 1px;
-      background: #0d1e34;
+    .crossword-grid {
+      display: inline-block;
       border: 1px solid #1a3455;
-      padding: 10px;
+      background: #0d1e34;
+      padding: 8px;
       border-radius: 3px;
       box-shadow: 0 0 60px rgba(0,0,0,0.7), 0 0 20px rgba(201,168,76,0.05);
     }
 
-    .cell {
-      width: 27px;
-      height: 27px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12.5px;
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 1px;
-      transition: background 0.08s;
-      user-select: none;
-      color: #b0a090;
-      font-family: 'Courier New', monospace;
-      background: #0a1828;
+    .grid-row { display: flex; }
+
+    .grid-cell {
+      width: 34px;
+      height: 34px;
+      position: relative;
     }
 
-    .cell:hover { background: rgba(201, 168, 76, 0.12); color: #d4c0a0; }
-    .cell.selecting { background: rgba(201, 168, 76, 0.35); color: #fff; }
-    .cell.found { background: rgba(20, 80, 60, 0.7); color: #5dd4a4; }
-    .cell.reveal { background: rgba(60, 30, 10, 0.8); color: #d4884a; }
+    .grid-cell.black {
+      background: #04090f;
+      border: 1px solid #0a1828;
+    }
 
+    .grid-cell.white {
+      background: #d8ccb8;
+      border: 1px solid #9a8a78;
+    }
+
+    .grid-cell.white.active {
+      background: #e8dcc8;
+    }
+
+    .grid-cell.white.highlight {
+      background: rgba(201, 168, 76, 0.45);
+    }
+
+    .grid-cell.white.correct {
+      background: rgba(20, 90, 65, 0.65);
+    }
+
+    .cell-input {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      text-align: center;
+      font-size: 15px;
+      font-weight: bold;
+      color: #1a1008;
+      font-family: Georgia, serif;
+      text-transform: uppercase;
+      cursor: pointer;
+      padding-top: 8px;
+    }
+
+    .cell-input.revealed {
+      color: #5a3a10;
+    }
+
+    .cell-number {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      font-size: 8px;
+      color: #3a2a10;
+      font-family: 'Courier New', monospace;
+      pointer-events: none;
+      line-height: 1;
+      z-index: 1;
+    }
+
+    /* CLUES */
+    .clues-panel {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .clue-group { min-width: 220px; max-width: 280px; }
+
+    .clue-group h3 {
+      font-size: 10px;
+      color: #c9a84c;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1a3455;
+      font-family: 'Courier New', monospace;
+    }
+
+    .clue-item {
+      font-size: 12px;
+      padding: 5px 6px;
+      color: #7a9ab4;
+      border-radius: 2px;
+      cursor: pointer;
+      line-height: 1.5;
+      border-bottom: 1px solid #0f2038;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .clue-item:hover { background: rgba(201,168,76,0.08); color: #c8b89a; }
+    .clue-item.active { background: rgba(201,168,76,0.15); color: #c9a84c; }
+    .clue-item.solved { color: #2a5a3a; }
+
+    .clue-num {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      color: #c9a84c88;
+      margin-right: 4px;
+    }
+
+    /* CONTROLS */
     .controls {
       display: flex;
       gap: 10px;
       align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     .btn {
@@ -131,42 +215,13 @@
       color: #c9a84c;
     }
 
-    .progress {
+    .status-msg {
       font-size: 10px;
-      color: #2a5a7f;
+      color: #3a6a8f;
       letter-spacing: 2px;
       text-transform: uppercase;
       font-family: 'Courier New', monospace;
-    }
-
-    .progress.complete { color: #2a8f5a; }
-
-    .word-panel { min-width: 190px; }
-
-    .word-panel h3 {
-      font-size: 10px;
-      color: #c9a84c;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      margin-bottom: 14px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid #1a3455;
-      font-family: 'Courier New', monospace;
-    }
-
-    .word-item {
-      font-size: 12px;
-      padding: 4px 0;
-      color: #5a8aaa;
-      letter-spacing: 1px;
-      font-family: 'Courier New', monospace;
-      border-bottom: 1px solid #0f2038;
-      transition: all 0.2s;
-    }
-
-    .word-item.found {
-      text-decoration: line-through;
-      color: #1a5a38;
+      min-height: 16px;
     }
 
     .footer {
@@ -181,14 +236,6 @@
       text-transform: uppercase;
       font-family: 'Courier New', monospace;
     }
-
-    .instruction {
-      font-size: 11px;
-      color: #2a4a6f;
-      margin-top: 6px;
-      font-family: 'Courier New', monospace;
-      letter-spacing: 1px;
-    }
   </style>
 </head>
 <body>
@@ -196,295 +243,431 @@
   <div class="header">
     <div class="series-label">A Marcus Pruitt Mystery · Book One</div>
     <h1>Heron's Bluff</h1>
-    <div class="subtitle">Word Search · #CoastalNoir</div>
+    <div class="subtitle">Crossword · #CoastalNoir</div>
   </div>
 
   <div class="divider"></div>
 
-  <div class="tagline">"Heron's Bluff smelled like salt and secrets."</div>
+  <div class="tagline">"Property law is, in many ways, chemistry."</div>
 
   <div class="puzzle-container">
     <div class="grid-panel">
-      <div class="grid" id="grid"></div>
-      <div class="instruction">Click a letter · then click the last letter of the word</div>
+      <div class="crossword-grid" id="crossword"></div>
       <div class="controls">
-        <span class="progress" id="progress">0 of 25 words found</span>
+        <button class="btn" id="checkBtn">Check Answers</button>
         <button class="btn" id="revealBtn">Reveal All</button>
         <button class="btn" id="clearBtn">Clear</button>
       </div>
+      <div class="status-msg" id="statusMsg"></div>
     </div>
 
-    <div class="word-panel">
-      <h3>Find These Words</h3>
-      <div id="wordList"></div>
+    <div>
+      <div class="clues-panel">
+        <div class="clue-group">
+          <h3>Across</h3>
+          <div id="acrossClues"></div>
+        </div>
+        <div class="clue-group">
+          <h3>Down</h3>
+          <div id="downClues"></div>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="footer">
     <div class="hashtag">#CoastalNoir · #HeronsBluff · #BeachRead</div>
-    <div class="instruction" style="margin-top:10px">
-      Available wherever books are sold
-    </div>
   </div>
 
 <script>
-const WORDS = [
-  'BEAUMONT', 'PELICAN', 'LIGHTHOUSE', 'CAUSEWAY', 'BOATHOUSE',
-  'SAVANNAH', 'CELESTE', 'MARCUS', 'FORENSIC', 'BOURBON',
-  'HARBOR', 'MARSH', 'CODICIL', 'CARVER', 'RONA',
-  'BEAU', 'VOSS', 'PRENTISS', 'SEAMASTER', 'LORELEI',
-  'COASTAL', 'DEED', 'BLUFF', 'HEIRS', 'TIDEWATER'
+// ─── SOLUTION GRID (14 rows × 15 cols) ───────────────────────────────────────
+// null = black square
+const SOLUTION = [
+  // col: 0    1    2    3    4    5    6    7    8    9   10   11   12   13   14
+  /* r0 */ ['S',null,'F','O','R','E','N','S','I','C',null,null,null,null,null],
+  /* r1 */ ['A',null,null,null,null,null,null,null,null,'P','B','L','U','F','F'],
+  /* r2 */ ['V',null,'S','E','A','M','A','S','T','E','R',null,null,null,null],
+  /* r3 */ ['A',null,null,null,null,null,null,null,null,'L','P',null,null,null,null],
+  /* r4 */ ['N','M','A','R','S','H',null,null,null,'I','R',null,null,null,null],
+  /* r5 */ ['N',null,null,null,null,null,'B',null,null,'C','E','B','E','A','U'],
+  /* r6 */ ['A',null,null,null,'C','C','O',null,'C','A','N','O',null,null,null],
+  /* r7 */ ['H',null,null,'B','E','A','U','M','O','N','T','A',null,null,null],
+  /* r8 */ [null,null,null,null,'L','R','R',null,'D',null,'I','T',null,null,null],
+  /* r9 */ [null,null,null,null,'E','V','B',null,'I',null,'S','H',null,null,null],
+  /* r10*/ ['R','O','N','A','S','E','O',null,'C',null,'S','O',null,null,null],
+  /* r11*/ ['D','E','E','D','T','R','N',null,'I',null,null,'U',null,null,null],
+  /* r12*/ ['V','O','S','S','E',null,null,null,'L',null,null,'S',null,null,null],
+  /* r13*/ ['H','A','R','B','O','R',null,null,null,null,null,'E',null,null,null],
 ];
 
-const ROWS = 20, COLS = 20;
-const DIRS = [
-  [0,1],[0,-1],[1,0],[-1,0],
-  [1,1],[1,-1],[-1,1],[-1,-1]
+// ─── CELL NUMBERS ────────────────────────────────────────────────────────────
+const CELL_NUMBERS = {
+  '0,0':1, '0,2':2, '1,9':3, '1,10':4, '2,2':5,
+  '3,10':6, '4,1':7, '5,6':8, '5,11':9,
+  '6,4':10, '6,5':11, '6,8':12, '7,3':13,
+  '10,0':14, '11,0':15, '12,0':16, '13,0':17
+};
+
+// ─── WORDS (for checking) ─────────────────────────────────────────────────────
+const WORDS_ACROSS = [
+  {num:2,  row:0,  col:2,  answer:'FORENSIC'},
+  {num:4,  row:1,  col:10, answer:'BLUFF'},
+  {num:5,  row:2,  col:2,  answer:'SEAMASTER'},
+  {num:7,  row:4,  col:1,  answer:'MARSH'},
+  {num:9,  row:5,  col:11, answer:'BEAU'},
+  {num:13, row:7,  col:3,  answer:'BEAUMONT'},
+  {num:14, row:10, col:0,  answer:'RONA'},
+  {num:15, row:11, col:0,  answer:'DEED'},
+  {num:16, row:12, col:0,  answer:'VOSS'},
+  {num:17, row:13, col:0,  answer:'HARBOR'},
 ];
 
-let grid = [];
-let wordPlacements = {};
-let foundWords = new Set();
-let selectedStart = null;
-let cellElements = [];
+const WORDS_DOWN = [
+  {num:1,  row:0,  col:0,  answer:'SAVANNAH'},
+  {num:3,  row:1,  col:9,  answer:'PELICAN'},
+  {num:6,  row:3,  col:10, answer:'PRENTISS'},
+  {num:8,  row:5,  col:6,  answer:'BOURBON'},
+  {num:9,  row:5,  col:11, answer:'BOATHOUSE'},
+  {num:10, row:6,  col:4,  answer:'CELESTE'},
+  {num:11, row:6,  col:5,  answer:'CARVER'},
+  {num:12, row:6,  col:8,  answer:'CODICIL'},
+];
 
-function initGrid() {
-  grid = Array.from({length: ROWS}, () => Array(COLS).fill(null));
-}
+// ─── CLUE TEXT ────────────────────────────────────────────────────────────────
+const CLUES_ACROSS = {
+  2:  'Marcus\'s professional foundation — where chemistry meets crime scene (8)',
+  4:  'Heron\'s ___ : the coastal height that names this town (5)',
+  5:  'Marcus\'s 1971 timepiece — runs as reliably as his instincts (9)',
+  7:  'The brackish landscape flanking the causeway (5)',
+  9:  'Carver\'s estranged son — wanted what a will wouldn\'t give him (4)',
+  13: 'The land trust at the heart of every secret in Heron\'s Bluff (8)',
+  14: 'Deputy Thibodaux, first name — not fooled for long (4)',
+  15: 'A legal record; once filed, it never forgets (4)',
+  16: 'The Atlanta developer who saw a vacant board and made a fatal move (4)',
+  17: 'The working waterfront visible from Tidewater & Tonic (6)',
+};
 
-function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
+const CLUES_DOWN = {
+  1:  'Marcus\'s home city — the Georgia port he drives north from (8)',
+  3:  'The shorebird that names the lighthouse point (7)',
+  6:  'The deaf lighthouse keeper whose log recorded every visitor (8)',
+  8:  'Marcus\'s analytical aid — poured correctly, a reasonable start to any Tuesday (7)',
+  9:  'Marcus\'s converted waterfront rental in Heron\'s Bluff (9)',
+  10: 'The estate attorney — always three moves ahead of the board (7)',
+  11: 'The murdered alderman — he ran everything he could get his hands on (6)',
+  12: 'The legal amendment that removed Carver\'s control over the deed (7)',
+};
 
-function placeWord(word) {
-  const dirs = shuffle([...DIRS]);
-  for (let attempt = 0; attempt < 300; attempt++) {
-    const [dr, dc] = dirs[attempt % dirs.length];
-    const row = Math.floor(Math.random() * ROWS);
-    const col = Math.floor(Math.random() * COLS);
-    const endRow = row + dr * (word.length - 1);
-    const endCol = col + dc * (word.length - 1);
-    if (endRow < 0 || endRow >= ROWS || endCol < 0 || endCol >= COLS) continue;
-    let canPlace = true;
-    for (let i = 0; i < word.length; i++) {
-      const r = row + dr * i, c = col + dc * i;
-      if (grid[r][c] !== null && grid[r][c] !== word[i]) { canPlace = false; break; }
-    }
-    if (canPlace) {
-      const cells = [];
-      for (let i = 0; i < word.length; i++) {
-        const r = row + dr * i, c = col + dc * i;
-        grid[r][c] = word[i];
-        cells.push([r, c]);
-      }
-      return cells;
-    }
-  }
-  return null;
-}
+// ─── STATE ────────────────────────────────────────────────────────────────────
+const ROWS = SOLUTION.length;
+const COLS = SOLUTION[0].length;
+let inputEls = {};   // 'r,c' → <input>
+let cellEls = {};    // 'r,c' → .grid-cell div
+let activeWord = null; // {num, dir}
 
-const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-function fillGrid() {
-  for (let r = 0; r < ROWS; r++)
-    for (let c = 0; c < COLS; c++)
-      if (grid[r][c] === null)
-        grid[r][c] = LETTERS[Math.floor(Math.random() * LETTERS.length)];
-}
-
-function buildPuzzle() {
-  initGrid();
-  const sorted = [...WORDS].sort((a, b) => b.length - a.length);
-  for (const w of sorted) {
-    const cells = placeWord(w);
-    if (cells) wordPlacements[w] = cells;
-  }
-  fillGrid();
-}
-
-function cellKey(r, c) { return `${r},${c}`; }
-
-function getCellsForWord(word) { return wordPlacements[word] || []; }
-
-function cellInWord(r, c, word) {
-  return getCellsForWord(word).some(([wr, wc]) => wr === r && wc === c);
-}
-
-function getWordAtCell(r, c) {
-  for (const w of Object.keys(wordPlacements)) {
-    if (cellInWord(r, c, w)) return w;
-  }
-  return null;
-}
-
-// Determine if two cells form a line matching a word
-function getWordFromSelection(r1, c1, r2, c2) {
-  const dr = r2 - r1, dc = c2 - c1;
-  if (dr === 0 && dc === 0) return null;
-  const len = Math.max(Math.abs(dr), Math.abs(dc));
-  if (Math.abs(dr) !== 0 && Math.abs(dc) !== 0 && Math.abs(dr) !== Math.abs(dc)) return null;
-  const sr = dr === 0 ? 0 : dr / Math.abs(dr);
-  const sc = dc === 0 ? 0 : dc / Math.abs(dc);
-  const selectedCells = [];
-  for (let i = 0; i <= len; i++) {
-    selectedCells.push([r1 + sr * i, c1 + sc * i]);
-  }
-  const letters = selectedCells.map(([r, c]) => grid[r][c]).join('');
-  const reversed = letters.split('').reverse().join('');
-  for (const w of WORDS) {
-    if ((w === letters || w === reversed) && wordPlacements[w]) {
-      const placement = wordPlacements[w];
-      const matches = selectedCells.every(([r, c], i) =>
-        placement.some(([pr, pc]) => pr === r && pc === c)
-      );
-      if (matches || wordPlacements[w].length === selectedCells.length) {
-        // verify exact match
-        const fwd = selectedCells.every(([r,c], i) => {
-          const p = placement[i];
-          return p && p[0] === r && p[1] === c;
-        });
-        const bwd = selectedCells.every(([r,c], i) => {
-          const p = placement[placement.length - 1 - i];
-          return p && p[0] === r && p[1] === c;
-        });
-        if (fwd || bwd) return w;
-      }
-    }
-  }
-  return null;
-}
-
-function renderGrid() {
-  const container = document.getElementById('grid');
+// ─── BUILD GRID ───────────────────────────────────────────────────────────────
+function buildGrid() {
+  const container = document.getElementById('crossword');
   container.innerHTML = '';
-  cellElements = [];
+
   for (let r = 0; r < ROWS; r++) {
-    cellElements.push([]);
+    const rowDiv = document.createElement('div');
+    rowDiv.className = 'grid-row';
+
     for (let c = 0; c < COLS; c++) {
-      const cell = document.createElement('div');
-      cell.className = 'cell';
-      cell.textContent = grid[r][c];
-      cell.dataset.row = r;
-      cell.dataset.col = c;
-      cell.addEventListener('click', handleCellClick);
-      container.appendChild(cell);
-      cellElements[r].push(cell);
+      const cellDiv = document.createElement('div');
+      const key = `${r},${c}`;
+      const letter = SOLUTION[r][c];
+
+      if (letter === null) {
+        cellDiv.className = 'grid-cell black';
+      } else {
+        cellDiv.className = 'grid-cell white';
+        cellDiv.dataset.row = r;
+        cellDiv.dataset.col = c;
+
+        if (CELL_NUMBERS[key] !== undefined) {
+          const numSpan = document.createElement('span');
+          numSpan.className = 'cell-number';
+          numSpan.textContent = CELL_NUMBERS[key];
+          cellDiv.appendChild(numSpan);
+        }
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.maxLength = 1;
+        input.className = 'cell-input';
+        input.dataset.row = r;
+        input.dataset.col = c;
+        input.autocomplete = 'off';
+        input.spellcheck = false;
+
+        input.addEventListener('keydown', handleKeydown);
+        input.addEventListener('focus', () => handleFocus(r, c));
+        input.addEventListener('input', handleInput);
+        input.addEventListener('click', () => handleClick(r, c));
+
+        cellDiv.appendChild(input);
+        inputEls[key] = input;
+      }
+
+      cellEls[key] = cellDiv;
+      rowDiv.appendChild(cellDiv);
+    }
+
+    container.appendChild(rowDiv);
+  }
+}
+
+// ─── WORD MEMBERSHIP ──────────────────────────────────────────────────────────
+function getWordCells(num, dir) {
+  const words = dir === 'across' ? WORDS_ACROSS : WORDS_DOWN;
+  const word = words.find(w => w.num === num);
+  if (!word) return [];
+  const cells = [];
+  for (let i = 0; i < word.answer.length; i++) {
+    const r = dir === 'across' ? word.row : word.row + i;
+    const c = dir === 'across' ? word.col + i : word.col;
+    cells.push([r, c]);
+  }
+  return cells;
+}
+
+function getWordsAtCell(r, c) {
+  const results = [];
+  for (const w of WORDS_ACROSS) {
+    for (let i = 0; i < w.answer.length; i++) {
+      if (w.row === r && w.col + i === c) { results.push({num:w.num, dir:'across'}); break; }
     }
   }
-}
-
-function renderWordList() {
-  const container = document.getElementById('wordList');
-  container.innerHTML = '';
-  const sorted = [...WORDS].sort();
-  for (const w of sorted) {
-    const el = document.createElement('div');
-    el.className = 'word-item';
-    el.id = `word-${w}`;
-    el.textContent = w;
-    container.appendChild(el);
-  }
-}
-
-function clearSelection() {
-  for (let r = 0; r < ROWS; r++)
-    for (let c = 0; c < COLS; c++) {
-      const el = cellElements[r][c];
-      if (el && !el.classList.contains('found') && !el.classList.contains('reveal'))
-        el.classList.remove('selecting');
+  for (const w of WORDS_DOWN) {
+    for (let i = 0; i < w.answer.length; i++) {
+      if (w.row + i === r && w.col === c) { results.push({num:w.num, dir:'down'}); break; }
     }
-}
-
-function drawLine(r1, c1, r2, c2) {
-  clearSelection();
-  const dr = r2 - r1, dc = c2 - c1;
-  if (dr === 0 && dc === 0) { cellElements[r1][c1].classList.add('selecting'); return; }
-  const len = Math.max(Math.abs(dr), Math.abs(dc));
-  if (Math.abs(dr) !== 0 && Math.abs(dc) !== 0 && Math.abs(dr) !== Math.abs(dc)) return;
-  const sr = dr === 0 ? 0 : dr / Math.abs(dr);
-  const sc = dc === 0 ? 0 : dc / Math.abs(dc);
-  for (let i = 0; i <= len; i++) {
-    const r = r1 + sr * i, c = c1 + sc * i;
-    if (r >= 0 && r < ROWS && c >= 0 && c < COLS)
-      cellElements[r][c].classList.add('selecting');
   }
+  return results;
 }
 
-function markFound(word) {
-  const cells = wordPlacements[word] || [];
-  cells.forEach(([r, c]) => {
-    cellElements[r][c].classList.remove('selecting');
-    cellElements[r][c].classList.add('found');
+// ─── HIGHLIGHTING ─────────────────────────────────────────────────────────────
+function clearHighlights() {
+  for (const key of Object.keys(cellEls)) {
+    cellEls[key].classList.remove('active', 'highlight');
+  }
+  document.querySelectorAll('.clue-item').forEach(el => el.classList.remove('active'));
+}
+
+function highlightWord(num, dir) {
+  clearHighlights();
+  activeWord = {num, dir};
+
+  const cells = getWordCells(num, dir);
+  cells.forEach(([r, c], i) => {
+    const key = `${r},${c}`;
+    cellEls[key].classList.add(i === 0 ? 'active' : 'highlight');
   });
-  foundWords.add(word);
-  const wordEl = document.getElementById(`word-${word}`);
-  if (wordEl) wordEl.classList.add('found');
-  updateProgress();
-}
 
-function updateProgress() {
-  const total = Object.keys(wordPlacements).length;
-  const el = document.getElementById('progress');
-  el.textContent = `${foundWords.size} of ${total} words found`;
-  if (foundWords.size === total) {
-    el.classList.add('complete');
-    el.textContent = `All ${total} words found! ✦`;
+  const clueEl = document.getElementById(`clue-${dir}-${num}`);
+  if (clueEl) {
+    clueEl.classList.add('active');
+    clueEl.scrollIntoView({block:'nearest', behavior:'smooth'});
   }
 }
 
-function handleCellClick(e) {
-  const r = parseInt(e.target.dataset.row);
-  const c = parseInt(e.target.dataset.col);
+// ─── NAVIGATION ───────────────────────────────────────────────────────────────
+function focusCell(r, c) {
+  const key = `${r},${c}`;
+  if (inputEls[key]) inputEls[key].focus();
+}
 
-  if (!selectedStart) {
-    selectedStart = [r, c];
-    clearSelection();
-    cellElements[r][c].classList.add('selecting');
+function nextCell(r, c, dir) {
+  const dr = dir === 'across' ? 0 : 1;
+  const dc = dir === 'across' ? 1 : 0;
+  let nr = r + dr, nc = c + dc;
+  while (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS) {
+    if (SOLUTION[nr][nc] !== null) { focusCell(nr, nc); return; }
+    nr += dr; nc += dc;
+  }
+}
+
+function prevCell(r, c, dir) {
+  const dr = dir === 'across' ? 0 : -1;
+  const dc = dir === 'across' ? -1 : 0;
+  let nr = r + dr, nc = c + dc;
+  while (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS) {
+    if (SOLUTION[nr][nc] !== null) { focusCell(nr, nc); return; }
+    nr += dr; nc += dc;
+  }
+}
+
+// ─── EVENT HANDLERS ───────────────────────────────────────────────────────────
+let lastFocusedKey = null;
+
+function handleClick(r, c) {
+  const key = `${r},${c}`;
+  if (lastFocusedKey === key && activeWord) {
+    // Toggle direction
+    const words = getWordsAtCell(r, c);
+    if (words.length > 1) {
+      const other = words.find(w => !(w.num === activeWord.num && w.dir === activeWord.dir));
+      if (other) highlightWord(other.num, other.dir);
+    }
+  }
+}
+
+function handleFocus(r, c) {
+  const key = `${r},${c}`;
+  lastFocusedKey = key;
+  const words = getWordsAtCell(r, c);
+  if (words.length > 0) {
+    // Prefer keeping current active word direction if cell belongs to it
+    const keepDir = activeWord && words.find(w => w.dir === activeWord.dir);
+    const word = keepDir || words[0];
+    highlightWord(word.num, word.dir);
+  }
+}
+
+function handleInput(e) {
+  const input = e.target;
+  const r = parseInt(input.dataset.row);
+  const c = parseInt(input.dataset.col);
+  const val = input.value.toUpperCase().replace(/[^A-Z]/g,'');
+  input.value = val;
+  if (val && activeWord) nextCell(r, c, activeWord.dir);
+}
+
+function handleKeydown(e) {
+  const input = e.target;
+  const r = parseInt(input.dataset.row);
+  const c = parseInt(input.dataset.col);
+  const dir = activeWord ? activeWord.dir : 'across';
+
+  if (e.key === 'Backspace') {
+    if (!input.value) { prevCell(r, c, dir); }
+    else { input.value = ''; }
+    e.preventDefault();
+  } else if (e.key === 'ArrowRight') { nextCell(r, c, 'across'); e.preventDefault(); }
+  else if (e.key === 'ArrowLeft')  { prevCell(r, c, 'across'); e.preventDefault(); }
+  else if (e.key === 'ArrowDown')  { nextCell(r, c, 'down'); e.preventDefault(); }
+  else if (e.key === 'ArrowUp')    { prevCell(r, c, 'down'); e.preventDefault(); }
+  else if (e.key === 'Tab') {
+    e.preventDefault();
+    advanceToNextWord(e.shiftKey);
+  }
+}
+
+function advanceToNextWord(backwards) {
+  const allWords = [
+    ...WORDS_ACROSS.map(w => ({num:w.num, dir:'across'})),
+    ...WORDS_DOWN.map(w => ({num:w.num, dir:'down'}))
+  ];
+  if (!activeWord) { highlightWord(allWords[0].num, allWords[0].dir); return; }
+  const idx = allWords.findIndex(w => w.num === activeWord.num && w.dir === activeWord.dir);
+  const next = allWords[(idx + (backwards ? -1 + allWords.length : 1)) % allWords.length];
+  const cells = getWordCells(next.num, next.dir);
+  if (cells.length > 0) {
+    highlightWord(next.num, next.dir);
+    focusCell(cells[0][0], cells[0][1]);
+  }
+}
+
+// ─── CLUE CLICK ───────────────────────────────────────────────────────────────
+function clueClick(num, dir) {
+  highlightWord(num, dir);
+  const cells = getWordCells(num, dir);
+  if (cells.length > 0) focusCell(cells[0][0], cells[0][1]);
+}
+
+// ─── BUILD CLUES ──────────────────────────────────────────────────────────────
+function buildClues() {
+  const acrossEl = document.getElementById('acrossClues');
+  const downEl = document.getElementById('downClues');
+
+  for (const w of WORDS_ACROSS) {
+    const div = document.createElement('div');
+    div.className = 'clue-item';
+    div.id = `clue-across-${w.num}`;
+    div.innerHTML = `<span class="clue-num">${w.num}.</span>${CLUES_ACROSS[w.num]}`;
+    div.addEventListener('click', () => clueClick(w.num, 'across'));
+    acrossEl.appendChild(div);
+  }
+
+  for (const w of WORDS_DOWN) {
+    const div = document.createElement('div');
+    div.className = 'clue-item';
+    div.id = `clue-down-${w.num}`;
+    div.innerHTML = `<span class="clue-num">${w.num}.</span>${CLUES_DOWN[w.num]}`;
+    div.addEventListener('click', () => clueClick(w.num, 'down'));
+    downEl.appendChild(div);
+  }
+}
+
+// ─── CHECK / REVEAL ───────────────────────────────────────────────────────────
+function checkAnswers() {
+  let correct = 0, total = 0;
+  const allWords = [...WORDS_ACROSS, ...WORDS_DOWN];
+  for (const w of allWords) {
+    const dir = WORDS_ACROSS.includes(w) ? 'across' : 'down';
+    const cells = getWordCells(w.num, dir);
+    let wordCorrect = true;
+    for (let i = 0; i < w.answer.length; i++) {
+      const [r, c] = cells[i];
+      const inp = inputEls[`${r},${c}`];
+      if (!inp) continue;
+      const val = inp.value.toUpperCase();
+      if (val === w.answer[i]) { correct++; }
+      else { wordCorrect = false; }
+      total++;
+    }
+    if (wordCorrect && cells.every(([r,c]) => {
+      const inp = inputEls[`${r},${c}`];
+      return inp && inp.value.toUpperCase() === SOLUTION[r][c];
+    })) {
+      const clueEl = document.getElementById(`clue-${dir}-${w.num}`);
+      if (clueEl) clueEl.classList.add('solved');
+    }
+  }
+
+  const pct = Math.round(100 * correct / total);
+  const msg = document.getElementById('statusMsg');
+  if (pct === 100) {
+    msg.textContent = '✦ All correct — case closed.';
+    msg.style.color = '#2a8f5a';
   } else {
-    const [r1, c1] = selectedStart;
-    const word = getWordFromSelection(r1, c1, r, c);
-    if (word && !foundWords.has(word)) {
-      markFound(word);
-    }
-    clearSelection();
-    selectedStart = null;
+    msg.textContent = `${pct}% correct — keep digging.`;
+    msg.style.color = '#8f5a2a';
   }
 }
 
-document.getElementById('revealBtn').addEventListener('click', () => {
-  for (const [word, cells] of Object.entries(wordPlacements)) {
-    if (!foundWords.has(word)) {
-      cells.forEach(([r, c]) => {
-        cellElements[r][c].classList.remove('selecting', 'found');
-        cellElements[r][c].classList.add('reveal');
-      });
-      foundWords.add(word);
-      const wordEl = document.getElementById(`word-${word}`);
-      if (wordEl) wordEl.classList.add('found');
+function revealAll() {
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      const key = `${r},${c}`;
+      if (SOLUTION[r][c] && inputEls[key]) {
+        inputEls[key].value = SOLUTION[r][c];
+        inputEls[key].classList.add('revealed');
+      }
     }
   }
-  selectedStart = null;
-  updateProgress();
-});
+  document.getElementById('statusMsg').textContent = 'Answers revealed. The deed doesn\'t lie.';
+  document.getElementById('statusMsg').style.color = '#5a3a10';
+}
 
-document.getElementById('clearBtn').addEventListener('click', () => {
-  foundWords.clear();
-  selectedStart = null;
-  for (let r = 0; r < ROWS; r++)
-    for (let c = 0; c < COLS; c++)
-      cellElements[r][c].className = 'cell';
-  renderWordList();
-  updateProgress();
-});
+function clearAll() {
+  for (const key of Object.keys(inputEls)) {
+    inputEls[key].value = '';
+    inputEls[key].classList.remove('revealed');
+  }
+  document.querySelectorAll('.clue-item').forEach(el => el.classList.remove('solved'));
+  document.getElementById('statusMsg').textContent = '';
+}
 
-buildPuzzle();
-renderGrid();
-renderWordList();
-updateProgress();
+document.getElementById('checkBtn').addEventListener('click', checkAnswers);
+document.getElementById('revealBtn').addEventListener('click', revealAll);
+document.getElementById('clearBtn').addEventListener('click', clearAll);
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+buildGrid();
+buildClues();
 </script>
 </body>
 </html>
