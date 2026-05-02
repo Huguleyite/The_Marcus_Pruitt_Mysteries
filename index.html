@@ -21,11 +21,6 @@
     ║    git commit -m "Add book cover image"                      ║
     ║    git push                                                  ║
     ║                                                              ║
-    ║  TO ADD AD IMAGES (name them ad-1.jpg, ad-2.jpg, etc.):     ║
-    ║    git add ad-1.jpg ad-2.jpg                                 ║
-    ║    git commit -m "Add promo ads"                             ║
-    ║    git push                                                  ║
-    ║                                                              ║
     ║  Puzzles (already committed):                                ║
     ║    HeronsBluff_WordSearch.html                               ║
     ║    HeronsBluff_Crossword.html                                ║
@@ -684,11 +679,16 @@
         }
 
         /* ===========================
-           ADS SIDEBAR
+           SOCIAL SIDEBAR
         =========================== */
-        .ads-sidebar { display: flex; flex-direction: column; gap: 1.1rem; }
-
-        .ads-title {
+        .social-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+            position: sticky;
+            top: 100px;
+        }
+        .social-sidebar-title {
             font-family: 'Cinzel', serif;
             font-size: 0.6rem;
             letter-spacing: 0.32em;
@@ -697,72 +697,53 @@
             padding-bottom: 0.6rem;
             border-bottom: 1px solid rgba(201, 168, 76, 0.1);
         }
-
-        .ad-card {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 3 / 2;   /* Facebook / Instagram landscape */
-            border: 1px solid rgba(201, 168, 76, 0.13);
-            overflow: hidden;
-            background: var(--bg-mid);
-        }
-        .ad-card img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.4s ease;
-        }
-        .ad-card:hover img { transform: scale(1.04); }
-
-        /* Placeholder shown when image not yet committed */
-        .ad-placeholder {
-            width: 100%; height: 100%;
+        .social-link-card {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            color: var(--text-dim);
-            font-family: 'Cinzel', serif;
-            font-size: 0.68rem;
-            letter-spacing: 0.1em;
-            text-align: center;
-            padding: 1rem;
-            border: 1px dashed rgba(201, 168, 76, 0.18);
-            gap: 0.4rem;
+            gap: 1.1rem;
+            padding: 1.25rem 1.5rem;
+            border: 1px solid rgba(201, 168, 76, 0.15);
+            background: rgba(201, 168, 76, 0.025);
+            text-decoration: none;
+            transition: border-color 0.25s, background 0.25s;
         }
-        .ad-placeholder .icon { font-size: 1.6rem; opacity: 0.3; }
-        .ad-placeholder small { font-size: 0.58rem; opacity: 0.4; margin-top: 0.2rem; }
-
-        /* How to add ads — remove once live */
-        .ads-how-to {
-            font-size: 0.75rem;
+        .social-link-card:hover {
+            border-color: rgba(201, 168, 76, 0.45);
+            background: rgba(201, 168, 76, 0.06);
+        }
+        .social-link-card svg {
+            flex-shrink: 0;
+            opacity: 0.75;
+            transition: opacity 0.25s;
+        }
+        .social-link-card:hover svg { opacity: 1; }
+        .social-link-card-text { display: flex; flex-direction: column; gap: 0.2rem; }
+        .social-link-card-name {
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+        .social-link-card-handle {
+            font-family: 'Lora', serif;
+            font-size: 0.82rem;
             color: var(--text-dim);
             font-style: italic;
-            line-height: 1.6;
-            padding: 0.75rem;
-            border: 1px dashed rgba(90, 157, 175, 0.25);
-            background: rgba(90, 157, 175, 0.03);
         }
-        .ads-how-to strong {
-            font-family: 'Cinzel', serif;
-            font-size: 0.62rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--teal-light);
-            display: block;
-            margin-bottom: 0.5rem;
-            font-style: normal;
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
         }
-        .ads-how-to code {
-            font-family: 'Courier New', monospace;
-            font-size: 0.75rem;
-            color: var(--parchment-dim);
-            display: block;
-            background: rgba(0,0,0,0.3);
-            padding: 0.4rem 0.6rem;
-            margin: 0.35rem 0;
-            border-left: 2px solid var(--teal-light);
+        .footer-social a {
+            color: var(--text-dim);
+            transition: color 0.25s;
+            display: flex;
+            align-items: center;
         }
+        .footer-social a:hover { color: var(--gold); }
 
         /* ===========================
            FOOTER
@@ -1165,63 +1146,31 @@
 
             </div>
 
-            <!-- Right column: Social media ads (3:2 ratio) -->
-            <div class="ads-sidebar reveal">
-                <div class="ads-title">Featured Promos</div>
+            <!-- Right column: Social media links -->
+            <div class="social-sidebar reveal">
+                <div class="social-sidebar-title">Follow Along</div>
 
-                <!--
-                ╔═══════════════════════════════════════════════════════╗
-                ║  ★  HOW TO ADD YOUR AD IMAGES  ★                      ║
-                ║  1. Save each ad image to the same folder as index.html║
-                ║     and commit it:                                     ║
-                ║       git add ad-1.jpg                                 ║
-                ║       git commit -m "Add promo ad"                     ║
-                ║       git push                                         ║
-                ║  2. Replace the <div class="ad-placeholder"> inside    ║
-                ║     each .ad-card with:                                ║
-                ║       <img src="ad-1.jpg" alt="Heron's Bluff promo">  ║
-                ║  3. Add more .ad-card divs below as needed.            ║
-                ║  4. Delete this comment block when done.               ║
-                ╚═══════════════════════════════════════════════════════╝
-                -->
-
-                <div class="ad-card">
-                    <!-- Replace this placeholder with: <img src="ad-1.jpg" alt="Promo ad 1"> -->
-                    <div class="ad-placeholder">
-                        <span class="icon">🗺</span>
-                        Ad Image 1
-                        <small>Replace with your ad image file</small>
+                <a href="https://www.facebook.com/profile.php?id=61560796817714" target="_blank" rel="noopener" class="social-link-card">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div class="social-link-card-text">
+                        <span class="social-link-card-name">Facebook</span>
+                        <span class="social-link-card-handle">Atlas Valley</span>
                     </div>
-                </div>
+                </a>
 
-                <div class="ad-card">
-                    <!-- Replace with: <img src="ad-2.jpg" alt="Promo ad 2"> -->
-                    <div class="ad-placeholder">
-                        <span class="icon">🌊</span>
-                        Ad Image 2
-                        <small>Replace with your ad image file</small>
+                <a href="https://www.instagram.com/atlasvalleyofficial" target="_blank" rel="noopener" class="social-link-card">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="12" cy="12" r="4" stroke="#c9a84c" stroke-width="1.5"/>
+                        <circle cx="17.5" cy="6.5" r="1" fill="#c9a84c"/>
+                    </svg>
+                    <div class="social-link-card-text">
+                        <span class="social-link-card-name">Instagram</span>
+                        <span class="social-link-card-handle">@atlasvalleyofficial</span>
                     </div>
-                </div>
-
-                <div class="ad-card">
-                    <!-- Replace with: <img src="ad-3.jpg" alt="Promo ad 3"> -->
-                    <div class="ad-placeholder">
-                        <span class="icon">🏮</span>
-                        Ad Image 3
-                        <small>Replace with your ad image file</small>
-                    </div>
-                </div>
-
-                <!-- Add more .ad-card divs here as you create more ads -->
-
-                <div class="ads-how-to">
-                    <strong>⚓ To Add Your Real Ads</strong>
-                    Save each image to your repo folder, then:
-                    <code>git add ad-1.jpg</code>
-                    <code>git commit -m "Add promo ad"</code>
-                    <code>git push</code>
-                    Replace each ad-placeholder block with an &lt;img&gt; tag. Delete this box when done.
-                </div>
+                </a>
 
             </div>
         </div>
@@ -1235,6 +1184,20 @@
 <footer>
     <div class="footer-logo">ATLAS VALLEY</div>
     <p class="footer-tagline">"Stories from the edge of the map."</p>
+    <div class="footer-social">
+        <a href="https://www.facebook.com/profile.php?id=61560796817714" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </a>
+        <a href="https://www.instagram.com/atlasvalleyofficial" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+            </svg>
+        </a>
+    </div>
     <nav class="footer-links">
         <a href="#hero">Home</a>
         <a href="#book">The Book</a>
