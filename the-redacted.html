@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Redacted — Daily Literary Puzzle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep:   #05080f;
+    --bg-card:   #0d1320;
+    --gold:      #c9a84c;
+    --amber:     #d4892a;
+    --teal:      #5a9daf;
+    --parchment: #f0e6cc;
+    --red-muted: #7a2c2c;
+    --text:      #e8dfc8;
+    --muted:     #7a8a9a;
+    --border:    rgba(201,168,76,0.18);
+    --border-hi: rgba(201,168,76,0.45);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg-deep);
+    color: var(--text);
+    font-family: 'Lora', Georgia, serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 16px 60px;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none; z-index: 0;
+  }
+  .wrap { position: relative; z-index: 1; width: 100%; max-width: 620px; }
+
+  /* ── HEADER ── */
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 0 10px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 6px;
+  }
+  .logo {
+    font-family: 'Cinzel', serif; font-size: 22px; font-weight: 700;
+    letter-spacing: 0.12em; color: var(--gold); text-transform: uppercase;
+  }
+  .header-right { display: flex; align-items: center; gap: 14px; }
+  .streak-badge {
+    font-family: 'Cinzel', serif; font-size: 12px; color: var(--gold);
+    border: 1px solid var(--border-hi); border-radius: 20px;
+    padding: 4px 10px; letter-spacing: 0.08em;
+  }
+  .icon-btn {
+    background: none; border: 1px solid var(--border);
+    color: var(--muted); width: 32px; height: 32px;
+    border-radius: 50%; cursor: pointer; font-size: 14px;
+    font-family: 'Cinzel', serif;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color .2s, color .2s;
+  }
+  .icon-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  .subheader {
+    font-size: 13px; color: var(--muted); font-family: 'Cinzel', serif;
+    letter-spacing: 0.1em; text-align: center; padding: 8px 0 14px;
+    text-transform: uppercase;
+  }
+
+  /* ── CONTEXT METER ── */
+  .context-bar {
+    display: flex; align-items: center; gap: 8px;
+    justify-content: center; margin-bottom: 18px;
+  }
+  .context-label {
+    font-family: 'Cinzel', serif; font-size: 10px;
+    letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase;
+  }
+  .context-pips { display: flex; gap: 5px; }
+  .context-pip {
+    width: 28px; height: 4px; border-radius: 2px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    transition: background .4s;
+  }
+  .context-pip.lit { background: var(--gold); border-color: var(--gold); }
+
+  /* ── PASSAGE CARD ── */
+  .passage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 30px;
+    margin-bottom: 18px;
+    min-height: 120px;
+    position: relative;
+  }
+  .passage-text {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--parchment);
+    transition: opacity .35s;
+  }
+  .passage-text.fading { opacity: 0; }
+
+  /* ── REDACTED BLOCK ── */
+  .redact {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--gold);
+    border-radius: 3px;
+    font-style: normal;
+    font-family: monospace;
+    letter-spacing: -1px;
+    vertical-align: middle;
+    user-select: none;
+    position: relative;
+    top: -1px;
+    padding: 0 2px;
+    transition: background .5s, color .5s, box-shadow .4s;
+  }
+  .redact.revealed {
+    background: var(--gold);
+    color: var(--bg-deep);
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 0.06em;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 0.95em;
+    animation: revealPop 0.4s ease;
+  }
+  @keyframes revealPop {
+    0%   { transform: scale(0.8); opacity: 0; }
+    60%  { transform: scale(1.1); }
+    100% { transform: scale(1);   opacity: 1; }
+  }
+  /* mid-game letter reveals inside the gold block */
+  .redact .rl {
+    display: inline-block;
+    color: var(--bg-deep);
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 0.02em;
+    animation: letterPop 0.3s ease forwards;
+  }
+  @keyframes letterPop {
+    0%   { transform: scaleY(0); opacity: 0; }
+    65%  { transform: scaleY(1.2); }
+    100% { transform: scaleY(1);  opacity: 1; }
+  }
+
+  /* ── HINT LINE ── */
+  .hint-line {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--teal);
+    text-transform: uppercase;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity .4s, max-height .4s;
+  }
+  .hint-line.show { opacity: 1; max-height: 40px; }
+
+  /* ── LETTER COUNT HINT ── */
+  .letter-hint {
+    margin-top: 8px;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--amber);
+    text-align: center;
+    opacity: 0;
+    transition: opacity .4s;
+  }
+  .letter-hint.show { opacity: 1; }
+
+  /* ── INPUT AREA ── */
+  .input-area { margin-bottom: 14px; }
+  .guess-row {
+    display: flex; gap: 8px;
+  }
+  .guess-input {
+    flex: 1;
+    background: var(--bg-card);
+    border: 1px solid var(--border-hi);
+    border-radius: 8px;
+    color: var(--parchment);
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    letter-spacing: 0.1em;
+    padding: 13px 16px;
+    text-transform: uppercase;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .guess-input::placeholder { color: var(--muted); text-transform: none; font-style: italic; font-family: 'Lora', serif; letter-spacing: 0; font-size: 13px; }
+  .guess-input:focus { border-color: var(--gold); }
+  .guess-input.shake { animation: shake .45s ease; }
+  .guess-input.pulse { animation: inputPulse .3s ease; }
+
+  .submit-btn {
+    background: rgba(201,168,76,0.1);
+    border: 1px solid var(--border-hi);
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background .2s;
+    white-space: nowrap;
+  }
+  .submit-btn:hover:not(:disabled) { background: rgba(201,168,76,0.2); }
+  .submit-btn:disabled { opacity: .3; cursor: default; }
+
+  /* ── ATTEMPTS ── */
+  .attempts-row {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; margin-bottom: 10px;
+    font-family: 'Cinzel', serif; font-size: 13px;
+    letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase;
+  }
+  .att-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--gold); display: inline-block;
+    transition: background .3s, transform .3s;
+  }
+  .att-dot.wrong { background: #7a2c2c; border: 1px solid #a33; transform: scale(.8); }
+  .att-dot.used  { background: var(--bg-card); border: 1px solid var(--border); transform: scale(.75); }
+
+  /* ── FEEDBACK ── */
+  .feedback {
+    text-align: center; font-style: italic; font-size: 15px;
+    color: var(--amber); min-height: 20px; margin-bottom: 10px;
+    transition: opacity .3s;
+  }
+
+  /* ── GUESS HISTORY ── */
+  .guess-history {
+    display: flex; flex-direction: column; gap: 4px;
+    margin-bottom: 16px;
+  }
+  .guess-item {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Cinzel', serif; font-size: 13px;
+    letter-spacing: 0.08em; padding: 7px 12px;
+    border-radius: 6px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+  }
+  .guess-item .gi-icon { font-size: 13px; flex-shrink: 0; }
+  .guess-item .gi-word { color: var(--muted); text-decoration: line-through; }
+  .guess-item.wrong .gi-word { color: #a06060; }
+
+  /* ── BOOK REVEAL ── */
+  .book-reveal {
+    display: none;
+    background: var(--bg-card);
+    border: 1px solid var(--border-hi);
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin-bottom: 18px;
+    animation: slideUp .4s ease;
+  }
+  .book-reveal.show { display: block; }
+  .reveal-pre {
+    font-family: 'Cinzel', serif; font-size: 10px;
+    letter-spacing: 0.12em; color: var(--teal);
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .reveal-title {
+    font-family: 'Cinzel', serif; font-size: 18px;
+    font-weight: 700; color: var(--gold);
+    letter-spacing: 0.08em; margin-bottom: 4px;
+  }
+  .reveal-author {
+    font-size: 13px; color: var(--parchment);
+    font-style: italic; margin-bottom: 10px;
+  }
+  .reveal-note {
+    font-size: 13px; color: var(--muted);
+    line-height: 1.7; font-style: italic;
+    border-top: 1px solid var(--border);
+    padding-top: 10px; margin-top: 4px;
+  }
+
+  /* ── SHARE / NEXT ── */
+  .share-area { display: none; text-align: center; margin-bottom: 16px; }
+  .share-area.show { display: block; }
+  .share-area .share-desc { font-size: 12px; font-style: italic; color: var(--muted); margin-bottom: 10px; }
+  .share-btn {
+    background: rgba(201,168,76,0.1); border: 1px solid var(--gold);
+    color: var(--gold); font-family: 'Cinzel', serif; font-size: 12px;
+    letter-spacing: 0.1em; padding: 10px 24px; border-radius: 6px;
+    cursor: pointer; text-transform: uppercase; transition: background .2s;
+  }
+  .share-btn:hover { background: rgba(201,168,76,0.2); }
+  .copy-confirm {
+    font-size: 11px; color: var(--teal); margin-top: 6px;
+    opacity: 0; transition: opacity .3s;
+    font-family: 'Cinzel', serif; letter-spacing: 0.08em;
+  }
+  .copy-confirm.show { opacity: 1; }
+
+  .next-area {
+    display: none; text-align: center; font-size: 12px;
+    color: var(--muted); font-family: 'Cinzel', serif;
+    letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px;
+  }
+  .next-area.show { display: block; }
+  #countdown { color: var(--gold); }
+
+  footer {
+    margin-top: 30px; text-align: center;
+    font-family: 'Cinzel', serif; font-size: 10px;
+    letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase;
+  }
+  footer a { color: var(--gold); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* ── MODALS ── */
+  .modal-backdrop {
+    display: none; position: fixed; inset: 0;
+    background: rgba(5,8,15,.88); z-index: 100;
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--bg-card); border: 1px solid var(--border-hi);
+    border-radius: 12px; padding: 32px 28px;
+    max-width: 440px; width: 100%; position: relative;
+    max-height: 90vh; overflow-y: auto;
+  }
+  .modal-title {
+    font-family: 'Cinzel', serif; font-size: 18px; font-weight: 700;
+    color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 16px; text-align: center;
+  }
+  .modal-body { font-size: 14px; line-height: 1.75; color: var(--text); font-family: 'Lora', serif; }
+  .modal-body p { margin-bottom: 12px; }
+  .modal-close {
+    position: absolute; top: 14px; right: 16px;
+    background: none; border: none; color: var(--muted); font-size: 18px; cursor: pointer;
+  }
+  .modal-close:hover { color: var(--gold); }
+  .modal-divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+
+  .sub-headline {
+    font-family: 'Lora', serif; font-style: italic; font-size: 15px;
+    color: var(--parchment); text-align: center; margin-bottom: 20px; line-height: 1.6;
+  }
+  .sub-perks { list-style: none; margin: 0 0 22px; display: flex; flex-direction: column; gap: 8px; }
+  .sub-perks li { font-size: 13px; color: var(--text); font-family: 'Lora', serif; display: flex; align-items: flex-start; gap: 10px; }
+  .sub-perks li::before { content: '◆'; color: var(--gold); font-size: 8px; margin-top: 5px; flex-shrink: 0; }
+  .sub-btn {
+    display: block; width: 100%; background: var(--gold); color: var(--bg-deep);
+    font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none;
+    text-align: center; padding: 13px; border-radius: 8px; border: none;
+    cursor: pointer; margin-bottom: 10px; transition: background .2s;
+  }
+  .sub-btn:hover { background: var(--amber); }
+  .sub-later {
+    background: none; border: none; color: var(--muted); font-size: 12px;
+    font-family: 'Lora', serif; font-style: italic; cursor: pointer;
+    display: block; width: 100%; text-align: center; padding: 8px;
+  }
+  .sub-later:hover { color: var(--text); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    15% { transform: translateX(-7px); } 30% { transform: translateX(7px); }
+    45% { transform: translateX(-5px); } 60% { transform: translateX(5px); }
+    75% { transform: translateX(-3px); } 90% { transform: translateX(3px); }
+  }
+  @keyframes inputPulse {
+    0% { box-shadow: 0 0 0 0 rgba(201,168,76,0); }
+    50% { box-shadow: 0 0 0 6px rgba(201,168,76,0.25); }
+    100% { box-shadow: 0 0 0 0 rgba(201,168,76,0); }
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes confettiFall {
+    0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+  .confetti-piece {
+    position: fixed; width: 7px; height: 7px; border-radius: 2px;
+    top: -20px; pointer-events: none; z-index: 200;
+    animation: confettiFall linear forwards;
+  }
+  @media (max-width: 420px) {
+    .logo { font-size: 17px; }
+    .passage-text { font-size: 15px; }
+    .passage-card { padding: 20px 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="logo">The Redacted</span>
+    <div class="header-right">
+      <span class="streak-badge" id="streak-badge">🔥 0</span>
+      <button class="icon-btn" onclick="openHelp()">?</button>
+    </div>
+  </header>
+
+  <div class="subheader" id="date-label">Daily Literary Puzzle</div>
+  <div id="game-indicator" style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.12em;color:var(--teal);text-align:center;padding-bottom:10px;text-transform:uppercase;">Passage 1 of 2</div>
+
+  <!-- Context meter -->
+  <div class="context-bar">
+    <span class="context-label">Context</span>
+    <div class="context-pips" id="context-pips">
+      <div class="context-pip lit"></div>
+      <div class="context-pip"></div>
+      <div class="context-pip"></div>
+      <div class="context-pip"></div>
+    </div>
+    <span class="context-label" id="context-label">Level 1 of 4</span>
+  </div>
+
+  <!-- Passage -->
+  <div class="passage-card">
+    <div class="passage-text" id="passage-text"></div>
+    <div class="hint-line" id="hint-line"></div>
+  </div>
+  <div class="letter-hint" id="letter-hint"></div>
+
+  <!-- Attempts -->
+  <div class="attempts-row">
+    <span>Guesses remaining</span>
+    <span id="att-dots"></span>
+  </div>
+
+  <!-- Feedback -->
+  <div class="feedback" id="feedback"></div>
+
+  <!-- Guess history -->
+  <div class="guess-history" id="guess-history"></div>
+
+  <!-- Input -->
+  <div class="input-area" id="input-area">
+    <div class="guess-row">
+      <input type="text" class="guess-input" id="guess-input"
+        placeholder="Type the missing word…" autocomplete="off" autocorrect="off"
+        spellcheck="false" maxlength="30">
+      <button class="submit-btn" id="submit-btn" onclick="submitGuess()">Submit</button>
+    </div>
+  </div>
+
+  <!-- Book reveal -->
+  <div class="book-reveal" id="book-reveal">
+    <div class="reveal-pre" id="reveal-pre">The answer was</div>
+    <div class="reveal-title" id="reveal-title"></div>
+    <div class="reveal-author" id="reveal-author"></div>
+    <div class="reveal-note" id="reveal-note"></div>
+  </div>
+
+  <!-- Share -->
+  <div class="share-area" id="share-area">
+    <div class="share-desc">Share your result — no spoilers</div>
+    <button class="share-btn" onclick="copyShare()">Copy Result</button>
+    <div class="copy-confirm" id="copy-confirm">Copied!</div>
+  </div>
+
+  <!-- Second passage (shown after Game 1 completes) -->
+  <div id="second-passage-area" style="display:none;text-align:center;margin-bottom:16px;">
+    <button class="share-btn" onclick="loadGame2()" style="background:rgba(201,168,76,0.12);">Today's Second Passage &rarr;</button>
+  </div>
+
+  <!-- Next puzzle countdown -->
+  <div class="next-area" id="next-area">
+    Next puzzle unlocks in <span id="countdown"></span>
+  </div>
+
+  <footer>
+    A game by <a href="https://atlasvalleybooks.com" target="_blank">Atlas Valley</a> &nbsp;·&nbsp; A new passage every day
+  </footer>
+
+</div><!-- /wrap -->
+
+<!-- HOW TO PLAY -->
+<div class="modal-backdrop" id="help-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeHelp()">✕</button>
+    <div class="modal-title">How to Play</div>
+    <div class="modal-body">
+      <p>A famous literary passage is presented with one key word <span style="background:var(--gold);color:var(--gold);border-radius:2px;padding:0 6px;font-family:monospace">████</span> redacted.</p>
+      <p>Type the missing word and press <strong>Submit</strong>. You have <strong>five guesses</strong>.</p>
+      <p>Each wrong guess unlocks more surrounding context — the passage gradually reveals itself around the blank until you crack it or run out of attempts.</p>
+      <hr class="modal-divider">
+      <p style="font-size:12px;color:var(--muted)">
+        ◆ One new passage every day<br>
+        ◆ The answer is always a single word<br>
+        ◆ Capitalization doesn't matter — type away<br>
+        ◆ Subscribe to unlock full archives and streak protection
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- SUBSCRIBE -->
+<div class="modal-backdrop" id="sub-modal">
+  <div class="modal">
+    <div class="modal-title">Keep Your Streak Alive</div>
+    <p class="sub-headline">You've used your free games.<br>Subscribe for daily access, streak protection, and the full archive.</p>
+    <ul class="sub-perks">
+      <li>Unlimited daily play — a new passage every morning</li>
+      <li>Streak protection — never lose your streak on a missed day</li>
+      <li>Full archive — every passage ever published, playable anytime</li>
+      <li>Early access to new Atlas Valley literary games</li>
+    </ul>
+    <a class="sub-btn" href="https://atlas-valley.beehiiv.com/subscribe" target="_blank" onclick="recordSubscribe()">
+      Subscribe Free — atlasvalleybooks.com
+    </a>
+    <button class="sub-later" onclick="dismissSub()">Maybe later — I'll lose my streak</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  PUZZLE DATA  —  52 passages. Day 0 = May 2, 2026.
+//  Each puzzle has:
+//    a  = answer (single word, uppercase)
+//    bk = book title
+//    au = author
+//    yr = year
+//    nt = interesting note
+//    s  = short context   (shown from start)
+//    m  = medium context  (after guess 1 wrong)
+//    l  = long context    (after guess 2 wrong)
+//    h  = hint text       (after guess 3 wrong)
+//  The placeholder [?] marks the redacted word.
+// ═══════════════════════════════════════════════════════
+const PUZZLES=[
+// 01
+{a:"CLOCKS",bk:"Nineteen Eighty-Four",au:"George Orwell",yr:1949,nt:"Orwell finished the manuscript in 1948 and simply inverted the last two digits to name his dystopian year.",
+s:"It was a bright cold day in April, and the [?] were ringing.",
+m:"It was a bright cold day in April, and the [?] were ringing. Winston Smith, his chin nuzzled into his breast in an effort to escape the vile wind, slipped quickly through the glass doors of Victory Mansions.",
+l:"The hallway smelt of boiled cabbage and old rag mats. At each landing, opposite the lift shaft, the poster with the enormous face gazed from the wall. It was a bright cold day in April, and the [?] were ringing. Winston Smith, his chin nuzzled into his breast in an effort to escape the vile wind, slipped quickly through the glass doors of Victory Mansions.",
+h:"Hint: British dystopian fiction, 1949 — a novel about memory, language, and control"},
+// 02
+{a:"ISHMAEL",bk:"Moby-Dick",au:"Herman Melville",yr:1851,nt:"Ishmael is the biblical outcast son of Abraham — Melville named his wandering, anonymous narrator accordingly.",
+s:"Call me [?].",
+m:"Call me [?]. Some years ago — never mind how long precisely — having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world.",
+l:"Call me [?]. Some years ago — never mind how long precisely — having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen, and regulating the circulation.",
+h:"Hint: American sea epic, 1851 — the most quoted three-word opening in the language"},
+// 03
+{a:"LIGHT",bk:"Lolita",au:"Vladimir Nabokov",yr:1955,nt:"Nabokov wrote Lolita in English rather than his native Russian, and considered it his finest work for the suppleness of its prose.",
+s:"Lolita, [?] of my life, fire of my loins.",
+m:"Lolita, [?] of my life, fire of my loins. Lo-lee-ta: the tip of the tongue taking a trip of three steps down the palate to tap, at three, on the teeth.",
+l:"Lolita, [?] of my life, fire of my loins. Lo-lee-ta: the tip of the tongue taking a trip of three steps down the palate to tap, at three, on the teeth. Lo. Lee. Ta. She was Lo, plain Lo, in the morning, standing four feet ten in one sock.",
+h:"Hint: Vladimir Nabokov, 1955 — a novel whose first paragraph is itself a masterclass"},
+// 04
+{a:"WIFE",bk:"Pride and Prejudice",au:"Jane Austen",yr:1813,nt:"The irony is total: the 'truth' Austen describes is the opposite of truth — it is the presumption of a scheming neighbourhood.",
+s:"It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a [?].",
+m:"It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a [?]. However little known the feelings or views of such a man may be on his first entering a neighbourhood, this truth is so well fixed in the minds of the surrounding families, that he is considered as the rightful property of some one or other of their daughters.",
+l:"It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a [?]. However little known the feelings or views of such a man may be on his first entering a neighbourhood, this truth is so well fixed in the minds of the surrounding families, that he is considered as the rightful property of some one or other of their daughters. \"My dear Mr. Bennet,\" said his lady to him one day, \"have you heard that Netherfield Park is let at last?\"",
+h:"Hint: Jane Austen, 1813 — perhaps the most ironic opening sentence in English literature"},
+// 05
+{a:"TELEVISION",bk:"Neuromancer",au:"William Gibson",yr:1984,nt:"Gibson coined the word 'cyberspace' in this novel, which launched the cyberpunk genre.",
+s:"The sky above the port was the color of [?], tuned to a dead channel.",
+m:"The sky above the port was the color of [?], tuned to a dead channel. All this was being shot by a remote unit that panned slowly across the face of the Sprawl.",
+l:"The sky above the port was the color of [?], tuned to a dead channel. All this was being shot by a remote unit that panned slowly across the face of the Sprawl. Case had heard somewhere that the Sprawl was the Boston-Atlanta Metropolitan Axis. Program a map to display frequency of data exchange.",
+h:"Hint: cyberpunk science fiction, 1984 — the novel that coined 'cyberspace'"},
+// 06
+{a:"INVISIBLE",bk:"Invisible Man",au:"Ralph Ellison",yr:1952,nt:"Ellison spent seven years writing Invisible Man. It won the National Book Award in 1953 and remains one of the defining American novels of the 20th century.",
+s:"I am an [?] man.",
+m:"I am an [?] man. No, I am not a spook like those who haunted Edgar Allan Poe; nor am I one of your Hollywood-movie ectoplasms. I am a man of substance, of flesh and bone, fiber and liquids — and I might even be said to possess a mind.",
+l:"I am an [?] man. No, I am not a spook like those who haunted Edgar Allan Poe; nor am I one of your Hollywood-movie ectoplasms. I am a man of substance, of flesh and bone, fiber and liquids — and I might even be said to possess a mind. I am invisible, understand, simply because people refuse to see me.",
+h:"Hint: Ralph Ellison, 1952 — a foundational American novel about race and identity"},
+// 07
+{a:"WAY",bk:"Anna Karenina",au:"Leo Tolstoy",yr:1878,nt:"Tolstoy later dismissed Anna Karenina as trivial, calling War and Peace his real work — a view universally rejected by readers ever since.",
+s:"Happy families are all alike; every unhappy family is unhappy in its own [?].",
+m:"Happy families are all alike; every unhappy family is unhappy in its own [?]. Everything was in confusion in the Oblonskys' house. The wife had discovered that the husband was carrying on an intrigue with a French girl.",
+l:"Happy families are all alike; every unhappy family is unhappy in its own [?]. Everything was in confusion in the Oblonskys' house. The wife had discovered that the husband was carrying on an intrigue with a French girl, and had told her husband that she could not go on living in the same house with him.",
+h:"Hint: Leo Tolstoy, 1878 — Russian realism at its most sweeping"},
+// 08
+{a:"WORST",bk:"A Tale of Two Cities",au:"Charles Dickens",yr:1859,nt:"Dickens modeled the opening's relentless antitheses on the political speeches of his era — which he considered deeply hypocritical.",
+s:"It was the best of times, it was the [?] of times.",
+m:"It was the best of times, it was the [?] of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity.",
+l:"It was the best of times, it was the [?] of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair.",
+h:"Hint: Charles Dickens, 1859 — set during the French Revolution"},
+// 09
+{a:"WALK",bk:"Jane Eyre",au:"Charlotte Brontë",yr:1847,nt:"Brontë published Jane Eyre under the pen name Currer Bell, and its immediate success shocked even her publisher.",
+s:"There was no possibility of taking a [?] that day.",
+m:"There was no possibility of taking a [?] that day. We had been wandering, indeed, in the leafless shrubbery an hour in the morning; but since dinner (Mrs. Reed, when there was no company, dined early) the cold winter wind had brought with it clouds so sombre, and a rain so penetrating, that further out-door exercise was now out of the question.",
+l:"There was no possibility of taking a [?] that day. We had been wandering, indeed, in the leafless shrubbery an hour in the morning; but since dinner the cold winter wind had brought with it clouds so sombre, and a rain so penetrating, that further out-door exercise was now out of the question. I was glad of it: I never liked long walks, especially on chilly afternoons.",
+h:"Hint: Charlotte Brontë, 1847 — a governess, a madwoman in the attic, a Gothic estate"},
+// 10
+{a:"TRANSFORMED",bk:"The Metamorphosis",au:"Franz Kafka",yr:1915,nt:"Kafka never named the creature Gregor becomes. The German word 'Ungeziefer' means roughly 'unclean animal unfit for sacrifice' — deliberately imprecise.",
+s:"As Gregor Samsa awoke one morning from uneasy dreams he found himself [?] in his bed into a gigantic insect.",
+m:"As Gregor Samsa awoke one morning from uneasy dreams he found himself [?] in his bed into a gigantic insect. He was lying on his hard, as it were armor-plated, back and when he lifted his head a little he could see his dome-like brown belly divided by stiff arched segments.",
+l:"As Gregor Samsa awoke one morning from uneasy dreams he found himself [?] in his bed into a gigantic insect. He was lying on his hard, as it were armor-plated, back and when he lifted his head a little he could see his dome-like brown belly divided by stiff arched segments on top of which the bed quilt was ready to slip off completely.",
+h:"Hint: Franz Kafka, 1915 — a story about alienation, family duty, and the body"},
+// 11
+{a:"TRUTH",bk:"Adventures of Huckleberry Finn",au:"Mark Twain",yr:1884,nt:"Twain's prefatory 'Notice' warned that anyone finding a moral, motive, or plot in the book would be prosecuted, banished, or shot.",
+s:"That book was made by Mr. Mark Twain, and he told the [?], mainly.",
+m:"You don't know about me, without you have read a book by the name of 'The Adventures of Tom Sawyer,' but that ain't no matter. That book was made by Mr. Mark Twain, and he told the [?], mainly. There was things which he stretched, but mainly he told the truth.",
+l:"You don't know about me, without you have read a book by the name of 'The Adventures of Tom Sawyer,' but that ain't no matter. That book was made by Mr. Mark Twain, and he told the [?], mainly. There was things which he stretched, but mainly he told the truth. That is nothing. I never seen anybody but lied, one time or another.",
+h:"Hint: Mark Twain, 1884 — narrated by a boy floating down the Mississippi"},
+// 12
+{a:"MANDERLEY",bk:"Rebecca",au:"Daphne du Maurier",yr:1938,nt:"Du Maurier based Manderley on Menabilly, a Cornish house she was obsessed with — she eventually leased it and lived there for 26 years.",
+s:"Last night I dreamt I went to [?] again.",
+m:"Last night I dreamt I went to [?] again. It seemed to me I stood by the iron gate leading to the drive, and for a while I could not enter for the way was barred to me.",
+l:"Last night I dreamt I went to [?] again. It seemed to me I stood by the iron gate leading to the drive, and for a while I could not enter for the way was barred to me. There was a padlock and chain upon the gate. I called in my dream to the lodge-keeper, and had no answer.",
+h:"Hint: Daphne du Maurier, 1938 — a Gothic suspense novel set on the Cornish coast"},
+// 13
+{a:"ICE",bk:"One Hundred Years of Solitude",au:"Gabriel García Márquez",yr:1967,nt:"Márquez later said the novel came to him fully formed while driving — he turned the car around, went home, and wrote it over the next 18 months.",
+s:"Many years later, as he faced the firing squad, Colonel Aureliano Buendía was to remember that distant afternoon when his father took him to discover [?].",
+m:"Many years later, as he faced the firing squad, Colonel Aureliano Buendía was to remember that distant afternoon when his father took him to discover [?]. At that time Macondo was a village of twenty adobe houses, built on the bank of a river of clear water that ran along a bed of polished stones.",
+l:"Many years later, as he faced the firing squad, Colonel Aureliano Buendía was to remember that distant afternoon when his father took him to discover [?]. At that time Macondo was a village of twenty adobe houses, built on the bank of a river of clear water that ran along a bed of polished stones, which were white and enormous, like prehistoric eggs.",
+h:"Hint: Gabriel García Márquez, 1967 — magic realism, Colombia, the Buendía family saga"},
+// 14
+{a:"BURN",bk:"Fahrenheit 451",au:"Ray Bradbury",yr:1953,nt:"Bradbury wrote the novel in nine days on a rented typewriter in a UCLA library basement, paying ten cents per half-hour of use.",
+s:"It was a pleasure to [?].",
+m:"It was a pleasure to [?]. It was a special pleasure to see things eaten, to see things blackened and changed. With the brass nozzle in his fists, with this great python spitting its venomous kerosene upon the world, the blood pounded in his head.",
+l:"It was a pleasure to [?]. It was a special pleasure to see things eaten, to see things blackened and changed. With the brass nozzle in his fists, with this great python spitting its venomous kerosene upon the world, the blood pounded in his head, and his hands were the hands of some amazing conductor playing all the symphonies of blazing and burning.",
+h:"Hint: Ray Bradbury, 1953 — a fireman in a future where books are illegal"},
+// 15
+{a:"MOUNTAINS",bk:"A Farewell to Arms",au:"Ernest Hemingway",yr:1929,nt:"Hemingway rewrote the famous ending 47 times, trying different versions before settling on one of literature's bleakest closing lines.",
+s:"In the late summer of that year we lived in a house in a village that looked across the river and the plain to the [?].",
+m:"In the late summer of that year we lived in a house in a village that looked across the river and the plain to the [?]. In the bed of the river there were pebbles and boulders, dry and white in the sun, and the water was clear and swiftly moving.",
+l:"In the late summer of that year we lived in a house in a village that looked across the river and the plain to the [?]. In the bed of the river there were pebbles and boulders, dry and white in the sun, and the water was clear and swiftly moving and blue in the channels. Troops went by the house and down the road.",
+h:"Hint: Ernest Hemingway, 1929 — World War I, Italy, an American ambulance driver"},
+// 16
+{a:"AXE",bk:"Charlotte's Web",au:"E.B. White",yr:1952,nt:"White later said the famous first line came to him as the one sentence that would guarantee a reader could not put the book down.",
+s:"\"Where's Papa going with that [?]?\" the girl asked.",
+m:"\"Where's Papa going with that [?]?\" the girl asked. \"Out to the hoghouse,\" replied Mrs. Arable. \"Some pigs were born last night.\" \"I don't see why he needs an axe,\" continued Fern.",
+l:"\"Where's Papa going with that [?]?\" the girl asked. \"Out to the hoghouse,\" replied Mrs. Arable. \"Some pigs were born last night.\" \"I don't see why he needs an axe,\" continued Fern, who was only eight. \"Well,\" said her mother, \"one of the pigs is a runt. It's very small and weak, and it will never amount to anything.\"",
+h:"Hint: E.B. White, 1952 — a pig, a spider, and the hardest lesson in children's literature"},
+// 17
+{a:"CHAPLAIN",bk:"Catch-22",au:"Joseph Heller",yr:1961,nt:"Heller spent eight years writing Catch-22. The novel's title entered the English language as a permanent phrase meaning an inescapable circular trap.",
+s:"It was love at first sight. The first time Yossarian saw the [?], he fell madly in love with him.",
+m:"It was love at first sight. The first time Yossarian saw the [?], he fell madly in love with him. Yossarian was in the hospital with a pain in his liver that fell just short of being jaundice.",
+l:"It was love at first sight. The first time Yossarian saw the [?], he fell madly in love with him. Yossarian was in the hospital with a pain in his liver that fell just short of being jaundice. The doctors were puzzled by the fact that it wasn't quite jaundice.",
+h:"Hint: Joseph Heller, 1961 — a satirical WWII novel whose title became a permanent English idiom"},
+// 18
+{a:"CANDLE",bk:"Macbeth",au:"William Shakespeare",yr:1606,nt:"Macbeth speaks this soliloquy upon hearing of Lady Macbeth's death — one of the most nihilistic speeches Shakespeare ever wrote.",
+s:"Out, out, brief [?]! Life's but a walking shadow, a poor player that struts and frets his hour upon the stage and then is heard no more.",
+m:"Out, out, brief [?]! Life's but a walking shadow, a poor player that struts and frets his hour upon the stage and then is heard no more. It is a tale told by an idiot, full of sound and fury, signifying nothing.",
+l:"She should have died hereafter; there would have been a time for such a word. To-morrow, and to-morrow, and to-morrow, creeps in this petty pace from day to day. Out, out, brief [?]! Life's but a walking shadow, a poor player that struts and frets his hour upon the stage and then is heard no more.",
+h:"Hint: William Shakespeare, Macbeth — spoken upon hearing of Lady Macbeth's death"},
+// 19
+{a:"THINKING",bk:"Hamlet",au:"William Shakespeare",yr:1601,nt:"Hamlet says this to Rosencrantz, implying the prison of Denmark is constructed by the mind — one of Shakespeare's most quoted lines on the subjective nature of reality.",
+s:"There is nothing either good or bad, but [?] makes it so.",
+m:"\"Denmark's a prison.\" — \"Then is the world one.\" — \"A goodly one, in which there are many confines, wards, and dungeons, Denmark being one o' the worst.\" — \"We think not so, my lord.\" — \"Why, then 'tis none to you; for there is nothing either good or bad, but [?] makes it so.\"",
+l:"I could be bounded in a nutshell and count myself a king of infinite space, were it not that I have bad dreams. There is nothing either good or bad, but [?] makes it so. To me it is a prison.",
+h:"Hint: William Shakespeare, Hamlet — spoken to Rosencrantz and Guildenstern"},
+// 20
+{a:"CEASELESSLY",bk:"The Great Gatsby",au:"F. Scott Fitzgerald",yr:1925,nt:"Fitzgerald considered this closing line a failure and nearly cut it — editor Maxwell Perkins urged him to keep it. It is now widely considered the finest last sentence in American fiction.",
+s:"So we beat on, boats against the current, borne back [?] into the past.",
+m:"Gatsby believed in the green light, the orgastic future that year by year recedes before us. It eluded us then, but that's no matter — to-morrow we will run faster, stretch out our arms farther... So we beat on, boats against the current, borne back [?] into the past.",
+l:"And so with the sunshine and the great bursts of leaves growing on the trees, just as things grow in fast movies, I had that familiar conviction that life was beginning over again with the summer. So we beat on, boats against the current, borne back [?] into the past.",
+h:"Hint: F. Scott Fitzgerald, 1925 — the famous closing line of a Jazz Age novel"},
+// 21
+{a:"MARRIED",bk:"Jane Eyre",au:"Charlotte Brontë",yr:1847,nt:"This three-word sentence is one of the most celebrated moments of narrative intimacy in Victorian fiction — the narrator addressing the reader directly.",
+s:"Reader, I [?] him.",
+m:"Reader, I [?] him. A quiet wedding we had: he and I, the parson and clerk, were alone present. When we got back from church, I went into the kitchen of the manor-house, where Mary was cooking the dinner, and John cleaning the knives.",
+l:"Reader, I [?] him. A quiet wedding we had: he and I, the parson and clerk, were alone present. When we got back from church, I went into the kitchen of the manor-house, where Mary was cooking the dinner, and John cleaning the knives, and I said — \"Mary, I have been married to Mr. Rochester this morning.\"",
+h:"Hint: Charlotte Brontë, Jane Eyre — one of the most famous sentences in Victorian fiction"},
+// 22
+{a:"TRUE",bk:"Slaughterhouse-Five",au:"Kurt Vonnegut",yr:1969,nt:"Vonnegut spent over 20 years trying to write about the Dresden firebombing he survived as a POW. He finally did it in 135 pages.",
+s:"All this happened, more or less. The war parts, anyway, are pretty much [?].",
+m:"All this happened, more or less. The war parts, anyway, are pretty much [?]. One guy I knew really was shot in Dresden for taking a teapot that wasn't his.",
+l:"All this happened, more or less. The war parts, anyway, are pretty much [?]. One guy I knew really was shot in Dresden for taking a teapot that wasn't his. Another guy I knew really did threaten to have his personal enemies killed by hired gunmen after the war.",
+h:"Hint: Kurt Vonnegut, 1969 — a time-traveling survivor of the Dresden firebombing"},
+// 23
+{a:"DELIBERATELY",bk:"Walden",au:"Henry David Thoreau",yr:1854,nt:"Thoreau lived at Walden Pond for two years, two months, and two days — but condensed his account into a single literary year.",
+s:"I went to the woods because I wished to live [?], and not, when I came to die, discover that I had not lived.",
+m:"I went to the woods because I wished to live [?], and not, when I came to die, discover that I had not lived. I did not wish to live what was not life, living is so dear.",
+l:"I went to the woods because I wished to live [?], and not, when I came to die, discover that I had not lived. I did not wish to live what was not life, living is so dear; nor did I wish to practise resignation, unless it was quite necessary.",
+h:"Hint: Henry David Thoreau, 1854 — American Transcendentalism, a pond, two years of simplicity"},
+// 24
+{a:"WANDER",bk:"The Fellowship of the Ring",au:"J.R.R. Tolkien",yr:1954,nt:"This couplet is part of a poem Bilbo wrote about Aragorn. Tolkien composed hundreds of poems embedded throughout Middle-earth's history.",
+s:"Not all those who [?] are lost.",
+m:"All that is gold does not glitter, / Not all those who [?] are lost; / The old that is strong does not wither, / Deep roots are not reached by the frost.",
+l:"All that is gold does not glitter, / Not all those who [?] are lost; / The old that is strong does not wither, / Deep roots are not reached by the frost. / From the ashes a fire shall be woken, / A light from the shadows shall spring.",
+h:"Hint: J.R.R. Tolkien, 1954 — a poem about a ranger whose identity is hidden"},
+// 25
+{a:"IMPROBABLE",bk:"The Sign of the Four",au:"Arthur Conan Doyle",yr:1890,nt:"Holmes delivers this maxim three separate times across the Doyle stories — Conan Doyle clearly considered it the most useful tool in the detective's mental kit.",
+s:"When you have eliminated the impossible, whatever remains, however [?], must be the truth.",
+m:"\"How often have I said to you that when you have eliminated the impossible, whatever remains, however [?], must be the truth? We know that he did not come through the door, the window, or the chimney.\"",
+l:"\"Eliminate all other factors, and the one which remains must be the truth.\" He then paused and added: \"How often have I said to you that when you have eliminated the impossible, whatever remains, however [?], must be the truth?\"",
+h:"Hint: Arthur Conan Doyle, 1890 — Sherlock Holmes's most famous axiom"},
+// 26
+{a:"EQUAL",bk:"Animal Farm",au:"George Orwell",yr:1945,nt:"Orwell had difficulty finding a publisher — several rejected it for fear of offending Britain's Soviet ally during WWII.",
+s:"All animals are [?], but some animals are more equal than others.",
+m:"There was nothing there now except a single Commandment. It ran: ALL ANIMALS ARE [?] BUT SOME ANIMALS ARE MORE EQUAL THAN OTHERS.",
+l:"The creatures outside looked from pig to man, and from man to pig, and from pig to man again; but already it was impossible to say which was which. The original Commandments had been replaced. It ran: ALL ANIMALS ARE [?] BUT SOME ANIMALS ARE MORE EQUAL THAN OTHERS.",
+h:"Hint: George Orwell, 1945 — a political allegory set on a farm"},
+// 27
+{a:"DISCONTENT",bk:"Richard III",au:"William Shakespeare",yr:1592,nt:"This is the most famous opening soliloquy in Shakespeare — Richard immediately reveals his deformity, his ambition, and his villainous charm in the space of 14 lines.",
+s:"Now is the winter of our [?] made glorious summer by this sun of York.",
+m:"Now is the winter of our [?] made glorious summer by this sun of York; and all the clouds that lour'd upon our house in the deep bosom of the ocean buried.",
+l:"Now is the winter of our [?] made glorious summer by this sun of York; and all the clouds that lour'd upon our house in the deep bosom of the ocean buried. Now are our brows bound with victorious wreaths; our bruised arms hung up for monuments.",
+h:"Hint: William Shakespeare, Richard III — the opening soliloquy of a famous villain"},
+// 28
+{a:"DESERVE",bk:"The Perks of Being a Wallflower",au:"Stephen Chbosky",yr:1999,nt:"Chbosky wrote the novel specifically for teenagers who felt they had no one to talk to — the book became a lifeline for generations of readers.",
+s:"We accept the love we think we [?].",
+m:"And I think that if I ever have kids, and they are upset, I won't tell them that people are starving in China or anything like that because it wouldn't change the fact that they were upset. And if I did, I think that they would get upset, but feel guilty about it, which is my favorite thing to do. But I would listen to them, and I would accept them. Because I think that's what we [?].",
+l:"\"Why do I and everyone I love pick people who treat us like we're nothing?\" — \"We accept the love we think we [?].\"",
+h:"Hint: Stephen Chbosky, 1999 — a coming-of-age epistolary novel"},
+// 29
+{a:"READ",bk:"To Kill a Mockingbird",au:"Harper Lee",yr:1960,nt:"Lee famously withdrew from public life after the novel's success, granting almost no interviews for decades.",
+s:"Until I feared I would lose it, I never loved to [?]. One does not love breathing.",
+m:"\"Now,\" she said, \"don't you bother me, hear me, Jean Louise? You just read as hard as you can.\" — Until I feared I would lose it, I never loved to [?]. One does not love breathing.",
+l:"\"Until I feared I would lose it, I never loved to [?]. One does not love breathing.\" She said I was the only person she'd ever known who didn't like the smell of new books.",
+h:"Hint: Harper Lee, 1960 — Scout Finch, Atticus, Maycomb, Alabama"},
+// 30
+{a:"SLANDERED",bk:"The Trial",au:"Franz Kafka",yr:1925,nt:"Kafka never finished The Trial and instructed his friend Max Brod to burn the manuscript. Brod published it anyway.",
+s:"Someone must have [?] Josef K., for without having done anything wrong, he was arrested one fine morning.",
+m:"Someone must have [?] Josef K., for without having done anything wrong, he was arrested one fine morning. His landlady's cook, who always brought him his breakfast at eight o'clock, failed to appear on this occasion.",
+l:"Someone must have [?] Josef K., for without having done anything wrong, he was arrested one fine morning. His landlady's cook, who always brought him his breakfast at eight o'clock, failed to appear on this occasion. That had never happened before. K. waited a little while longer.",
+h:"Hint: Franz Kafka, 1925 — a man prosecuted without knowing his crime"},
+// 31
+{a:"DARKNESS",bk:"Frankenstein",au:"Mary Shelley",yr:1818,nt:"Mary Shelley began writing Frankenstein at age 18 during a ghost-story competition at the Villa Diodati. It is considered the first true science fiction novel.",
+s:"He was soon borne away by the waves and lost in [?] and distance.",
+m:"\"He is dead who called me into being; and when I shall be no more, the very remembrance of us both will speedily vanish. I shall no longer see the sun or stars or feel the winds play on my cheeks.\" He was soon borne away by the waves and lost in [?] and distance.",
+l:"\"I shall die, and what I now feel be no longer felt. Soon these burning miseries will be extinct.\" He sprung from the cabin-window, as he said this, upon the ice-raft which lay close to the vessel. He was soon borne away by the waves and lost in [?] and distance.",
+h:"Hint: Mary Shelley, 1818 — the famous final line of the original science fiction novel"},
+// 32
+{a:"ADVANTAGES",bk:"The Great Gatsby",au:"F. Scott Fitzgerald",yr:1925,nt:"The novel's opening presents Nick as a narrator who prides himself on suspension of judgment — a claim the novel slowly and brilliantly undermines.",
+s:"\"Whenever you feel like criticizing anyone,\" he told me, \"just remember that all the people in this world haven't had the [?] you've had.\"",
+m:"In my younger and more vulnerable years my father gave me some advice that I've been turning over in my mind ever since. \"Whenever you feel like criticizing anyone,\" he told me, \"just remember that all the people in this world haven't had the [?] you've had.\"",
+l:"In my younger and more vulnerable years my father gave me some advice that I've been turning over in my mind ever since. \"Whenever you feel like criticizing anyone,\" he told me, \"just remember that all the people in this world haven't had the [?] you've had.\" He didn't say any more, but we've always been unusually communicative in a reserved way.",
+h:"Hint: F. Scott Fitzgerald, 1925 — the opening lines of The Great Gatsby, narrated by Nick Carraway"},
+// 33
+{a:"REMAIN",bk:"Waiting for Godot",au:"Samuel Beckett",yr:1953,nt:"Beckett said he wrote the play in French to strip his language of style and ornament — the economy of the text is deliberate.",
+s:"We are all born mad. Some [?] so.",
+m:"\"Do you think God sees me?\" — \"You must close your eyes.\" — We are all born mad. Some [?] so.",
+l:"\"Was I sleeping, while the others suffered? Am I sleeping now? To-morrow, when I wake, or think I do, what shall I say of to-day?\" — We are all born mad. Some [?] so.",
+h:"Hint: Samuel Beckett, 1953 — two men waiting, endlessly, for someone who never arrives"},
+// 34
+{a:"SHOW",bk:"David Copperfield",au:"Charles Dickens",yr:1850,nt:"Dickens considered David Copperfield his 'favourite child' among his novels, and the book is closely autobiographical.",
+s:"Whether I shall turn out to be the hero of my own life, or whether that station will be held by anybody else, these pages must [?].",
+m:"Whether I shall turn out to be the hero of my own life, or whether that station will be held by anybody else, these pages must [?]. To begin my life with the beginning of my life, I record that I was born (as I have been informed and believe) on a Friday, at twelve o'clock at night.",
+l:"Whether I shall turn out to be the hero of my own life, or whether that station will be held by anybody else, these pages must [?]. To begin my life with the beginning of my life, I record that I was born (as I have been informed and believe) on a Friday, at twelve o'clock at night. It was remarked that the clock began to strike, and I began to cry, simultaneously.",
+h:"Hint: Charles Dickens, 1850 — his most autobiographical novel"},
+// 35
+{a:"OTHER",bk:"No Exit",au:"Jean-Paul Sartre",yr:1944,nt:"Sartre meant 'hell is other people' not as a condemnation of humanity but as a comment on how we define ourselves through others' judgments — a subtlety often lost in quotation.",
+s:"Hell is [?] people.",
+m:"\"So that is what hell is. I'd never have believed it. You remember all we were told about the torture-chambers, the fire and brimstone, the burning marl. Old wives' tales! There's no need for red-hot pokers. Hell is [?] people!\"",
+l:"\"Each of us will act as torturer of the two others.\" — \"So that is what hell is. I'd never have believed it. You remember all we were told about the torture-chambers, the fire and brimstone. Old wives' tales! There's no need for red-hot pokers. Hell is [?] people!\"",
+h:"Hint: Jean-Paul Sartre, 1944 — three characters, one room, no exit"},
+// 36
+{a:"IMMORTAL",bk:"Ode to a Nightingale",au:"John Keats",yr:1819,nt:"Keats wrote this ode in a single morning under a plum tree in his garden at Hampstead. He died of tuberculosis two years later at the age of 25.",
+s:"Thou wast not born for death, [?] Bird! No hungry generations tread thee down.",
+m:"Away! away! for I will fly to thee, not charioted by Bacchus and his pards, but on the viewless wings of Poesy. Thou wast not born for death, [?] Bird! No hungry generations tread thee down.",
+l:"Thou wast not born for death, [?] Bird! No hungry generations tread thee down; the voice I hear this passing night was heard in ancient days by emperor and clown: perhaps the self-same song that found a path through the sad heart of Ruth.",
+h:"Hint: John Keats, 1819 — a meditation on mortality and beauty in the form of an ode"},
+// 37
+{a:"HEAVEN",bk:"Paradise Lost",au:"John Milton",yr:1667,nt:"Milton dictated Paradise Lost to his daughters each morning — he had been completely blind for over a decade by the time he composed it.",
+s:"The mind is its own place, and in itself can make a [?] of hell, a hell of heaven.",
+m:"\"Better to reign in hell than serve in [?].\" The mind is its own place, and in itself can make a [?] of hell, a hell of heaven.",
+l:"\"Farewell happy Fields where Joy for ever dwells: Hail horrours, hail infernal world!\" The mind is its own place, and in itself can make a [?] of hell, a hell of heaven. What matter where, if I be still the same?",
+h:"Hint: John Milton, 1667 — Satan speaking after being cast from Paradise"},
+// 38
+{a:"SUCCESSFULLY",bk:"Crime and Punishment",au:"Fyodor Dostoyevsky",yr:1866,nt:"Dostoyevsky wrote Crime and Punishment in desperate debt, dictating portions to his stenographer Anna Snitkina — whom he then married.",
+s:"On an exceptionally hot evening early in July a young man came out of the garret in which he lodged and walked slowly, as though in hesitation. He had [?] avoided meeting his landlady on the staircase.",
+m:"On an exceptionally hot evening early in July a young man came out of the garret in which he lodged in S. Place and walked slowly, as though in hesitation, towards K. bridge. He had [?] avoided meeting his landlady on the staircase.",
+l:"On an exceptionally hot evening early in July a young man came out of the garret in which he lodged in S. Place and walked slowly, as though in hesitation, towards K. bridge. He had [?] avoided meeting his landlady on the staircase. His garret was under the roof of a high, five-storied house, and was more like a cupboard than a room.",
+h:"Hint: Fyodor Dostoyevsky, 1866 — a student, a murder, and an unbearable conscience"},
+// 39
+{a:"TWINKLING",bk:"Of Mice and Men",au:"John Steinbeck",yr:1937,nt:"Steinbeck's working title was 'Something That Happened' — his final title comes from a Robert Burns poem about the best-laid plans of mice and men.",
+s:"The water is warm too, for it has slipped [?] over the yellow sands in the sunlight before reaching the narrow pool.",
+m:"A few miles south of Soledad, the Salinas River drops in close to the hillside bank and runs deep and green. The water is warm too, for it has slipped [?] over the yellow sands in the sunlight before reaching the narrow pool.",
+l:"A few miles south of Soledad, the Salinas River drops in close to the hillside bank and runs deep and green. The water is warm too, for it has slipped [?] over the yellow sands in the sunlight before reaching the narrow pool. On one side of the river the golden foothill slopes curve up to the strong and rocky Gabilan mountains.",
+h:"Hint: John Steinbeck, 1937 — two migrant workers, a dream of land, and an inevitable ending"},
+// 40
+{a:"DELIBERATE",bk:"The Awakening",au:"Kate Chopin",yr:1899,nt:"The Awakening was so scandalous upon publication that Chopin was effectively blacklisted from the literary clubs and journals she depended on.",
+s:"She was becoming herself and daily casting aside that fictitious self which we assume like a garment with which to appear before the world. She had resolved never again to belong to another than herself, and she had no wish, not even a [?] one.",
+m:"The bird that would soar above the level plain of tradition and prejudice must have strong wings. It is a sad spectacle to see the weaklings bruised, exhausted, fluttering back to earth. She was becoming herself and daily casting aside that fictitious self. She had no wish, not even a [?] one.",
+l:"She was becoming herself and daily casting aside that fictitious self which we assume like a garment with which to appear before the world. She had resolved never again to belong to another than herself. She had abandoned herself to Fate, and awaited the consequences with indifference. She had no wish, not even a [?] one.",
+h:"Hint: Kate Chopin, 1899 — a woman in New Orleans discovering what freedom costs"},
+// 41
+{a:"STORMS",bk:"Little Women",au:"Louisa May Alcott",yr:1868,nt:"Alcott did not want to write a story for girls and began the book reluctantly. She finished the first part in ten weeks.",
+s:"I am not afraid of [?], for I am learning how to sail my ship.",
+m:"\"It takes two flints to make a fire.\" — \"I am not afraid of [?], for I am learning how to sail my ship.\" Jo spoke with the confidence of one who had weathered many gales.",
+l:"\"Don't try to make me grow up before my time, Marmee. It's hard enough to have you and grandfather lecture me without my friends doing it too.\" — \"I am not afraid of [?], for I am learning how to sail my ship.\"",
+h:"Hint: Louisa May Alcott, 1868 — the March sisters, Concord, Massachusetts"},
+// 42
+{a:"REMEMBER",bk:"Don Quixote",au:"Miguel de Cervantes",yr:1605,nt:"Cervantes began writing Don Quixote while in debtor's prison. The novel is considered the first modern novel in the Western literary tradition.",
+s:"Somewhere in La Mancha, in a place whose name I do not care to [?], a gentleman lived not long ago.",
+m:"Somewhere in La Mancha, in a place whose name I do not care to [?], a gentleman lived not long ago, one of those who has a lance and ancient shield on a shelf and keeps a skinny nag and a greyhound for racing.",
+l:"Somewhere in La Mancha, in a place whose name I do not care to [?], a gentleman lived not long ago, one of those who has a lance and ancient shield on a shelf and keeps a skinny nag and a greyhound for racing. An occasional stew with more beef than lamb, lentils on most evenings, bacon and eggs on Saturdays.",
+h:"Hint: Miguel de Cervantes, 1605 — often called the first modern novel"},
+// 43
+{a:"INCOMMUNICABLE",bk:"My Ántonia",au:"Willa Cather",yr:1918,nt:"Cather considered My Ántonia her finest novel. The buried treasure of a friendship, she said, is precisely what cannot be fully explained.",
+s:"Whatever we had missed, we possessed together the precious, the [?] past.",
+m:"\"Do you know, Ántonia, since I've been away, I think of you more often than of anyone else in this part of the world.\" — Whatever we had missed, we possessed together the precious, the [?] past.",
+l:"I sat down in the middle of the garden, where snakes could scarcely approach unseen, and leaned my back against a warm yellow pumpkin. Whatever we had missed, we possessed together the precious, the [?] past.",
+h:"Hint: Willa Cather, 1918 — a Nebraska prairie, Bohemian immigrants, a lifelong friendship"},
+// 44
+{a:"RAZOR",bk:"Ulysses",au:"James Joyce",yr:1922,nt:"Joyce based Buck Mulligan on his real-life friend Oliver St. John Gogarty, who was furious at the portrayal — Joyce didn't care.",
+s:"Stately, plump Buck Mulligan came from the stairhead, bearing a bowl of lather on which a mirror and a [?] lay crossed.",
+m:"Stately, plump Buck Mulligan came from the stairhead, bearing a bowl of lather on which a mirror and a [?] lay crossed. A yellow dressinggown, ungirdled, was sustained gently behind him by the mild morning air.",
+l:"Stately, plump Buck Mulligan came from the stairhead, bearing a bowl of lather on which a mirror and a [?] lay crossed. A yellow dressinggown, ungirdled, was sustained gently behind him by the mild morning air. He held the bowl aloft and intoned: Introibo ad altare Dei.",
+h:"Hint: James Joyce, 1922 — a single day in Dublin, June 16, 1904"},
+// 45
+{a:"ELECTROCUTED",bk:"The Bell Jar",au:"Sylvia Plath",yr:1963,nt:"Plath published The Bell Jar under the pseudonym Victoria Lucas, not wanting to upset her mother. She died one month after its publication.",
+s:"It was a queer, sultry summer, the summer they [?] the Rosenbergs, and I didn't know what I was doing in New York.",
+m:"It was a queer, sultry summer, the summer they [?] the Rosenbergs, and I didn't know what I was doing in New York. I'm stupid about executions. The idea of being [?] makes me sick.",
+l:"It was a queer, sultry summer, the summer they [?] the Rosenbergs, and I didn't know what I was doing in New York. I'm stupid about executions. The idea of being [?] makes me sick, and that's all there was to read about in the papers — goggle-eyed headlines staring up at me on every street corner.",
+h:"Hint: Sylvia Plath, 1963 — semi-autobiographical, published under a pen name"},
+// 46
+{a:"REMAINDER",bk:"The Remains of the Day",au:"Kazuo Ishiguro",yr:1989,nt:"Ishiguro wrote the novel in four weeks, in a self-imposed 'crash' during which he wrote from 9am to 10:30pm daily. It won the Booker Prize.",
+s:"It seems increasingly likely that I really will undertake this expedition that, upon consideration, I have been promising myself as the small [?] of my career.",
+m:"It seems increasingly likely that I really will undertake this expedition that, upon consideration, I have been promising myself as the small [?] of my career. Miss Kenton's letter, which arrived some days ago, has confirmed my belief that a trip to the West Country might yield dividends.",
+l:"When I told Mr. Farraday of my plan, his immediate response was to offer the use of his Ford. Indeed, the more I think about it, the more I am convinced that a trip out into the country would be the ideal thing at this juncture. It seems increasingly likely that I really will undertake this expedition — the small [?] of my career.",
+h:"Hint: Kazuo Ishiguro, 1989 — a butler, an English country house, a journey of regret"},
+// 47
+{a:"DESIRE",bk:"A Streetcar Named Desire",au:"Tennessee Williams",yr:1947,nt:"Williams based Blanche DuBois partly on himself — her fragility, her dependence on others' kindness, and her horror of hard reality all reflect his own.",
+s:"I have always depended on the kindness of strangers.",
+m:"Whoever you are — I have always depended on the kindness of strangers. The last stop — the name of that streetcar — was [?].",
+l:"\"They told me to take a streetcar named [?], and then transfer to one called Cemeteries and ride six blocks and get off at — Elysian Fields!\" — I have always depended on the kindness of strangers.",
+h:"Hint: Tennessee Williams, 1947 — New Orleans, a faded Southern belle, her brother-in-law"},
+// 48
+{a:"CLOUDS",bk:"Heart of Darkness",au:"Joseph Conrad",yr:1899,nt:"Conrad wrote Heart of Darkness while recovering from illness contracted during his own journey up the Congo River in 1890.",
+s:"The offing was barred by a black bank of [?], and the tranquil waterway leading to the uttermost ends of the earth flowed sombre under an overcast sky.",
+m:"The offing was barred by a black bank of [?], and the tranquil waterway leading to the uttermost ends of the earth flowed sombre under an overcast sky — seemed to lead into the heart of an immense darkness.",
+l:"We looked at the venerable stream not in the vivid flush of a short day that comes and departs for ever, but in the august light of abiding memories. The offing was barred by a black bank of [?], and the tranquil waterway leading to the uttermost ends of the earth flowed sombre under an overcast sky — seemed to lead into the heart of an immense darkness.",
+h:"Hint: Joseph Conrad, 1899 — the final line; a narrator drifting on the Thames"},
+// 49
+{a:"SCARECROW",bk:"The Wonderful Wizard of Oz",au:"L. Frank Baum",yr:1900,nt:"Baum said he invented the name 'Oz' by glancing at his filing cabinet and seeing the drawer labeled O–Z.",
+s:"\"I don't mind my legs and arms and body being stuffed, because I cannot get hurt. If anyone treads on my toes or sticks a pin into me, it doesn't matter, for I can't feel it. But I do not want people to call me a fool, and if my head stays stuffed with straw instead of with brains, how am I ever to know anything?\" So said the [?].",
+m:"Dorothy listened gravely to his words and then asked: \"What will you do when Oz has given you brains?\" — \"I don't know,\" he answered. \"But I do not want people to call me a fool.\" So said the [?], and Dorothy looked at him with puzzlement.",
+l:"\"Do you think Oz could give me brains?\" asked the [?]. \"Just as easily as he could give me a heart,\" replied the Tin Woodman. \"He gave me a heart,\" said the Lion, \"and he can give you brains.\" \"True,\" said Dorothy.",
+h:"Hint: L. Frank Baum, 1900 — Kansas, a yellow brick road, three companions seeking gifts"},
+// 50
+{a:"PRISON",bk:"The Count of Monte Cristo",au:"Alexandre Dumas",yr:1844,nt:"Dumas co-wrote the novel with Auguste Maquet, who researched and drafted many scenes — a collaboration Dumas rarely acknowledged.",
+s:"Wait and hope. These were the two words of wisdom that the Abbé gave him in that dark [?].",
+m:"\"What do I risk?\" he asked himself. \"To be refused. And what is a refusal, after all?\" — Wait and hope. These were the two words of wisdom the Abbé Faria gave him in that dark [?].",
+l:"All human wisdom is contained in these two words — Wait and hope. \"But while waiting, what shall I do?\" — \"You will do what all men do who have intelligence, energy, and desire for better things.\" Wait and hope. These were the two words of wisdom the Abbé gave him in that dark [?].",
+h:"Hint: Alexandre Dumas, 1844 — revenge, treasure, and a man who waits fourteen years"},
+// 51
+{a:"SCANTY",bk:"Paul Clifford",au:"Edward Bulwer-Lytton",yr:1830,nt:"This opening gave rise to the annual Bulwer-Lytton Fiction Contest, which awards the worst opening sentence of the year in its author's honor.",
+s:"It was a dark and stormy night; the rain fell in torrents — except at occasional intervals, when it was checked by a violent gust of wind which swept up the streets, rattling along the housetops, and fiercely agitating the [?] flames of the lamps that struggled against the darkness.",
+m:"It was a dark and stormy night; the rain fell in torrents — except at occasional intervals, when it was checked by a violent gust of wind which swept up the streets (for it is in London that our scene lies), rattling along the housetops, and fiercely agitating the [?] flames of the lamps that struggled against the darkness.",
+l:"It was a dark and stormy night; the rain fell in torrents — except at occasional intervals, when it was checked by a violent gust of wind which swept up the streets (for it is in London that our scene lies), rattling along the housetops, and fiercely agitating the [?] flames of the lamps that struggled against the darkness; and the wind swept through the long and straggling lanes, rattling the doors of the scattered houses.",
+h:"Hint: Edward Bulwer-Lytton, 1830 — perhaps the most mocked opening line in literary history"},
+// 52
+{a:"SOMEWHERE",bk:"The Catcher in the Rye",au:"J.D. Salinger",yr:1951,nt:"Salinger refused all attempts to adapt the novel for film and stage throughout his life, calling Holden Caulfield uncastable.",
+s:"I keep picturing all these little kids playing some game in this big field of rye and all. Thousands of little kids, and nobody's big or old except me. And I'm standing on the edge of some crazy cliff. What I have to do, I have to catch everybody if they start to go over the cliff — I mean if they're running and they don't look where they're going I have to come out from [?].",
+m:"\"Anyway, I keep picturing all these little kids playing some game in this big field of rye. If they're running and they don't look where they're going I have to come out from [?] and catch them. That's all I'd do all day.\"",
+l:"\"That's all I'd do all day. I'd just be the catcher in the rye and all.\" — I have to come out from [?] and catch them. I know it's crazy, but that's the only thing I'd really like to be.",
+h:"Hint: J.D. Salinger, 1951 — a teenager expelled from prep school, wandering New York City"},
+// 53
+{a:"CARELESSNESS",bk:"The Importance of Being Earnest",au:"Oscar Wilde",yr:1895,nt:"Wilde wrote the play in three weeks. Lady Bracknell's famous interrogation of Jack is widely considered the wittiest scene in English comic drama.",
+s:"To lose one parent, Mr. Worthing, may be regarded as a misfortune; to lose both looks like [?].",
+m:"\"I do not know whether there is anything peculiarly exciting in the air of this particular part of Hertfordshire.\" — To lose one parent, Mr. Worthing, may be regarded as a misfortune; to lose both looks like [?].",
+l:"Lady Bracknell raised her lorgnette, surveyed Jack with steely composure, and set down her teacup with great deliberation. To lose one parent, Mr. Worthing, may be regarded as a misfortune; to lose both looks like [?].",
+h:"Hint: Oscar Wilde, 1895 — a comedy of manners, handbags, and double lives"},
+// 54
+{a:"UNDERSTAND",bk:"To Kill a Mockingbird",au:"Harper Lee",yr:1960,nt:"Lee was reportedly so overwhelmed by the novel's reception that she never published another book for 55 years.",
+s:"You never really [?] a person until you consider things from his point of view — until you climb into his skin and walk around in it.",
+m:"\"First of all,\" he said, \"if you can learn a simple trick, Scout, you'll get along a lot better with all kinds of folks. You never really [?] a person until you consider things from his point of view.\"",
+l:"Atticus said, \"You never really [?] a person until you consider things from his point of view — until you climb into his skin and walk around in it.\" I had not heard Atticus talk like that before.",
+h:"Hint: Harper Lee, 1960 — Alabama, a trial, a father explaining the world to his daughter"},
+// 55
+{a:"THANKLESS",bk:"King Lear",au:"William Shakespeare",yr:1606,nt:"Lear speaks this line having just been humiliated by his daughter Goneril, beginning his recognition of the nature of ungrateful children.",
+s:"How sharper than a serpent's tooth it is to have a [?] child!",
+m:"Hear, Nature, hear! dear goddess, hear! Suspend thy purpose, if thou didst intend to make this creature fruitful! How sharper than a serpent's tooth it is to have a [?] child!",
+l:"Ingratitude, thou marble-hearted fiend, more hideous, when thou show'st thee in a child, than the sea-monster! How sharper than a serpent's tooth it is to have a [?] child!",
+h:"Hint: William Shakespeare, King Lear — a father cursing the daughter who has cast him out"},
+// 56
+{a:"SPOT",bk:"Macbeth",au:"William Shakespeare",yr:1606,nt:"Lady Macbeth's sleepwalking scene is one of Shakespeare's most psychologically acute moments — guilt made physical, the mind undone by what the hands have done.",
+s:"Out, damned [?]! out, I say!",
+m:"\"Out, damned [?]! out, I say! One: two: why, then, 'tis time to do't.\" Lady Macbeth wrung her hands as she paced the darkened corridor, her eyes wide and unseeing.",
+l:"The Doctor whispered to the Gentlewoman: \"Hark, she speaks. I will set down what comes from her, to satisfy my remembrance the more strongly.\" — \"Out, damned [?]! out, I say!\"",
+h:"Hint: William Shakespeare, Macbeth — the sleepwalking scene, guilt made visible"},
+// 57
+{a:"NIGHTMARE",bk:"Ulysses",au:"James Joyce",yr:1922,nt:"Stephen's phrase 'History is a nightmare from which I am trying to awake' became one of the most cited lines in all of Joyce and in postcolonial literary criticism.",
+s:"History, Stephen said, is a [?] from which I am trying to awake.",
+m:"Mr Deasy laughed with rich delight. \"That's all very fine and large. But what are we to do about the two evils?\" — Stephen paused, and said with deliberate gravity: \"History is a [?] from which I am trying to awake.\"",
+l:"The bald glistening head of Mr Deasy gleamed in the sunlight. \"I have paid my way. Can you?\" he asked. — History, Stephen said, is a [?] from which I am trying to awake.",
+h:"Hint: James Joyce, Ulysses — Stephen Dedalus, a headmaster, a history lesson"},
+// 58
+{a:"TODAY",bk:"The Stranger",au:"Albert Camus",yr:1942,nt:"Camus wrote The Stranger in Algeria in 1940 during the German occupation. The flat, affectless first line is one of literature's most studied openings.",
+s:"Mother died [?]. Or maybe yesterday, I don't know.",
+m:"Mother died [?]. Or maybe yesterday, I don't know. I got a telegram from the home: 'Mother deceased. Funeral tomorrow. Faithfully yours.' That doesn't mean anything.",
+l:"Mother died [?]. Or maybe yesterday, I don't know. I got a telegram from the home: 'Mother deceased. Funeral tomorrow. Faithfully yours.' That doesn't mean anything. Maybe it was yesterday.",
+h:"Hint: Albert Camus, 1942 — existentialism, Algiers, a man who feels nothing"},
+// 59
+{a:"GUNSLINGER",bk:"The Dark Tower: The Gunslinger",au:"Stephen King",yr:1982,nt:"King began writing The Dark Tower series in 1970 as a student, influenced by Tolkien and Robert Browning's 'Childe Roland to the Dark Tower Came.'",
+s:"The man in black fled across the desert, and the [?] followed.",
+m:"The man in black fled across the desert, and the [?] followed. The desert was the apotheosis of all deserts, huge, standing to the sky for what looked like eternity in all directions.",
+l:"The man in black fled across the desert, and the [?] followed. The desert was the apotheosis of all deserts, huge, standing to the sky for what looked like eternity in all directions. It was white and blinding and waterless and without feature save for the faint, cloudy haze of the mountains which sketched themselves on the horizon.",
+h:"Hint: Stephen King, 1982 — the first line of a seven-book epic fantasy"},
+// 60
+{a:"MOTTO",bk:"Brave New World",au:"Aldous Huxley",yr:1932,nt:"Huxley took his title from Shakespeare's The Tempest. The World State's stabilizing slogan — 'Community, Identity, Stability' — deliberately inverts the French Revolutionary ideals of liberty, equality, and fraternity.",
+s:"COMMUNITY, IDENTITY, STABILITY — these were the three words of the World State's [?].",
+m:"A squat grey building of only thirty-four stories. Over the main entrance the words, CENTRAL LONDON HATCHERY AND CONDITIONING CENTRE, and, in a shield, the World State's [?]: COMMUNITY, IDENTITY, STABILITY.",
+l:"The enormous room on the ground floor faced towards the north. Cold for all the summer beyond the panes, for all the tropical heat of the room itself, a harsh thin light glared through the windows. It was a building belonging to the World State, and its [?] was clear: COMMUNITY, IDENTITY, STABILITY.",
+h:"Hint: Aldous Huxley, 1932 — a dystopia built on pleasure rather than fear"},
+// 61
+{a:"SHOESHINE",bk:"Death of a Salesman",au:"Arthur Miller",yr:1949,nt:"Miller wrote Death of a Salesman in six weeks. Willy Loman's obsession with being 'well liked' was Miller's critique of the American Dream's hollow promises.",
+s:"\"Pop! I'm a dime a dozen, and so are you!\" — \"I am not a dime a dozen! I am Willy Loman, and you are Biff Loman! ... A man who had all the wrong dreams. A [?] man.\"",
+m:"\"Biff, a man is not a bird to be flown away with!\" — The requiem was quiet, the earth still. Charley spoke slowly: \"Nobody dast blame this man. A salesman is got to dream. It comes with the territory.\" — He was a [?] man who believed in his own shine.",
+l:"\"He had the wrong dreams. All, all, wrong.\" — Happy said: \"He had a good dream. It's the only dream you can have — to come out number-one man.\" — A man who had all the wrong dreams. A [?] man. Attention, attention must be finally paid to such a person.",
+h:"Hint: Arthur Miller, 1949 — a salesman's last hours, the American Dream on trial"},
+// 62
+{a:"ANSWER",bk:"Their Eyes Were Watching God",au:"Zora Neale Hurston",yr:1937,nt:"Hurston wrote the novel in seven weeks while on a folklore expedition in Haiti. It was largely forgotten after publication, revived by Alice Walker's advocacy in the 1970s.",
+s:"Ships at a distance have every man's wish on board. For some they come in with the tide. For others they sail forever on the horizon, never out of sight, never landing until the Watcher turns his eyes away in resignation, his dreams mocked to death by Time. That is the life of men. Now, women forget all those things they don't want to remember, and remember everything they don't want to forget. The dream is the [?] and truth the question.",
+m:"Ships at a distance have every man's wish on board. For some they come in with the tide. For others they sail forever on the horizon, never out of sight, never landing. That is the life of men. Now, women forget all those things they don't want to remember. The dream is the [?] and truth the question.",
+l:"Ships at a distance have every man's wish on board. For some they come in with the tide. For others they sail forever on the horizon. The dream is the [?] and truth the question. So the beginning of this was a woman.",
+h:"Hint: Zora Neale Hurston, 1937 — Janie Crawford, the Florida porch, the horizon"},
+// 63
+{a:"SPITEFUL",bk:"Beloved",au:"Toni Morrison",yr:1987,nt:"Morrison dedicated Beloved to the 'Sixty Million and more' — her estimate of the number of Africans who died during the Middle Passage and under slavery. It won the Pulitzer Prize in 1988.",
+s:"124 was [?]. Full of a baby's venom.",
+m:"124 was [?]. Full of a baby's venom. The women in the house knew it and so did their two sons who had run away by age thirteen.",
+l:"124 was [?]. Full of a baby's venom. The women in the house knew it and so did their two sons who had run away by age thirteen, as soon as merely looking in a mirror shattered it. That was ten years ago.",
+h:"Hint: Toni Morrison, 1987 — a house haunted by slavery's unspoken grief"},
+// 64
+{a:"FLEA",bk:"Moby-Dick",au:"Herman Melville",yr:1851,nt:"Melville's meditation on Ahab's monomaniacal will begins with a question of scale — the same obsession that consumes a whale-sized man over a whale-sized wound.",
+s:"What is it, what nameless, inscrutable, unearthly thing is it; what cozening, hidden lord and master, and cruel, remorseless emperor commands me; that against all natural lovings and longings, I so keep pushing, and crowding, and jamming myself on all the time; recklessly making me ready to do what in my own proper, natural heart, I durst not so much as dare? Is Ahab, Ahab? Is it I, God, or who, that lifts this arm? But if the great sun move not of himself; but is as an errand-boy in heaven; nor one single star can revolve, but by some invisible power; how then can this one small heart beat; this one small brain think thoughts; unless God does that beating, does that thinking, does that living, and not I. By heaven, man, we are turned round and round in this world, like yonder windlass, and Fate is the handspike. And all the time, lo! that smiling sky, and this unseen sea! Look! see yon Albicore! who put it into him to chase and [?] the flying-fish?",
+m:"Is Ahab, Ahab? Is it I, God, or who, that lifts this arm? By heaven, man, we are turned round and round in this world, like yonder windlass, and Fate is the handspike. Look! see yon Albicore! who put it into him to chase and [?] the flying-fish?",
+l:"By heaven, man, we are turned round and round in this world, like yonder windlass, and Fate is the handspike. And all the time, lo! that smiling sky, and this unseen sea! Look! see yon Albicore! who put it into him to chase and [?] the flying-fish? Where do murderers go, man! Who's to doom, when the judge himself is dragged to the bar?",
+h:"Hint: Herman Melville, Moby-Dick — Ahab's meditation on fate and free will"},
+// 65
+{a:"FISH",bk:"The Old Man and the Sea",au:"Ernest Hemingway",yr:1952,nt:"Hemingway considered The Old Man and the Sea the best writing he had ever done. It was instrumental in his Nobel Prize in Literature awarded in 1954.",
+s:"He was an old man who fished alone in a skiff in the Gulf Stream and he had gone eighty-four days now without taking a [?].",
+m:"He was an old man who fished alone in a skiff in the Gulf Stream and he had gone eighty-four days now without taking a [?]. In the first forty days a boy had been with him.",
+l:"He was an old man who fished alone in a skiff in the Gulf Stream and he had gone eighty-four days now without taking a [?]. In the first forty days a boy had been with him. But after forty days without a fish the boy's parents had told him that the old man was now definitely and finally salao, which is the worst form of unlucky.",
+h:"Hint: Ernest Hemingway, 1952 — a Cuban fisherman, the sea, and a magnificent marlin"},
+// 66
+{a:"BARS",bk:"The Jungle",au:"Upton Sinclair",yr:1906,nt:"Sinclair intended The Jungle to expose the exploitation of immigrant workers; instead it caused a national scandal about unsanitary meat-packing conditions. He lamented: 'I aimed at the public's heart, and by accident I hit it in the stomach.'",
+s:"There is over a square mile of space in the yards, and more than half of it is occupied by cattle pens; north and south as far as the eye can reach there stretches a sea of pens. And they are all filled — so many cattle no one had ever dreamed existed in the world. Red cattle, black, white, and yellow cattle; old cattle and young cattle; great bellowing bulls and little calves not an hour born; meek-eyed milch cows and fierce, long-horned Texas steers. The sound of them here was as of all the [?] of the world.",
+m:"There is over a square mile of space in the yards, and more than half of it is occupied by cattle pens, north and south as far as the eye can reach. Red cattle, black, white, and yellow cattle; old cattle and young cattle. The sound of them here was as of all the [?] of the world.",
+l:"The yards extended as far as the eye could reach, filled with cattle of every kind. The sound of them here was as of all the [?] of the world. And on every side of it, wherever the road ran, there stretched out the great bare gray desert of the meat packing plant.",
+h:"Hint: Upton Sinclair, 1906 — Chicago's meatpacking district, immigrant labor"},
+// 67
+{a:"MUTES",bk:"The Heart Is a Lonely Hunter",au:"Carson McCullers",yr:1940,nt:"McCullers wrote this novel at age 22. It begins with two deaf-mute men and the intricate silence of their friendship — a metaphor for all isolation that follows.",
+s:"In the town there were two [?], and they were always together.",
+m:"In the town there were two [?], and they were always together. Early every morning they would be seen walking in the street. At noon they could be seen in the park where they sat together on a bench. At night the two friends would be in their room.",
+l:"In the town there were two [?], and they were always together. Early every morning they would be seen walking in the street. At noon they could be seen in the park where they sat together on a bench. The two friends communicated with each other in their own sign language, which only they could understand.",
+h:"Hint: Carson McCullers, 1940 — isolation and connection in a Georgia mill town"},
+// 68
+{a:"HORIZON",bk:"Their Eyes Were Watching God",au:"Zora Neale Hurston",yr:1937,nt:"Hurston's closing image of Janie pulling in the horizon like a great fish net around herself is considered one of the most lyrical endings in American literature.",
+s:"She pulled in her [?] like a great fish-net. Pulled it from around the waist of the world and draped it over her shoulder.",
+m:"\"Of course he wasn't dead. He could never be dead until she herself had finished feeling and thinking.\" — She pulled in her [?] like a great fish-net. Pulled it from around the waist of the world and draped it over her shoulder.",
+l:"The kiss of his memory made pictures of love and light against the wall. Here was peace. She pulled in her [?] like a great fish-net. Pulled it from around the waist of the world and draped it over her shoulder. So much of life in its meshes!",
+h:"Hint: Zora Neale Hurston, 1937 — the final image; Janie Crawford comes home"},
+// 69
+{a:"SUICIDE",bk:"The Virgin Suicides",au:"Jeffrey Eugenides",yr:1993,nt:"Eugenides narrates the novel through an unnamed collective 'we' — the neighborhood boys, grown into men, still obsessed twenty years later. It is his first novel.",
+s:"On the morning the last Lisbon girl took her turn, the neighbours were alerted not by the sirens but by the smell, rising through the window screens like the effluent of [?].",
+m:"On the morning the last Lisbon girl took her turn, the neighbours were alerted not by the sirens but by the smell. The Lisbon girls had tried every method and failed before trying the last, which worked. The smell rose through the window screens like the effluent of [?].",
+l:"We had never seen girls quite like the Lisbon girls, or a house quite like their house. On the morning the last Lisbon girl took her turn, the neighbours were alerted not by the sirens but by the smell, rising through the window screens like the effluent of [?].",
+h:"Hint: Jeffrey Eugenides, 1993 — five sisters, suburban Michigan, the 1970s"},
+// 70
+{a:"CARER",bk:"Never Let Me Go",au:"Kazuo Ishiguro",yr:2005,nt:"Ishiguro described the novel as an attempt to explore 'the huge human capacity for self-deception.' The students never rebel; their acceptance is the horror.",
+s:"My name is Kathy H. I'm thirty-one years old, and I've been a [?] now for over eleven years.",
+m:"My name is Kathy H. I'm thirty-one years old, and I've been a [?] now for over eleven years. That sounds long enough, I know, but actually they want me to go on for another eight months.",
+l:"My name is Kathy H. I'm thirty-one years old, and I've been a [?] now for over eleven years. That sounds long enough, I know, but actually they want me to go on for another eight months, until the end of this year. Then, I'm told, I'll be able to stop and become a donor myself.",
+h:"Hint: Kazuo Ishiguro, 2005 — Hailsham, Tommy, Ruth, and the quietly terrible truth"},
+// 71
+{a:"CONSENT",bk:"Blood Meridian",au:"Cormac McCarthy",yr:1985,nt:"Blood Meridian is based on documented atrocities committed by the Glanton Gang along the Texas–Mexico border in 1849. Judge Holden is considered one of the most terrifying figures in American fiction.",
+s:"Whatever in creation exists without my knowledge exists without my [?].",
+m:"The Judge smiled. \"Whatever in creation exists without my knowledge exists without my [?].\" He spread his hands broadly. \"Only nature can enslave man and only when the existence of each last entity is routed out and made to stand naked before him will he be properly suzerain of the earth.\"",
+l:"\"Whatever in creation exists without my knowledge exists without my [?],\" the Judge said. \"The freedom of birds is an insult to me. I'd have them all in zoos.\" He turned, and as he did, he added: \"Whatever exists without my knowing it, does not exist at all.\"",
+h:"Hint: Cormac McCarthy, 1985 — the Judge's manifesto; violence as cosmology"},
+// 72
+{a:"ASHAMED",bk:"The Body",au:"Stephen King",yr:1982,nt:"King's novella 'The Body' was adapted into the 1986 film Stand by Me. It is considered his most autobiographical work — the narrator Gordon Lachance shares King's birth year and writing career.",
+s:"I never had any friends later on like the ones I had when I was twelve. Jesus, did you?",
+m:"\"It happens sometimes. Friends come in and out of a life like busboys in a restaurant, did you ever notice that? But sometimes, with a little luck, they arrive in threes or fours or fives and you hardly notice them slipping away.\" I never had any friends later on like the ones I had when I was twelve. Jesus, did you? I'm not [?] to say it.",
+l:"I never had any friends later on like the ones I had when I was twelve. Jesus, did you? I'm not [?] to say it. The word is the right word for what happened to us that fall — together, the four of us pulled ourselves up out of something dark and nearly lost.",
+h:"Hint: Stephen King, 1982 — four boys, a dead body, a summer that changed everything"},
+// 73
+{a:"PROLOGUE",bk:"The Tempest",au:"William Shakespeare",yr:1611,nt:"The Tempest is widely believed to be Shakespeare's final play. Prospero's farewell speech — in which he breaks his staff and drowns his book — is often read as Shakespeare's own farewell to the stage.",
+s:"Our revels now are ended. These our actors, as I foretold you, were all spirits, and are melted into air, into thin air: And, like the baseless fabric of this vision, the cloud-capp'd towers, the gorgeous palaces, the solemn temples, the great globe itself, yea, all which it inherit, shall dissolve and, like this insubstantial pageant faded, leave not a rack behind. We are such stuff as dreams are made on, and our little life is rounded with a sleep. Sir, I am vex'd; bear with my weakness; my old brain is troubled. Be not disturb'd with my infirmity: if you be pleased, retire into my cell, and there repose: a turn or two I'll walk, to still my beating mind. We wish your peace. Come with your servant, as I said I would — your [?] I spoke was all but fancies.",
+m:"Our revels now are ended. These our actors were all spirits, and are melted into air, into thin air. We are such stuff as dreams are made on, and our little life is rounded with a sleep. Your [?] I spoke was all but fancies.",
+l:"We are such stuff as dreams are made on, and our little life is rounded with a sleep. Sir, I am vex'd; bear with my weakness; my old brain is troubled. We wish your peace. Your [?] I spoke was all but fancies.",
+h:"Hint: William Shakespeare, The Tempest — Prospero, the spirit Ariel, a farewell to magic"},
+// 74
+{a:"SONGS",bk:"Atonement",au:"Ian McEwan",yr:2001,nt:"McEwan's Atonement is itself an act of literary metafiction — Briony, the narrator, ultimately reveals that the novel we have read is her own invented atonement for a childhood lie.",
+s:"The play — for which Briony had designed the [?], costumes, and dances, and for which she had written the words — was her first foray into drama.",
+m:"The play — for which Briony had designed the [?], costumes, and dances, and for which she had written the words — was her first foray into drama. She was thirteen, more or less, and the central character was a young woman of exceptional courage and beauty.",
+l:"The play — for which Briony had designed the [?], costumes, and dances, and for which she had written the words — was her first foray into drama, and she had found it exhilarating. The Trials of Arabella was performed only once, on a hot Saturday afternoon in June.",
+h:"Hint: Ian McEwan, 2001 — a child playwright, an English country house, 1935"},
+// 75
+{a:"MARTYRDOM",bk:"Middlemarch",au:"George Eliot",yr:1871,nt:"George Eliot's Prelude to Middlemarch compares Dorothea to St. Theresa — women whose ardor alternated between vague ideals and common yearnings, with no epic life to match their epic longing.",
+s:"Her finely touched spirit had still its fine issues, though they were not widely visible. Her full nature spent itself in channels which had no great name on the earth. But the effect of her action on those around her was incalculably diffusive: for the growing good of the world is partly dependent on unhistoric acts; and that things are not so ill with you and me as they might have been, is half owing to the number who lived faithfully a hidden life, and rest in unvisited tombs. Some have felt that these blundering lives are due to the inconvenient indefiniteness with which the Supreme Power has fashioned the natures of women: if there were one level of feminine incompetence as strict as the ability to count three and no more, the social lot of women might be treated with scientific certitude. Meanwhile the indefiniteness remains, and the limits of variation are really much wider than any one would imagine from the sameness of women's coiffure and the favourite love-stories in prose and verse. Here and there a cygnet is reared uneasily among the ducklings in the brown pond, and never finds the living stream in fellowship with its own oary-footed kind. Here and there is born a Saint Theresa, foundress of nothing, whose loving heart-beats and [?] must be held in the larger faith.",
+m:"Some have felt that these blundering lives are due to the inconvenient indefiniteness with which the Supreme Power has fashioned the natures of women. Here and there is born a Saint Theresa, foundress of nothing, whose loving heart-beats and [?] must be held in the larger faith.",
+l:"The growing good of the world is partly dependent on unhistoric acts. Here and there is born a Saint Theresa, foundress of nothing, whose loving heart-beats and [?] must be held in the larger faith.",
+h:"Hint: George Eliot, Middlemarch — the Prelude; Saint Theresa, women, and unhistoric greatness"},
+// 76
+{a:"AMUSEMENT",bk:"Persuasion",au:"Jane Austen",yr:1817,nt:"Persuasion was published posthumously in 1817, six months after Austen's death. Captain Wentworth's letter — 'I am half agony, half hope' — is widely considered the most romantic declaration in English literature.",
+s:"How eloquent could Anne Elliot have been — how eloquent, at least, were her wishes on the side of early warm attachment, and a cheerful confidence in futurity, against that over-anxious caution which seems to insult exertion and distrust Providence! She had been forced into prudence in her youth, she learned romance as she grew older — the natural sequel of an unnatural beginning. With all this experience, however, she was not in the end satisfied to have it so. She thought it could scarcely escape him to feel that a persuadable temper might sometimes be a misfortune to herself; she doubted whether it might not have been good for her to be more resolved — but she had no [?] in the conclusion she drew.",
+m:"She had been forced into prudence in her youth, she learned romance as she grew older — the natural sequel of an unnatural beginning. She doubted whether it might not have been good for her to be more resolved — but she had no [?] in the conclusion she drew.",
+l:"How eloquent could Anne Elliot have been on the side of early warm attachment and cheerful confidence in futurity! She had been forced into prudence in her youth. She doubted whether it might not have been good for her to be more resolved — but she had no [?] in the conclusion she drew.",
+h:"Hint: Jane Austen, Persuasion — Anne Elliot and the lesson of her own persuadability"},
+// 77
+{a:"CLEVER",bk:"Emma",au:"Jane Austen",yr:1815,nt:"Austen famously told her family she was writing 'a heroine whom no one but myself will much like.' The novel's irony is that Emma is exactly as clever as she thinks she is — in almost every way except the most important.",
+s:"Emma Woodhouse, handsome, [?], and rich, with a comfortable home and happy disposition, seemed to unite some of the best blessings of existence.",
+m:"Emma Woodhouse, handsome, [?], and rich, with a comfortable home and happy disposition, seemed to unite some of the best blessings of existence; and had lived nearly twenty-one years in the world with very little to distress or vex her.",
+l:"Emma Woodhouse, handsome, [?], and rich, with a comfortable home and happy disposition, seemed to unite some of the best blessings of existence; and had lived nearly twenty-one years in the world with very little to distress or vex her. She was the youngest of the two daughters of a most affectionate, indulgent father.",
+h:"Hint: Jane Austen, Emma — the opening sentence; a heroine with almost every advantage"},
+// 78
+{a:"GLOOMY",bk:"The Brothers Karamazov",au:"Fyodor Dostoyevsky",yr:1880,nt:"Dostoyevsky died four months after completing The Brothers Karamazov. He considered it his masterpiece. Father Zosima's teachings in Book VI are widely studied as the novel's spiritual center.",
+s:"Alexey Fyodorovitch Karamazov was the third son of Fyodor Pavlovitch Karamazov, a landowner well known in our district in his own day, and still remembered among us owing to his [?] and tragic death, which happened thirteen years ago.",
+m:"Alexey Fyodorovitch Karamazov was the third son of Fyodor Pavlovitch Karamazov, a landowner well known in our district in his own day, and still remembered among us owing to his [?] and tragic death, which happened thirteen years ago, and which I shall describe in its proper place.",
+l:"Alexey Fyodorovitch Karamazov was the third son of Fyodor Pavlovitch Karamazov, a landowner well known in our district in his own day, and still remembered among us owing to his [?] and tragic death. He was a strange type, yet one pretty frequently met with, a type abject and vicious and at the same time senseless.",
+h:"Hint: Fyodor Dostoyevsky, 1880 — the opening sentence of a final masterpiece"},
+// 79
+{a:"HEROINE",bk:"Northanger Abbey",au:"Jane Austen",yr:1817,nt:"Northanger Abbey was the first novel Austen sold for publication, but it was published posthumously. The entire book parodies Gothic novels like those by Ann Radcliffe, which Catherine Morland adores.",
+s:"No one who had ever seen Catherine Morland in her infancy, would have supposed her born to be an [?].",
+m:"No one who had ever seen Catherine Morland in her infancy, would have supposed her born to be an [?]. Her situation in life, the character of her father and mother, her own person and disposition, were all equally against her.",
+l:"No one who had ever seen Catherine Morland in her infancy, would have supposed her born to be an [?]. Her situation in life, the character of her father and mother, her own person and disposition, were all equally against her. Her father was a clergyman, without being neglected, or poor, and a very respectable man.",
+h:"Hint: Jane Austen, Northanger Abbey — the opening; a protagonist who doesn't fit the mold"},
+// 80
+{a:"SILENCE",bk:"Middlemarch",au:"George Eliot",yr:1871,nt:"Eliot's 'roar on the other side of silence' is one of the most quoted lines in Victorian fiction, a metaphor for the immensity of ordinary human suffering that goes unheard.",
+s:"If we had a keen vision and feeling of all ordinary human life, it would be like hearing the grass grow and the squirrel's heart beat, and we should die of that roar which lies on the other side of [?].",
+m:"\"That element of tragedy which lies in the very fact of frequency, has not yet wrought itself into the coarse emotion of mankind.\" — If we had a keen vision and feeling of all ordinary human life, it would be like hearing the grass grow and the squirrel's heart beat, and we should die of that roar which lies on the other side of [?].",
+l:"As it is, the quickest of us walk about well wadded with stupidity. If we had a keen vision and feeling of all ordinary human life, it would be like hearing the grass grow and the squirrel's heart beat, and we should die of that roar which lies on the other side of [?].",
+h:"Hint: George Eliot, Middlemarch — on ordinary suffering and the human capacity for numbness"},
+// 81
+{a:"OPINION",bk:"Sense and Sensibility",au:"Jane Austen",yr:1811,nt:"Sense and Sensibility was Austen's first published novel, appearing in 1811. The contrast between Elinor's sense and Marianne's sensibility was Austen's way of exploring emotional intelligence versus passionate feeling.",
+s:"\"I have not wanted syllables where actions have spoken so plainly. Has not his behaviour to Marianne and to all of us, for at least the last fortnight, declared that he loved and considered her no more than a friend?\" — \"Certainly. But I do not think I should be justified, acting on my own judgment alone. I have no right to give my [?] as to his intentions, when I have not the means of forming a just one.\"",
+m:"\"Has not his behaviour to Marianne declared that he loved and considered her no more than a friend?\" — \"Certainly. But I have no right to give my [?] as to his intentions, when I have not the means of forming a just one.\"",
+l:"Elinor spoke with great composure. \"Certainly. But I have no right to give my [?] as to his intentions, when I have not the means of forming a just one. I have no data for forming any judgment.\"",
+h:"Hint: Jane Austen, Sense and Sensibility — Elinor Dashwood and the discipline of reserve"},
+// 82
+{a:"FAUST",bk:"The Age of Innocence",au:"Edith Wharton",yr:1920,nt:"Wharton's novel won the Pulitzer Prize in 1921, making her the first woman to receive it. She set the story in the 1870s New York society she grew up in, which she depicted as a gilded trap.",
+s:"It invariably happened in the same way. Madame Olenska was always beautifully dressed, and always in clothes that slightly startled conventional eyes. That evening she had on a dark red velvet gown which set off her pale skin and dark hair; and round her neck she wore what Newland Archer called to himself her '[?] jewels' — long old-fashioned pendants of pale gold.",
+m:"Madame Olenska had on a dark red velvet gown which set off her pale skin and dark hair; and round her neck she wore what Newland Archer called to himself her '[?] jewels' — long old-fashioned pendants of pale gold.",
+l:"That evening she had on a dark red velvet gown which set off her pale skin and dark hair; and round her neck she wore what Newland Archer called to himself her '[?] jewels' — long old-fashioned pendants of pale gold, that gave her the look of a heroine of romance.",
+h:"Hint: Edith Wharton, 1920 — Newland Archer, Ellen Olenska, Old New York society"},
+// 83
+{a:"SEA",bk:"The House of the Spirits",au:"Isabel Allende",yr:1982,nt:"Allende began The House of the Spirits as a letter to her dying grandfather, who could not read. The magic realist saga spans four generations of the Trueba family and the political upheaval of Chile.",
+s:"Barrabás came to us by [?]. He was in a despicable cage, covered with his own filth and urine, and had spent so long that he had the lost, stupefied look of a hapless prisoner.",
+m:"Barrabás came to us by [?]. He was in a despicable cage, covered with his own filth and urine. The child Clara saw him on the gangway and immediately made him part of her world.",
+l:"Clara wrote in her diary: \"Barrabás came to us by [?]. He was in a despicable cage, covered with his own filth and urine, and had spent so long that he had the lost, stupefied look of a hapless prisoner.\" Clara named the dog the moment she saw him.",
+h:"Hint: Isabel Allende, 1982 — magic realism, Chile, the del Valle family and a prophetic child"},
+// 84
+{a:"CHURCH",bk:"The Alchemist",au:"Paulo Coelho",yr:1988,nt:"Coelho wrote The Alchemist in only two weeks. It has sold over 65 million copies and been translated into 80 languages, making it one of the best-selling books in history.",
+s:"The boy's name was Santiago. He had dreamed the same dream twice — that if he went to the pyramids in Egypt he would find a treasure. He had begun to think he should abandon the search when he arrived in the abandoned [?] in the Andalusian hills.",
+m:"Santiago had slept in the ruined [?] that night. He had dreamed the same dream again, the one about the treasure at the foot of the Egyptian pyramids. He decided that day to interpret his dream seriously.",
+l:"Santiago arrived at the abandoned [?] in the Andalusian hills. The roof had fallen in long ago, and a great sycamore had grown where the sacristy once had been. He dreamed of the treasure twice — the same dream, both times, ending at the pyramids.",
+h:"Hint: Paulo Coelho, 1988 — a shepherd boy, his Personal Legend, and a journey to Egypt"},
+// 85
+{a:"BLUSHING",bk:"Tender Is the Night",au:"F. Scott Fitzgerald",yr:1934,nt:"Fitzgerald drew heavily on his wife Zelda's mental illness and their years living on the French Riviera. He considered Tender Is the Night his most ambitious work.",
+s:"On the pleasant shore of the French Riviera, about half way between Marseilles and the Italian border, stands a large, proud, rose-colored hotel. Deferential palms cool its flushed façade, and before it stretches a short dazzling beach. Lately it has become a [?] business in the summer for much of Europe to come here.",
+m:"On the pleasant shore of the French Riviera stands a large, proud, rose-colored hotel. Deferential palms cool its flushed façade, and before it stretches a short dazzling beach. Lately it has become a [?] business in the summer for much of Europe to come here.",
+l:"On the pleasant shore of the French Riviera stands a large, proud, rose-colored hotel. Deferential palms cool its flushed façade. Lately it has become a [?] business in the summer for much of Europe to come here — particularly for those who can afford the Diver's special guests.",
+h:"Hint: F. Scott Fitzgerald, 1934 — Dick Diver, Nicole, and the decay of the American abroad"},
+// 86
+{a:"WIPE",bk:"One Flew Over the Cuckoo's Nest",au:"Ken Kesey",yr:1962,nt:"Kesey wrote the novel partly while working as a night attendant in a mental ward at a VA hospital, and partly while participating in MKUltra drug experiments. Chief Bromden narrates the entire novel.",
+s:"They're out there. Black boys in white suits up before me to [?] down the fog machine.",
+m:"They're out there. Black boys in white suits up before me to [?] down the fog machine. I can smell them in the hall. I can hear them out there, getting the machine ready.",
+l:"They're out there. Black boys in white suits up before me to [?] down the fog machine. I can smell them in the hall. I can hear the fog coming at me through the walls, and I hear the generator hum begin to build up.",
+h:"Hint: Ken Kesey, 1962 — Chief Bromden's opening lines; a psychiatric ward, a fog machine"},
+// 87
+{a:"AMERICA",bk:"The Joy Luck Club",au:"Amy Tan",yr:1989,nt:"Tan wrote The Joy Luck Club in four months as a collection of interconnected stories. It was sold for $50,000 in 1989 and became an instant bestseller, later adapted into a celebrated 1993 film.",
+s:"My mother believed you could be anything you wanted to be in [?]. You could open a restaurant. You could work for the government and get good retirement. You could buy a house with almost no money down.",
+m:"My mother believed you could be anything you wanted to be in [?]. You could open a restaurant. You could work for the government and get good retirement. You could buy a house with almost no money down. You could become rich. You could become instantly famous.",
+l:"My mother believed you could be anything you wanted to be in [?]. You could open a restaurant. You could work for the government and get good retirement. You could buy a house with almost no money down. You could become rich. You could become instantly famous. \"Of course, you can be prodigy, too,\" my mother told me when I was nine.",
+h:"Hint: Amy Tan, 1989 — a daughter, a mother's expectations, and the mythology of possibility"},
+// 88
+{a:"BASKETBALL",bk:"The Handmaid's Tale",au:"Margaret Atwood",yr:1985,nt:"Atwood has said that every element in The Handmaid's Tale had already occurred in real-world history somewhere. She wrote the novel during the Reagan years, amid rising religious conservatism.",
+s:"A chair, a table, a lamp. Above, on the white ceiling, a relief ornament in the shape of a wreath, and in the centre of it a blank space, plastered over, like the place in a face where the eye has been taken out. There's a window with white curtains and the glass is shatterproof, but it isn't like that, it has a distorting ovoid curve to it. What I can see through it is segments of the garden: a willow, a bed of tulips, a [?] hoop.",
+m:"A chair, a table, a lamp. There's a window with white curtains and the glass is shatterproof. What I can see through it is segments of the garden: a willow, a bed of tulips, a [?] hoop.",
+l:"A chair, a table, a lamp. Above, on the white ceiling, a relief ornament in the shape of a wreath. What I can see through it is segments of the garden: a willow, a bed of tulips, a [?] hoop. The net is gone from the hoop.",
+h:"Hint: Margaret Atwood, 1985 — Offred's room in the Commander's house; Gilead"},
+// 89
+{a:"PALPABLE",bk:"Tess of the d'Urbervilles",au:"Thomas Hardy",yr:1891,nt:"Hardy subtitled the novel 'A Pure Woman Faithfully Presented,' which was considered scandalous at the time. The novel's critical reception was so hostile that Hardy gave up fiction and wrote poetry for the rest of his life.",
+s:"The President of the Immortals, in Aeschylean phrase, had ended his sport with Tess. And the d'Urberville knights and dames slept on in their tombs unknowing. The two speechless gazers bent themselves down to the earth, as if in prayer, and remained thus a long time, absolutely motionless: the flag continued to wave silently. As soon as they had strength, they arose, joined hands again, and went on. \"Justice\" was done, and the President of the Immortals (in Aeschylean phrase) had ended his sport with Tess. And the silence in the prison-house seemed [?].",
+m:"As soon as they had strength, they arose, joined hands again, and went on. \"Justice\" was done, and the President of the Immortals (in Aeschylean phrase) had ended his sport with Tess. And the silence in the prison-house seemed [?].",
+l:"\"Justice\" was done, and the President of the Immortals had ended his sport with Tess. The flag continued to wave silently. The silence in the prison-house seemed [?] even to those two speechless gazers.",
+h:"Hint: Thomas Hardy, 1891 — the final paragraph; Tess's fate and the gods' indifference"},
+// 90
+{a:"EARS",bk:"Far from the Madding Crowd",au:"Thomas Hardy",yr:1874,nt:"Hardy's title comes from Thomas Gray's 'Elegy Written in a Country Churchyard.' Gabriel Oak is considered one of Hardy's most steadfast and quietly heroic characters.",
+s:"When Farmer Oak smiled, the corners of his mouth spread till they were within an unimportant distance of his [?], his eyes were reduced to chinks, and diverging wrinkles appeared round them, extending upon his countenance like the rays in a rudimentary sketch of the rising sun.",
+m:"When Farmer Oak smiled, the corners of his mouth spread till they were within an unimportant distance of his [?], his eyes were reduced to chinks, and diverging wrinkles appeared round them.",
+l:"Gabriel Oak had the smile of an honest man. When Farmer Oak smiled, the corners of his mouth spread till they were within an unimportant distance of his [?], his eyes were reduced to chinks, and diverging wrinkles appeared round them.",
+h:"Hint: Thomas Hardy, 1874 — Gabriel Oak's smile; the opening portrait of a stalwart hero"},
+// 91
+{a:"TWILIGHT",bk:"The Return of the Native",au:"Thomas Hardy",yr:1878,nt:"Hardy's Egdon Heath is often considered a character in itself — wild, timeless, indifferent to human feeling. It appears in the novel's famous opening chapter before any human character is introduced.",
+s:"A Saturday afternoon in November was approaching the time of [?], and the vast tract of unenclosed wild known as Egdon Heath embrowned itself moment by moment.",
+m:"A Saturday afternoon in November was approaching the time of [?], and the vast tract of unenclosed wild known as Egdon Heath embrowned itself moment by moment. Overhead the hollow stretch of whitish cloud shutting out the sky was as a tent which had the whole heath for its floor.",
+l:"A Saturday afternoon in November was approaching the time of [?], and the vast tract of unenclosed wild known as Egdon Heath embrowned itself moment by moment. The heaven being spread with this pallid screen, the earth with the darkest vegetation, their meeting-line at the horizon was clearly marked.",
+h:"Hint: Thomas Hardy, 1878 — the opening line; Egdon Heath before any human appears"},
+// 92
+{a:"BLACKSMITH",bk:"Great Expectations",au:"Charles Dickens",yr:1860,nt:"Great Expectations is Dickens's most autobiographical novel — Pip's shame about his origins and his obsessive striving to be a gentleman mirror Dickens's own childhood experience of social humiliation.",
+s:"My father's family name being Pirrip, and my Christian name Philip, my infant tongue could make of both names nothing longer or more explicit than Pip. So, I called myself Pip, and came to be called Pip. I give Pirrip as my father's family name, on the authority of his tombstone and my sister — Mrs Joe Gargery, who married the [?].",
+m:"I give Pirrip as my father's family name, on the authority of his tombstone and my sister — Mrs Joe Gargery, who married the [?].",
+l:"My father's family name being Pirrip, and my Christian name Philip, my infant tongue could make of both names nothing longer or more explicit than Pip. My sister — Mrs Joe Gargery — had married the [?] of the village, and she was not a good-tempered woman.",
+h:"Hint: Charles Dickens, 1860 — Pip's opening account of his own name and family"},
+// 93
+{a:"MEGALOSAURUS",bk:"Bleak House",au:"Charles Dickens",yr:1852,nt:"Dickens's fog in Bleak House is one of the most celebrated metaphors in Victorian fiction — the physical fog mirroring the impenetrable fog of Chancery Court's endless legal proceedings.",
+s:"London. Michaelmas Term lately over, and the Lord Chancellor sitting in Lincoln's Inn Hall. Implacable November weather. As much mud in the streets as if the waters had but newly retired from the face of the earth, and it would not be wonderful to meet a [?], forty feet long or so, waddling like an elephantine lizard up Holborn Hill.",
+m:"Implacable November weather. As much mud in the streets as if the waters had but newly retired from the face of the earth, and it would not be wonderful to meet a [?], forty feet long or so, waddling like an elephantine lizard up Holborn Hill.",
+l:"London. Implacable November weather. As much mud in the streets as if the waters had but newly retired from the face of the earth, and it would not be wonderful to meet a [?], forty feet long or so, waddling like an elephantine lizard up Holborn Hill. Fog everywhere.",
+h:"Hint: Charles Dickens, 1852 — the fog opening; London mud, Lincoln's Inn, and a dinosaur"},
+// 94
+{a:"MYSTERY",bk:"The Woman in White",au:"Wilkie Collins",yr:1859,nt:"Collins published The Woman in White as a serial in All the Year Round, the magazine edited by Charles Dickens. It is widely credited as the first modern detective novel.",
+s:"This is the story of what a Woman's patience can endure, and what a Man's resolution can achieve. If the machinery of the Law could be depended on to fathom every [?] and to punish every wrong, I should have had no reason to write these pages.",
+m:"This is the story of what a Woman's patience can endure, and what a Man's resolution can achieve. If the machinery of the Law could be depended on to fathom every [?] and to punish every wrong, I should have had no reason to write these pages. The story here presented will be told by more than one pen.",
+l:"If the machinery of the Law could be depended on to fathom every [?] and to punish every wrong, I should have had no reason to write these pages. The story here presented will be told by more than one pen, as the story of an offence against the laws is told in Court by more than one witness.",
+h:"Hint: Wilkie Collins, 1859 — the opening declaration of a Victorian sensation novel"},
+// 95
+{a:"NAMED",bk:"Villette",au:"Charlotte Brontë",yr:1853,nt:"Villette is the most autobiographical of Brontë's novels, drawing on her years as a student and teacher in Brussels. Lucy Snowe is considered one of Victorian fiction's most psychologically complex unreliable narrators.",
+s:"My godmother lived in a handsome house in the clean and ancient town of Bretton. Her husband's family had been, perhaps, for two generations, natives of a continental town called Villette; hence his [?].",
+m:"My godmother lived in a handsome house in the clean and ancient town of Bretton. Her husband's family had been, perhaps, for two generations, natives of a continental town called Villette; hence his [?]. I, Lucy Snowe, had known her since I was a very young girl.",
+l:"My godmother lived in a handsome house in the clean and ancient town of Bretton. Her husband's family had been, perhaps, for two generations, natives of a continental town called Villette; hence his [?]. I, Lucy Snowe, had known her since I was a very young girl. I was accustomed to visit her sometimes.",
+h:"Hint: Charlotte Brontë, 1853 — Lucy Snowe, Brussels, and a narrator you cannot entirely trust"},
+// 96
+{a:"DISAGREEABLE",bk:"The Secret Garden",au:"Frances Hodgson Burnett",yr:1911,nt:"Burnett's novel was initially dismissed as a minor children's book. It was later recognized as one of the most psychologically rich portraits of childhood unhappiness transformed by nature in English literature.",
+s:"When Mary Lennox was sent to Misselthwaite Manor to live with her uncle, everybody said she was the most [?] looking child ever seen.",
+m:"When Mary Lennox was sent to Misselthwaite Manor to live with her uncle, everybody said she was the most [?] looking child ever seen. It was true, too. She had a little thin face and a little thin body, thin light hair and a sour expression.",
+l:"When Mary Lennox was sent to Misselthwaite Manor to live with her uncle, everybody said she was the most [?] looking child ever seen. It was true, too. She had a little thin face and a little thin body, thin light hair and a sour expression. Her hair was yellow, and her face was yellow because she had been born in India.",
+h:"Hint: Frances Hodgson Burnett, 1911 — the opening sentence; a girl nobody wants"},
+// 97
+{a:"MUNICIPAL",bk:"Kim",au:"Rudyard Kipling",yr:1901,nt:"Kim is Kipling's most celebrated novel and widely considered his masterpiece. The Great Game — the intelligence rivalry between Britain and Russia in Central Asia — forms the novel's political backdrop.",
+s:"He sat, in defiance of [?] orders, astride the gun Zam-Zammah on her brick platform opposite the old Ajaib-Gher — the Wonder House, as the natives call the Lahore Museum.",
+m:"He sat, in defiance of [?] orders, astride the gun Zam-Zammah on her brick platform opposite the old Ajaib-Gher — the Wonder House, as the natives call the Lahore Museum. Who hold Zam-Zammah, that 'fire-breathing dragon', hold the Punjab.",
+l:"He sat, in defiance of [?] orders, astride the gun Zam-Zammah on her brick platform opposite the old Ajaib-Gher — the Wonder House. Who hold Zam-Zammah hold the Punjab. Kim, the boy, was well acquainted with the great cannon, with the old men of the road, with the smell of Lahore.",
+h:"Hint: Rudyard Kipling, 1901 — Kim astride the great gun; Lahore, the opening line"},
+// 98
+{a:"FEELING",bk:"The Jungle Book",au:"Rudyard Kipling",yr:1894,nt:"Kipling wrote The Jungle Book while living in Vermont, drawing on his childhood memories of India. He invented Mowgli's story entirely — there was no specific source for the feral child.",
+s:"It was seven o'clock of a very warm evening in the Seeonee hills when Father Wolf woke up from his day's rest, scratched himself, yawned, and spread out his paws one after the other to get rid of the sleepy [?] in their tips.",
+m:"It was seven o'clock of a very warm evening in the Seeonee hills when Father Wolf woke up from his day's rest, scratched himself, yawned, and spread out his paws one after the other to get rid of the sleepy [?] in their tips. Mother Wolf lay with her big grey nose dropped across her four tumbling, squealing cubs.",
+l:"It was seven o'clock of a very warm evening in the Seeonee hills when Father Wolf woke up from his day's rest, scratched himself, yawned, and spread out his paws one after the other to get rid of the sleepy [?] in their tips. Mother Wolf lay with her big grey nose dropped across her four tumbling, squealing cubs. The moon shone into the mouth of the cave.",
+h:"Hint: Rudyard Kipling, 1894 — the opening of Mowgli's story; the Seeonee hills at evening"},
+// 99
+{a:"REMOVED",bk:"Wuthering Heights",au:"Emily Brontë",yr:1847,nt:"Emily Brontë published Wuthering Heights under the male pseudonym Ellis Bell. She died the year after its publication, aged 30. Its reputation grew enormously in the 20th century.",
+s:"I have just returned from a visit to my landlord — the solitary neighbour that I shall be troubled with. This is certainly a beautiful country! In all England, I do not believe that I could have fixed on a situation so completely [?] from the stir of society.",
+m:"I have just returned from a visit to my landlord — the solitary neighbour that I shall be troubled with. In all England, I do not believe that I could have fixed on a situation so completely [?] from the stir of society.",
+l:"Mr. Lockwood — I have just returned from a visit to my landlord. This is certainly a beautiful country! In all England, I do not believe that I could have fixed on a situation so completely [?] from the stir of society. A perfect misanthropist's Heaven — and Mr. Heathcliff and I are such a suitable pair to divide the desolation between us.",
+h:"Hint: Emily Brontë, 1847 — Lockwood's first journal entry; the Yorkshire moors"},
+// 100
+{a:"FLOWERS",bk:"Mrs Dalloway",au:"Virginia Woolf",yr:1925,nt:"Woolf originally planned for Clarissa to die at the end of the party. She changed this and instead killed Septimus — the shell-shocked veteran — allowing Clarissa to absorb his death from a distance.",
+s:"Mrs Dalloway said she would buy the [?] herself.",
+m:"Mrs Dalloway said she would buy the [?] herself. For Lucy had her work cut out for her. The doors would be taken off their hinges; Rumpelmayer's men were coming.",
+l:"Mrs Dalloway said she would buy the [?] herself. For Lucy had her work cut out for her. The doors would be taken off their hinges; Rumpelmayer's men were coming. And then, thought Clarissa Dalloway, what a morning — fresh as if issued to children on a beach.",
+h:"Hint: Virginia Woolf, 1925 — the first sentence; Clarissa Dalloway on a June morning in London"},
+// 101
+{a:"JOY",bk:"To the Lighthouse",au:"Virginia Woolf",yr:1927,nt:"Woolf based the Ramsay family on her own parents and childhood summers in Cornwall. She said writing the novel felt like an exorcism — it allowed her to bury her mother, who had died when Woolf was thirteen.",
+s:"\"Yes, of course, if it's fine tomorrow,\" said Mrs Ramsay. \"But you'll have to be up with the lark,\" she added. To her son these words conveyed an extraordinary [?], as if it were settled, the expedition were bound to take place, and the wonder to which he had looked forward, for years and years it seemed, was, after a night's darkness and a day's sail, within touch.",
+m:"\"Yes, of course, if it's fine tomorrow,\" said Mrs Ramsay. \"But you'll have to be up with the lark,\" she added. To her son these words conveyed an extraordinary [?], as if it were settled, the expedition were bound to take place.",
+l:"\"Yes, of course, if it's fine tomorrow,\" said Mrs Ramsay. To her son these words conveyed an extraordinary [?], as if it were settled. The wonder to which he had looked forward, for years and years it seemed, was within touch.",
+h:"Hint: Virginia Woolf, 1927 — Mrs Ramsay's promise; the lighthouse in the distance"},
+// 102
+{a:"NEIGHBORHOOD",bk:"Sula",au:"Toni Morrison",yr:1973,nt:"Morrison's second novel, Sula is structured around the friendship between two Black women in a community called the Bottom — a name given with cruel irony. It was Morrison's first work to explore female friendship as its central subject.",
+s:"In that place, where they tore the nightshade and blackberry patches from their roots to make room for the Medallion City Golf Course, there was once a [?] for Black people.",
+m:"In that place, where they tore the nightshade and blackberry patches from their roots to make room for the Medallion City Golf Course, there was once a [?] for Black people. It was called the Bottom and it was, of course, in the hills above the valley.",
+l:"In that place, where they tore the nightshade and blackberry patches from their roots to make room for the Medallion City Golf Course, there was once a [?] for Black people. It was called the Bottom and it was, of course, in the hills above the valley — because the white farmer who first settled there said the hill land was the bottom of heaven.",
+h:"Hint: Toni Morrison, 1973 — the Bottom; a community's geography and its bitter irony"},
+// 103
+{a:"TEA",bk:"The Portrait of a Lady",au:"Henry James",yr:1881,nt:"Henry James called The Portrait of a Lady his finest achievement. Isabel Archer's tragedy — choosing wrong and accepting the consequences with integrity — was for James the highest form of moral consciousness.",
+s:"Under certain circumstances there are few hours in life more agreeable than the hour dedicated to the ceremony known as afternoon [?].",
+m:"Under certain circumstances there are few hours in life more agreeable than the hour dedicated to the ceremony known as afternoon [?]. There are circumstances of course under which the situation is so little agreeable — when the ceremony in question can be at best got through rapidly.",
+l:"Under certain circumstances there are few hours in life more agreeable than the hour dedicated to the ceremony known as afternoon [?]. There are circumstances of course under which the situation is so little agreeable. But if the occasion itself is satisfactory the hour may be as delightful as any of the twenty-four.",
+h:"Hint: Henry James, 1881 — the opening sentence; an English lawn, a silver teapot, and Isabel Archer approaching"},
+// 104
+{a:"IMPETUOUS",bk:"The Mill on the Floss",au:"George Eliot",yr:1860,nt:"The Mill on the Floss is George Eliot's most autobiographical novel. Maggie Tulliver's intellectual hunger in a world that has no use for clever women closely mirrors Eliot's own early life.",
+s:"A wide plain, where the broadening Floss hurries on between its green banks to the sea, and the water-fowl go with him. How lovely the little river is, with its dark, changing wavelets! Oh, it is brown, good old Floss. The same river I remember so well. How I used to love it! But now — now I have been [?]. I have gone away from it. I am not the child I was.",
+m:"How lovely the little river is, with its dark, changing wavelets! But now — now I have been [?]. I have gone away from it. I am not the child I was. I dream of it, the Floss.",
+l:"A wide plain, where the broadening Floss hurries on between its green banks to the sea. How lovely the little river is, with its dark, changing wavelets! But now — now I have been [?]. I have gone away from it. I am not the child I was. Maggie Tulliver would say: it is a sorrow to have the world's good.",
+h:"Hint: George Eliot, 1860 — the River Floss; a childhood home seen from distance and longing"}
+];
+
+// ═══════════════════════════════════════════════════════
+//  GAME ENGINE
+// ═══════════════════════════════════════════════════════
+const EPOCH    = new Date('2026-05-02T00:00:00');
+const MAX_GUESSES = 5;
+
+let puzzle, guesses = [], contextLevel = 0, won = false, lost = false;
+let gameNum = 1;
+let revealedLetters = new Set();
+const TEST_MODE = new URLSearchParams(window.location.search).get('test') === '1';
+
+// ── utilities ────────────────────────────────────────
+function todayKey() {
+  const d = new Date(); return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+}
+function dayIndex() {
+  const now = new Date(); now.setHours(0,0,0,0);
+  return Math.max(0, Math.floor((now - EPOCH) / 86400000));
+}
+function getPuzzle()  { return TEST_MODE ? PUZZLES[9] : PUZZLES[(dayIndex() * 2 + (gameNum - 1)) % PUZZLES.length]; }
+function dateLabel()  { return new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}); }
+
+function stateKey()   { return (TEST_MODE ? 'test_' : 'redacted_') + todayKey() + '_g' + gameNum; }
+function loadState()  { const r = localStorage.getItem(stateKey()); return r ? JSON.parse(r) : null; }
+function saveState()  { localStorage.setItem(stateKey(), JSON.stringify({guesses, contextLevel, won, lost, revealedLetters:[...revealedLetters]})); }
+function game2State() { const r = localStorage.getItem('redacted_' + todayKey() + '_g2'); return r ? JSON.parse(r) : null; }
+
+function getStreak()  { return parseInt(localStorage.getItem('redacted_streak') || '0'); }
+function renderStreak() { const s = getStreak(); document.getElementById('streak-badge').textContent = (s>0?'🔥 ':'')+s; }
+
+function updateStreak(didWin) {
+  const today = todayKey();
+  const last  = localStorage.getItem('redacted_last_played');
+  let streak  = getStreak();
+  if (last !== today) {
+    const yesterday = new Date(); yesterday.setDate(yesterday.getDate()-1);
+    const yd = `${yesterday.getFullYear()}-${yesterday.getMonth()}-${yesterday.getDate()}`;
+    if (last !== yd) streak = 0;
+    if (didWin) streak++;
+    localStorage.setItem('redacted_streak', streak);
+    localStorage.setItem('redacted_last_played', today);
+  }
+  renderStreak();
+}
+
+function getPlays()   { return parseInt(localStorage.getItem('redacted_plays') || '0'); }
+function bumpPlays()  { localStorage.setItem('redacted_plays', getPlays()+1); }
+function isSubbed()   { return localStorage.getItem('redacted_subbed') === '1'; }
+function recordSubscribe() { localStorage.setItem('redacted_subbed','1'); }
+
+// ── passage rendering ─────────────────────────────────
+function buildBlocks(answerWord) {
+  let inner = '';
+  for (let i = 0; i < answerWord.length; i++) {
+    const ch = answerWord[i].toUpperCase();
+    inner += revealedLetters.has(ch)
+      ? `<span class="rl">${ch}</span>`
+      : '█';
+  }
+  return `<span class="redact" id="redact-block">${inner}</span>`;
+}
+
+function renderPassage(text, answer, showHint, showLetterCount) {
+  const el     = document.getElementById('passage-text');
+  const html   = text.replace('[?]', buildBlocks(answer));
+  el.classList.add('fading');
+  setTimeout(() => {
+    el.innerHTML = html;
+    el.classList.remove('fading');
+  }, 220);
+
+  // hint line
+  const hl = document.getElementById('hint-line');
+  if (showHint) {
+    hl.textContent = puzzle.h;
+    hl.classList.add('show');
+  }
+
+  // letter count
+  const lh = document.getElementById('letter-hint');
+  if (showLetterCount) {
+    lh.textContent = `The missing word is ${answer.length} letters long`;
+    lh.classList.add('show');
+  }
+}
+
+function getContextText() {
+  if (contextLevel === 0) return puzzle.s;
+  if (contextLevel === 1) return puzzle.m;
+  return puzzle.l;
+}
+
+function renderContextPips() {
+  const pips  = document.querySelectorAll('.context-pip');
+  pips.forEach((p,i) => p.classList.toggle('lit', i <= contextLevel));
+  document.getElementById('context-label').textContent = `Level ${contextLevel+1} of 4`;
+}
+
+// ── dots ─────────────────────────────────────────────
+function renderDots() {
+  const el = document.getElementById('att-dots');
+  let html = '';
+  for (let i = 0; i < MAX_GUESSES; i++) {
+    const used   = i < guesses.length;
+    const wrong  = used && !guesses[i].correct;
+    html += `<span class="att-dot ${wrong ? 'wrong' : used ? 'used' : ''}"></span>`;
+  }
+  el.innerHTML = html;
+}
+
+// ── guess history ─────────────────────────────────────
+function renderHistory() {
+  const el = document.getElementById('guess-history');
+  el.innerHTML = '';
+  guesses.forEach(g => {
+    if (g.correct) return; // correct shows in reveal
+    const div = document.createElement('div');
+    div.className = 'guess-item wrong';
+    div.innerHTML = `<span class="gi-icon">✕</span><span class="gi-word">${g.word}</span>`;
+    el.appendChild(div);
+  });
+}
+
+// ── feedback ─────────────────────────────────────────
+function setFeedback(msg) {
+  const el = document.getElementById('feedback');
+  el.textContent = msg;
+  if (msg) { clearTimeout(el._t); el._t = setTimeout(() => { el.textContent=''; }, 2400); }
+}
+
+// ── submit ────────────────────────────────────────────
+function submitGuess() {
+  const input = document.getElementById('guess-input');
+  const raw   = input.value.trim();
+  if (!raw || won || lost) return;
+
+  const guess = raw.toUpperCase().replace(/[^A-Z]/g,'');
+  if (!guess) return;
+
+  const correct = guess === puzzle.a.toUpperCase();
+  guesses.push({ word: raw.toUpperCase(), correct });
+
+  if (correct) {
+    won = true;
+    revealAnswer(true);
+    updateStreak(true);
+    bumpPlays();
+    saveState();
+    input.value = '';
+    document.getElementById('input-area').style.display = 'none';
+    setTimeout(confetti, 300);
+    setTimeout(showShareAndNext, 800);
+    if (!isSubbed() && getPlays() >= 3) setTimeout(openSub, 2000);
+  } else {
+    // wrong
+    input.classList.add('shake');
+    input.addEventListener('animationend', () => input.classList.remove('shake'), { once: true });
+    input.value = '';
+
+    // unmask any letters from the guess that appear in the answer
+    const answerUpper = puzzle.a.toUpperCase();
+    let newReveals = 0;
+    for (const ch of guess) {
+      if (answerUpper.includes(ch) && !revealedLetters.has(ch)) {
+        revealedLetters.add(ch);
+        newReveals++;
+      }
+    }
+
+    // advance context
+    const remaining = MAX_GUESSES - guesses.length;
+    if (guesses.length === 1) contextLevel = 1;
+    else if (guesses.length === 2) contextLevel = 2;
+    else if (guesses.length === 3) { contextLevel = 3; }
+    else if (guesses.length === 4) { contextLevel = 3; }
+
+    const showHint    = guesses.length >= 3;
+    const showLetters = guesses.length >= 4;
+    renderPassage(getContextText(), puzzle.a, showHint, showLetters);
+    renderContextPips();
+
+    if (remaining <= 0) {
+      lost = true;
+      revealAnswer(false);
+      updateStreak(false);
+      bumpPlays();
+      saveState();
+      document.getElementById('input-area').style.display = 'none';
+      showShareAndNext();
+      if (!isSubbed() && getPlays() >= 3) setTimeout(openSub, 1200);
+    } else {
+      let msg = remaining === 1 ? 'Last chance…' : 'Not quite.';
+      if (newReveals > 0) msg += ` ${newReveals} letter${newReveals > 1 ? 's' : ''} revealed.`;
+      setFeedback(msg);
+    }
+
+    renderDots();
+    renderHistory();
+    saveState();
+  }
+}
+
+// ── reveal ────────────────────────────────────────────
+function revealAnswer(isWin) {
+  // swap the block for gold text in the passage
+  const block = document.getElementById('redact-block');
+  if (block) {
+    block.className = 'redact revealed';
+    block.textContent = puzzle.a;
+  }
+
+  // book reveal card
+  const card = document.getElementById('book-reveal');
+  document.getElementById('reveal-pre').textContent  = isWin ? 'Correct! The passage is from' : 'The answer was ' + puzzle.a + ' — from';
+  document.getElementById('reveal-title').textContent = `${puzzle.bk} (${puzzle.yr})`;
+  document.getElementById('reveal-author').textContent = `— ${puzzle.au}`;
+  document.getElementById('reveal-note').textContent   = puzzle.nt;
+  card.classList.add('show');
+
+  renderDots();
+  renderHistory();
+}
+
+// ── share ─────────────────────────────────────────────
+function buildShare() {
+  const date     = dateLabel();
+  const gamePart = gameNum === 2 ? ' · Passage 2' : ' · Passage 1';
+  const result   = won
+    ? `Solved in ${guesses.length} guess${guesses.length===1?'':'es'} of 5`
+    : 'Could not crack it today';
+  const icons  = guesses.map(g => g.correct ? '🟩' : '🟥').join('') +
+                 '⬜'.repeat(Math.max(0, MAX_GUESSES - guesses.length));
+  return [
+    `The Redacted — ${date}${gamePart}`,
+    result,
+    icons,
+    '',
+    'atlasvalleybooks.com/the-redacted'
+  ].join('\n');
+}
+
+function copyShare() {
+  navigator.clipboard.writeText(buildShare()).then(() => {
+    const c = document.getElementById('copy-confirm');
+    c.classList.add('show');
+    setTimeout(() => c.classList.remove('show'), 2000);
+  });
+}
+
+function loadGame2() {
+  gameNum = 2;
+  guesses = []; contextLevel = 0; won = false; lost = false;
+  revealedLetters = new Set();
+  puzzle  = getPuzzle();
+
+  document.getElementById('game-indicator').textContent = 'Passage 2 of 2';
+  document.getElementById('second-passage-area').style.display = 'none';
+
+  document.getElementById('passage-text').innerHTML =
+    getContextText().replace('[?]', buildBlocks(puzzle.a));
+
+  const hl = document.getElementById('hint-line');
+  hl.textContent = ''; hl.classList.remove('show');
+  const lh = document.getElementById('letter-hint');
+  lh.textContent = ''; lh.classList.remove('show');
+
+  renderContextPips();
+  renderDots();
+  document.getElementById('guess-history').innerHTML = '';
+  document.getElementById('feedback').textContent = '';
+  document.getElementById('book-reveal').classList.remove('show');
+  document.getElementById('share-area').classList.remove('show');
+  document.getElementById('next-area').classList.remove('show');
+
+  const ia = document.getElementById('input-area');
+  ia.style.display = '';
+  document.getElementById('guess-input').value = '';
+  document.getElementById('submit-btn').disabled = false;
+}
+
+function showShareAndNext() {
+  document.getElementById('share-area').classList.add('show');
+  if (gameNum === 1) {
+    const g2 = game2State();
+    if (!g2 || (!g2.won && !g2.lost)) {
+      document.getElementById('second-passage-area').style.display = '';
+    } else {
+      document.getElementById('next-area').classList.add('show');
+    }
+  } else {
+    document.getElementById('next-area').classList.add('show');
+  }
+}
+
+// ── confetti ──────────────────────────────────────────
+function confetti() {
+  const colors = ['#c9a84c','#d4892a','#5a9daf','#f0e6cc','#ffffff'];
+  for (let i = 0; i < 55; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.cssText = `left:${Math.random()*100}vw;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${1.4+Math.random()*2}s;animation-delay:${Math.random()*.8}s;width:${6+Math.random()*7}px;height:${6+Math.random()*7}px`;
+    document.body.appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
+  }
+}
+
+// ── countdown ─────────────────────────────────────────
+function startCountdown() {
+  function tick() {
+    const now  = new Date();
+    const tmrw = new Date(now); tmrw.setDate(tmrw.getDate()+1); tmrw.setHours(0,0,0,0);
+    const d    = tmrw - now;
+    const h    = String(Math.floor(d/3600000)).padStart(2,'0');
+    const m    = String(Math.floor((d%3600000)/60000)).padStart(2,'0');
+    const s    = String(Math.floor((d%60000)/1000)).padStart(2,'0');
+    const el   = document.getElementById('countdown');
+    if (el) el.textContent = `${h}:${m}:${s}`;
+  }
+  tick(); setInterval(tick, 1000);
+}
+
+// ── modals ────────────────────────────────────────────
+function openHelp()  { document.getElementById('help-modal').classList.add('open'); }
+function closeHelp() { document.getElementById('help-modal').classList.remove('open'); }
+function openSub()   { document.getElementById('help-modal').classList.remove('open'); document.getElementById('sub-modal').classList.add('open'); }
+function dismissSub(){ const d=parseInt(localStorage.getItem('redacted_sub_dismissed')||'0'); localStorage.setItem('redacted_sub_dismissed',d+1); document.getElementById('sub-modal').classList.remove('open'); }
+
+document.querySelectorAll('.modal-backdrop').forEach(el => {
+  el.addEventListener('click', e => { if (e.target===el && el.id==='help-modal') closeHelp(); });
+});
+
+// enter key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    const inp = document.getElementById('guess-input');
+    if (document.activeElement === inp || inp.value) submitGuess();
+  }
+});
+
+// ── INIT ─────────────────────────────────────────────
+function init() {
+  // If game 2 has been started/completed today, resume it
+  const g2 = game2State();
+  if (g2) gameNum = 2;
+
+  document.getElementById('date-label').textContent = dateLabel();
+  document.getElementById('game-indicator').textContent = `Passage ${gameNum} of 2`;
+  renderStreak();
+  puzzle = getPuzzle();
+
+  const saved = loadState();
+  if (saved) {
+    guesses         = saved.guesses         || [];
+    contextLevel    = saved.contextLevel    || 0;
+    won             = saved.won             || false;
+    lost            = saved.lost            || false;
+    revealedLetters = new Set(saved.revealedLetters || []);
+  }
+
+  // restore context text
+  const showHint    = guesses.length >= 3 || won || lost;
+  const showLetters = guesses.length >= 4 || won || lost;
+  document.getElementById('passage-text').innerHTML =
+    getContextText().replace('[?]', buildBlocks(puzzle.a));
+  if (showHint) {
+    document.getElementById('hint-line').textContent = puzzle.h;
+    document.getElementById('hint-line').classList.add('show');
+  }
+  if (showLetters && !won && !lost) {
+    document.getElementById('letter-hint').textContent = `The missing word is ${puzzle.a.length} letters long`;
+    document.getElementById('letter-hint').classList.add('show');
+  }
+
+  renderContextPips();
+  renderDots();
+  renderHistory();
+
+  if (won || lost) {
+    revealAnswer(won);
+    document.getElementById('input-area').style.display = 'none';
+    showShareAndNext();
+  }
+
+  startCountdown();
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

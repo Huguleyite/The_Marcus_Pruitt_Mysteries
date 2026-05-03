@@ -236,6 +236,20 @@
       text-transform: uppercase;
       font-family: 'Courier New', monospace;
     }
+
+    /* ── RESPONSIVE: scale grid down on small screens ── */
+    @media (max-width: 600px) {
+      body { padding: 24px 12px 36px; }
+      h1 { font-size: 26px; letter-spacing: 2px; }
+      .puzzle-container { gap: 24px; }
+      .crossword-grid { transform: scale(0.82); transform-origin: top center; }
+      .grid-panel { gap: 8px; }
+    }
+    @media (max-width: 420px) {
+      .crossword-grid { transform: scale(0.65); transform-origin: top center; }
+      .clue-group { min-width: 160px; }
+      .clue-item { font-size: 11px; }
+    }
   </style>
 </head>
 <body>

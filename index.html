@@ -127,7 +127,10 @@
             border: none;
             padding: 4px;
         }
-        .hamburger span { display: block; width: 24px; height: 2px; background: var(--gold); transition: all 0.3s; }
+        .hamburger span { display: block; width: 24px; height: 2px; background: var(--gold); transition: transform 0.3s ease, opacity 0.3s ease; transform-origin: center; }
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
         /* Mobile nav drawer */
         #mobile-nav {
@@ -616,6 +619,75 @@
             border-top: 1px solid rgba(201, 168, 76, 0.08);
         }
 
+        /* ===========================
+           LITERARY GAMES
+        =========================== */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.75rem;
+            margin-top: 2.5rem;
+        }
+        .game-card {
+            border: 1px solid rgba(201, 168, 76, 0.28);
+            background: rgba(201, 168, 76, 0.03);
+            padding: 2.2rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s, background 0.3s;
+        }
+        .game-card:hover {
+            border-color: rgba(201, 168, 76, 0.55);
+            background: rgba(201, 168, 76, 0.06);
+        }
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            opacity: 0.5;
+        }
+        .game-card-eyebrow {
+            font-family: 'Cinzel', serif;
+            font-size: 0.58rem;
+            letter-spacing: 0.38em;
+            text-transform: uppercase;
+            color: var(--teal-light);
+            margin-bottom: 0.7rem;
+        }
+        .game-card h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.75rem;
+        }
+        .game-card p {
+            color: var(--text-dim);
+            font-size: 0.88rem;
+            line-height: 1.7;
+            margin-bottom: 1.6rem;
+            font-style: italic;
+        }
+        .game-tag {
+            display: inline-block;
+            font-family: 'Cinzel', serif;
+            font-size: 0.58rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--teal-light);
+            border: 1px solid rgba(90, 157, 175, 0.35);
+            border-radius: 20px;
+            padding: 3px 10px;
+            margin-bottom: 1.4rem;
+        }
+        @media (max-width: 640px) {
+            .games-grid { grid-template-columns: 1fr; }
+        }
+
         .extras-layout {
             display: grid;
             grid-template-columns: 1fr 360px;
@@ -839,9 +911,10 @@
         <li><a href="#book">The Book</a></li>
         <li><a href="#about">The Author</a></li>
         <li><a href="#book2">Coming Soon</a></li>
+        <li><a href="#games">Games</a></li>
         <li><a href="#extras">Extras</a></li>
     </ul>
-    <button class="hamburger" aria-label="Open menu" onclick="toggleMobileNav()">
+    <button class="hamburger" id="hamburger-btn" aria-label="Open menu" onclick="toggleMobileNav()">
         <span></span><span></span><span></span>
     </button>
 </nav>
@@ -851,6 +924,7 @@
         <li><a href="#book"  onclick="closeMobileNav()">The Book</a></li>
         <li><a href="#about" onclick="closeMobileNav()">The Author</a></li>
         <li><a href="#book2" onclick="closeMobileNav()">Coming Soon</a></li>
+        <li><a href="#games" onclick="closeMobileNav()">Games</a></li>
         <li><a href="#extras" onclick="closeMobileNav()">Extras</a></li>
     </ul>
 </div>
@@ -1090,6 +1164,47 @@
 
 
 <!-- ==============================
+     LITERARY GAMES
+============================== -->
+<section id="games">
+    <div class="section-inner">
+        <div class="section-label">Literary Games</div>
+        <h2 class="section-title reveal">Play the World of Heron's Bluff</h2>
+
+        <div class="games-grid">
+
+            <!-- The Manuscript -->
+            <div class="game-card reveal">
+                <div class="game-card-eyebrow">Daily Puzzle</div>
+                <h3>The Manuscript</h3>
+                <div class="game-tag">Connections-Style</div>
+                <p>
+                    Sixteen words. Four hidden literary connections.
+                    Find the groups before your attempts run out.
+                    A new puzzle every morning.
+                </p>
+                <a href="the-manuscript.html" class="btn-secondary">Play Today's Puzzle</a>
+            </div>
+
+            <!-- The Redacted -->
+            <div class="game-card reveal">
+                <div class="game-card-eyebrow">Daily Puzzle · 2 per day</div>
+                <h3>The Redacted</h3>
+                <div class="game-tag">Word Guessing</div>
+                <p>
+                    A passage from a literary work — with one word blacked out.
+                    Use the expanding context clues to name what's hidden.
+                    Two new puzzles every day.
+                </p>
+                <a href="the-redacted.html" class="btn-secondary">Play Today's Puzzle</a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ==============================
      EXTRAS
 ============================== -->
 <section id="extras">
@@ -1287,10 +1402,15 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 // ================================
 function toggleMobileNav() {
     const nav = document.getElementById('mobile-nav');
-    nav.style.display = (nav.style.display === 'block') ? 'none' : 'block';
+    const btn = document.getElementById('hamburger-btn');
+    const isOpen = nav.style.display === 'block';
+    nav.style.display = isOpen ? 'none' : 'block';
+    btn.classList.toggle('open', !isOpen);
 }
 function closeMobileNav() {
     document.getElementById('mobile-nav').style.display = 'none';
+    const btn = document.getElementById('hamburger-btn');
+    if (btn) btn.classList.remove('open');
 }
 </script>
 

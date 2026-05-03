@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Manuscript — Daily Literary Connections</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #05080f;
+    --bg-card: #0d1320;
+    --bg-tile: #111827;
+    --bg-tile-hover: #1a2540;
+    --bg-tile-selected: #1e2e50;
+    --gold: #c9a84c;
+    --amber: #d4892a;
+    --teal: #5a9daf;
+    --parchment: #f0e6cc;
+    --text-primary: #e8dfc8;
+    --text-muted: #7a8a9a;
+    --border: rgba(201,168,76,0.18);
+    --border-strong: rgba(201,168,76,0.45);
+    /* category colors */
+    --cat1: #c9a84c; --cat1-text: #05080f;
+    --cat2: #5a9daf; --cat2-text: #05080f;
+    --cat3: #d4892a; --cat3-text: #05080f;
+    --cat4: #f0e6cc; --cat4-text: #05080f;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: 'Lora', Georgia, serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 12px 60px;
+  }
+
+  /* grid overlay to match site */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap { position: relative; z-index: 1; width: 100%; max-width: 560px; }
+
+  /* ── HEADER ── */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 0 10px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 6px;
+  }
+
+  .logo {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .header-right { display: flex; align-items: center; gap: 14px; }
+
+  .streak-badge {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    color: var(--gold);
+    border: 1px solid var(--border-strong);
+    border-radius: 20px;
+    padding: 4px 10px;
+    letter-spacing: 0.08em;
+  }
+
+  .icon-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'Cinzel', serif;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .icon-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── SUBHEADER ── */
+  .subheader {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.1em;
+    text-align: center;
+    padding: 8px 0 16px;
+    text-transform: uppercase;
+  }
+
+  /* ── INSTRUCTION ── */
+  .instruction {
+    font-size: 15px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+
+  /* ── SOLVED ROWS ── */
+  #solved-area { display: flex; flex-direction: column; gap: 6px; margin-bottom: 6px; }
+
+  .solved-row {
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    animation: slideDown 0.35s ease;
+  }
+  .solved-row .cat-name {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cat1-text);
+  }
+  .solved-row .cat-items {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--cat1-text);
+    opacity: 0.85;
+  }
+
+  /* ── TILE GRID ── */
+  #grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .tile {
+    background: var(--bg-tile);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0 6px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--text-primary);
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s, border-color 0.15s, transform 0.1s;
+    word-break: break-word;
+    line-height: 1.3;
+  }
+  .tile:hover { background: var(--bg-tile-hover); border-color: var(--border-strong); }
+  .tile.selected {
+    background: var(--bg-tile-selected);
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-2px);
+  }
+  .tile.shake { animation: shake 0.45s ease; }
+  .tile.pop { animation: pop 0.3s ease; }
+
+  /* ── ATTEMPTS ── */
+  #attempts-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--gold);
+    display: inline-block;
+    transition: background 0.3s, transform 0.3s;
+  }
+  .dot.used { background: var(--bg-card); border: 1px solid var(--border); transform: scale(0.75); }
+
+  /* ── FEEDBACK ── */
+  #feedback {
+    text-align: center;
+    font-size: 15px;
+    font-style: italic;
+    color: var(--amber);
+    min-height: 20px;
+    margin-bottom: 10px;
+    transition: opacity 0.3s;
+  }
+
+  /* ── CONTROLS ── */
+  #controls {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .ctrl-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .ctrl-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .ctrl-btn:disabled { opacity: 0.3; cursor: default; }
+  .ctrl-btn.primary {
+    border-color: var(--border-strong);
+    color: var(--gold);
+  }
+  .ctrl-btn.primary:hover:not(:disabled) { background: rgba(201,168,76,0.12); }
+  .ctrl-btn.primary:disabled { opacity: 0.25; }
+
+  /* ── SHARE ── */
+  #share-area { display: none; text-align: center; margin-bottom: 20px; }
+  #share-area .share-text {
+    font-size: 12px;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+  .share-btn {
+    background: rgba(201,168,76,0.1);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    padding: 10px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background 0.2s;
+  }
+  .share-btn:hover { background: rgba(201,168,76,0.2); }
+  .copy-confirm {
+    font-size: 11px;
+    color: var(--teal);
+    margin-top: 6px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.08em;
+  }
+  .copy-confirm.show { opacity: 1; }
+
+  /* ── NEXT PUZZLE ── */
+  #next-area {
+    display: none;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  #countdown { color: var(--gold); }
+
+  /* ── MODALS ── */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(5,8,15,0.88);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-backdrop.open { display: flex; }
+
+  .modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    padding: 32px 28px;
+    max-width: 440px;
+    width: 100%;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal-title {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .modal-body {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text-primary);
+    font-family: 'Lora', serif;
+  }
+  .modal-body p { margin-bottom: 12px; }
+  .modal-body .example-row {
+    display: flex;
+    gap: 6px;
+    margin: 12px 0;
+    flex-wrap: wrap;
+  }
+  .example-tile {
+    background: var(--bg-tile);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--text-primary);
+  }
+  .example-tile.sel { border-color: var(--gold); color: var(--gold); }
+  .modal-close {
+    position: absolute;
+    top: 14px; right: 16px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 18px;
+    cursor: pointer;
+    font-family: 'Lora', serif;
+  }
+  .modal-close:hover { color: var(--gold); }
+  .modal-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 16px 0;
+  }
+
+  /* subscribe modal */
+  .sub-headline {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--parchment);
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  .sub-perks {
+    list-style: none;
+    margin: 0 0 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .sub-perks li {
+    font-size: 13px;
+    color: var(--text-primary);
+    font-family: 'Lora', serif;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .sub-perks li::before {
+    content: '◆';
+    color: var(--gold);
+    font-size: 8px;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+  .sub-btn {
+    display: block;
+    width: 100%;
+    background: var(--gold);
+    color: var(--bg-deep);
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+    padding: 13px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background 0.2s;
+  }
+  .sub-btn:hover { background: var(--amber); }
+  .sub-later {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 12px;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 8px;
+  }
+  .sub-later:hover { color: var(--text-primary); }
+
+  /* ── CATEGORY DIFFICULTY LABEL ── */
+  .diff-legend {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .diff-pip {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  .diff-pip .swatch {
+    width: 10px; height: 10px; border-radius: 3px;
+  }
+
+  /* ── GAME OVER ── */
+  #gameover-reveal {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .reveal-row {
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .reveal-row .rr-left {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .reveal-row .rr-name {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .reveal-row .rr-items {
+    font-size: 13px;
+    opacity: 0.8;
+  }
+  .reveal-row .rr-check {
+    font-size: 16px;
+  }
+
+  /* ── MISTAKE HISTORY ── */
+  #mistake-history {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .mh-title {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: center;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2px;
+  }
+  .mh-row {
+    background: rgba(180,60,60,0.05);
+    border: 1px solid rgba(180,60,60,0.22);
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .mh-words {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    flex: 1;
+  }
+  .mh-word {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--text-primary);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 3px 7px;
+  }
+  .mh-x {
+    font-size: 12px;
+    color: rgba(200,80,80,0.7);
+    flex-shrink: 0;
+    font-family: 'Cinzel', serif;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 30px;
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  footer a { color: var(--gold); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    15% { transform: translateX(-7px); }
+    30% { transform: translateX(7px); }
+    45% { transform: translateX(-5px); }
+    60% { transform: translateX(5px); }
+    75% { transform: translateX(-3px); }
+    90% { transform: translateX(3px); }
+  }
+  @keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+    100% { transform: scale(1); }
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes confettiFall {
+    0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  .confetti-piece {
+    position: fixed;
+    width: 8px; height: 8px;
+    border-radius: 2px;
+    top: -20px;
+    pointer-events: none;
+    z-index: 200;
+    animation: confettiFall linear forwards;
+  }
+
+  /* responsive */
+  @media (max-width: 400px) {
+    .logo { font-size: 17px; }
+    .tile { height: 56px; font-size: 11px; }
+    #grid { gap: 4px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header>
+    <span class="logo">The Manuscript</span>
+    <div class="header-right">
+      <span class="streak-badge" id="streak-badge">🔥 0</span>
+      <button class="icon-btn" onclick="openHelp()" title="How to play">?</button>
+    </div>
+  </header>
+
+  <div class="subheader" id="date-label">Daily Literary Connections</div>
+
+  <div class="diff-legend">
+    <div class="diff-pip"><div class="swatch" style="background:var(--cat1)"></div>Gilt (easiest)</div>
+    <div class="diff-pip"><div class="swatch" style="background:var(--cat2)"></div>Teal</div>
+    <div class="diff-pip"><div class="swatch" style="background:var(--cat3)"></div>Amber</div>
+    <div class="diff-pip"><div class="swatch" style="background:var(--cat4)"></div>Parchment (hardest)</div>
+  </div>
+
+  <div class="instruction">Find four groups of four. Select tiles, then submit.</div>
+
+  <!-- SOLVED ROWS appear here -->
+  <div id="solved-area"></div>
+
+  <!-- TILE GRID -->
+  <div id="grid"></div>
+
+  <!-- ATTEMPTS -->
+  <div id="attempts-row">
+    <span>Attempts remaining</span>
+    <span id="dots"></span>
+  </div>
+
+  <!-- FEEDBACK -->
+  <div id="feedback"></div>
+
+  <!-- CONTROLS -->
+  <div id="controls">
+    <button class="ctrl-btn" onclick="shuffle()" id="shuffle-btn">Shuffle</button>
+    <button class="ctrl-btn" onclick="deselectAll()" id="deselect-btn">Deselect All</button>
+    <button class="ctrl-btn primary" onclick="submitGuess()" id="submit-btn" disabled>Submit</button>
+  </div>
+
+  <!-- GAME OVER REVEAL (unsolved categories) -->
+  <div id="gameover-reveal"></div>
+
+  <!-- MISTAKE HISTORY -->
+  <div id="mistake-history"></div>
+
+  <!-- SHARE -->
+  <div id="share-area">
+    <div class="share-text">Share today's result without spoilers</div>
+    <button class="share-btn" onclick="copyShare()">Copy Result</button>
+    <div class="copy-confirm" id="copy-confirm">Copied to clipboard!</div>
+  </div>
+
+  <!-- NEXT PUZZLE COUNTDOWN -->
+  <div id="next-area">
+    Next manuscript unlocks in <span id="countdown"></span>
+  </div>
+
+  <footer>
+    A game by <a href="https://atlasvalleybooks.com" target="_blank">Atlas Valley</a> &nbsp;·&nbsp; A new puzzle every day
+  </footer>
+
+</div><!-- /wrap -->
+
+<!-- ══════════════ HOW TO PLAY MODAL ══════════════ -->
+<div class="modal-backdrop" id="help-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeHelp()">✕</button>
+    <div class="modal-title">How to Play</div>
+    <div class="modal-body">
+      <p>Find four groups of four literary words or names hidden among sixteen tiles. Each group shares a hidden connection.</p>
+      <div class="example-row">
+        <div class="example-tile">GATSBY</div>
+        <div class="example-tile sel">CHANDLER</div>
+        <div class="example-tile">HAMLET</div>
+        <div class="example-tile sel">HAMMETT</div>
+      </div>
+      <p>Select four tiles and press <strong>Submit</strong>. If correct, they collapse into a colored row revealing the connection.</p>
+      <p>You have <strong>four attempts</strong>. The harder groups are more likely to mislead — a word that fits one category may seem to fit another.</p>
+      <hr class="modal-divider">
+      <p style="font-size:12px;color:var(--text-muted)">
+        ◆ Gilt = easiest &nbsp;·&nbsp; Parchment = hardest<br>
+        ◆ One new puzzle every day<br>
+        ◆ Streaks track your consecutive daily solves<br>
+        ◆ Subscribe to unlock full archives &amp; streak protection
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SUBSCRIBE MODAL ══════════════ -->
+<div class="modal-backdrop" id="sub-modal">
+  <div class="modal">
+    <div class="modal-title">Keep Your Streak Alive</div>
+    <p class="sub-headline">You've played your free games.<br>Subscribe for daily access, streak tracking, and the full archive.</p>
+    <ul class="sub-perks">
+      <li>Unlimited daily play — one new puzzle every morning</li>
+      <li>Streak protection — never lose your streak on a missed day</li>
+      <li>Full archive — every puzzle ever published, playable anytime</li>
+      <li>Early access to new Atlas Valley literary games</li>
+    </ul>
+    <!-- ↓ CHANGE THIS URL to your Beehiiv subscribe link -->
+    <a class="sub-btn" href="https://atlas-valley.beehiiv.com/subscribe" target="_blank" onclick="recordSubscribeClick()">
+      Subscribe Free — atlasvalleybooks.com
+    </a>
+    <button class="sub-later" onclick="dismissSub()">Maybe later — I'll lose my streak</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+//  PUZZLE DATA  —  52 puzzles (one per week,
+//  cycling annually). Day 0 = May 2 2026.
+// ══════════════════════════════════════════════
+const PUZZLES = [
+// ── 01 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Hard-boiled crime fiction authors",      w:["CHANDLER","HAMMETT","HIGHSMITH","JAMES"]},
+ {l:2,n:"Celebrated British female novelists",    w:["AUSTEN","BRONTE","WOOLF","SHELLEY"]},
+ {l:3,n:"Antiheroes consumed by obsession",       w:["GATSBY","HEATHCLIFF","AHAB","RASKOLNIKOV"]},
+ {l:4,n:"Literary terms for story structure",     w:["DENOUEMENT","FOIL","MOTIF","CATHARSIS"]}
+]},
+// ── 02 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Shakespeare's four great tragedies",     w:["HAMLET","MACBETH","OTHELLO","LEAR"]},
+ {l:2,n:"Shakespearean stage settings",           w:["ELSINORE","DUNSINANE","VERONA","VENICE"]},
+ {l:3,n:"Shakespeare dramatic craft terms",       w:["FOLIO","IAMBIC","SOLILOQUY","ASIDE"]},
+ {l:4,n:"Archetypal Shakespearean figures",       w:["JESTER","VILLAIN","USURPER","AVENGER"]}
+]},
+// ── 03 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Dystopian fiction authors",              w:["ORWELL","HUXLEY","BRADBURY","ATWOOD"]},
+ {l:2,n:"Fictional dystopian locations",          w:["PANEM","GILEAD","OCEANIA","AIRSTRIP"]},
+ {l:3,n:"Orwellian vocabulary from 1984",         w:["DOUBLETHINK","NEWSPEAK","THOUGHTCRIME","PROLES"]},
+ {l:4,n:"First words of dystopian titles",        w:["BRAVE","FAHRENHEIT","HANDMAID","NINETEEN"]}
+]},
+// ── 04 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Pride & Prejudice male characters",      w:["DARCY","WICKHAM","BINGLEY","COLLINS"]},
+ {l:2,n:"Jane Austen novel title words",          w:["EMMA","PERSUASION","MANSFIELD","NORTHANGER"]},
+ {l:3,n:"Regency England social concepts",        w:["ENTAIL","DOWRY","GOVERNESS","ESTATE"]},
+ {l:4,n:"Austen heroines' first names",           w:["ELIZABETH","ANNE","ELINOR","CATHERINE"]}
+]},
+// ── 05 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Victorian novelists",                    w:["DICKENS","THACKERAY","TROLLOPE","GASKELL"]},
+ {l:2,n:"Dickens characters",                     w:["SCROOGE","BUMBLE","FAGIN","MICAWBER"]},
+ {l:3,n:"Thomas Hardy heroines",                  w:["BATHSHEBA","TESS","EUSTACIA","SUE"]},
+ {l:4,n:"George Eliot novel title words",         w:["MIDDLEMARCH","SILAS","ROMOLA","MILL"]}
+]},
+// ── 06 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Golden Age mystery authors",             w:["CHRISTIE","SAYERS","MARSH","ALLINGHAM"]},
+ {l:2,n:"Sherlock Holmes characters",             w:["WATSON","MORIARTY","MYCROFT","IRENE"]},
+ {l:3,n:"Agatha Christie's detectives",           w:["POIROT","MARPLE","HASTINGS","OLIVER"]},
+ {l:4,n:"Famous mystery novel settings",          w:["ORIENT","VICARAGE","NILE","MANOR"]}
+]},
+// ── 07 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Words in Hemingway novel titles",        w:["OLD","FAREWELL","SUN","BELL"]},
+ {l:2,n:"Words in Fitzgerald novel titles",       w:["GATSBY","TENDER","DAMNED","PARADISE"]},
+ {l:3,n:"Lost Generation literary figures",       w:["POUND","ELIOT","JOYCE","STEIN"]},
+ {l:4,n:"Lost Generation expatriate cities",      w:["PARIS","PAMPLONA","HAVANA","MADRID"]}
+]},
+// ── 08 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Magic realism authors",                  w:["MARQUEZ","BORGES","ALLENDE","RUSHDIE"]},
+ {l:2,n:"Magic realism novel title words",        w:["SOLITUDE","LABYRINTH","MIDNIGHT","SPIRITS"]},
+ {l:3,n:"Famous first words of opening lines",    w:["CALL","HAPPY","LOLITA","RIVERRUN"]},
+ {l:4,n:"Types of narrative voice",               w:["OMNISCIENT","UNRELIABLE","EPISTOLARY","STREAM"]}
+]},
+// ── 09 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Gothic fiction atmosphere words",        w:["CASTLE","CRYPT","MOOR","GARRET"]},
+ {l:2,n:"Gothic horror authors",                  w:["POE","STOKER","RADCLIFFE","LEFANU"]},
+ {l:3,n:"Famous Gothic novel locations",          w:["THORNFIELD","MANDERLEY","USHER","WUTHERING"]},
+ {l:4,n:"Gothic heroine archetypes",              w:["ORPHAN","WARD","GOVERNESS","MADWOMAN"]}
+]},
+// ── 10 ──────────────────────────────────────
+{c:[
+ {l:1,n:"American Transcendentalist writers",     w:["EMERSON","THOREAU","ALCOTT","FULLER"]},
+ {l:2,n:"Chapters in Thoreau's Walden",           w:["ECONOMY","SOLITUDE","VISITORS","SPRING"]},
+ {l:3,n:"Emerson essay title words",              w:["NATURE","HISTORY","PRUDENCE","HEROISM"]},
+ {l:4,n:"American nature writing icons",          w:["WHITMAN","MUIR","ABBEY","DILLARD"]}
+]},
+// ── 11 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Beat Generation writers",                w:["KEROUAC","GINSBERG","BURROUGHS","FERLINGHETTI"]},
+ {l:2,n:"Beat Generation slang",                  w:["CAT","COOL","DIG","SQUARE"]},
+ {l:3,n:"Kerouac novel title words",              w:["ROAD","DHARMA","DESOLATION","SUBTERRANEANS"]},
+ {l:4,n:"Famous Beat works title words",          w:["HOWL","NAKED","JUNKIE","CONEY"]}
+]},
+// ── 12 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Magical lands in children's classics",   w:["WONDERLAND","NEVERLAND","NARNIA","OZ"]},
+ {l:2,n:"Child protagonists of those worlds",     w:["ALICE","PETER","LUCY","DOROTHY"]},
+ {l:3,n:"Their authors' surnames",                w:["CARROLL","BARRIE","LEWIS","BAUM"]},
+ {l:4,n:"Famous children's literary animals",     w:["ASLAN","TOTO","PIGLET","CHESHIRE"]}
+]},
+// ── 13 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Fictional schools in literature",        w:["HOGWARTS","LOWOOD","DOTHEBOYS","PENCEY"]},
+ {l:2,n:"Coming-of-age novel title words",        w:["CATCHER","PERKS","WONDER","SPEAK"]},
+ {l:3,n:"Coming-of-age protagonists",             w:["HOLDEN","CHARLIE","AUGGIE","MELINDA"]},
+ {l:4,n:"Coming-of-age universal themes",         w:["IDENTITY","BELONGING","REBELLION","OUTSIDER"]}
+]},
+// ── 14 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Tolkien's Middle-earth locations",       w:["MORDOR","RIVENDELL","GONDOR","SHIRE"]},
+ {l:2,n:"The Lord of the Rings characters",       w:["FRODO","GANDALF","ARAGORN","SAMWISE"]},
+ {l:3,n:"Tolkien creature types",                 w:["HOBBIT","ELF","DWARF","ENT"]},
+ {l:4,n:"Legendary literary swords",              w:["EXCALIBUR","GLAMDRING","STING","ANDURIL"]}
+]},
+// ── 15 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Giant Russian literary authors",         w:["TOLSTOY","DOSTOYEVSKY","CHEKHOV","TURGENEV"]},
+ {l:2,n:"Chekhov play title words",               w:["SEAGULL","CHERRY","THREE","UNCLE"]},
+ {l:3,n:"Tolstoy novel title words",              w:["ANNA","WAR","PEACE","RESURRECTION"]},
+ {l:4,n:"Dostoyevsky novel title words",          w:["CRIME","IDIOT","POSSESSED","BROTHERS"]}
+]},
+// ── 16 ──────────────────────────────────────
+{c:[
+ {l:1,n:"French literary masters",                w:["HUGO","FLAUBERT","ZOLA","PROUST"]},
+ {l:2,n:"Les Misérables character types",         w:["BISHOP","CONVICT","INSPECTOR","STUDENT"]},
+ {l:3,n:"Flaubert's Madame Bovary characters",    w:["EMMA","CHARLES","LEON","RODOLPHE"]},
+ {l:4,n:"Proustian concepts and characters",      w:["SWANN","MADELEINE","TEMPS","GILBERTE"]}
+]},
+// ── 17 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Irish literary giants",                  w:["JOYCE","BECKETT","WILDE","YEATS"]},
+ {l:2,n:"James Joyce works",                      w:["ULYSSES","DUBLINERS","PORTRAIT","FINNEGANS"]},
+ {l:3,n:"Oscar Wilde play title words",           w:["EARNEST","SALOME","IDEAL","FAN"]},
+ {l:4,n:"Samuel Beckett play title words",        w:["GODOT","ENDGAME","HAPPY","KRAPP"]}
+]},
+// ── 18 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Southern Gothic authors",                w:["FAULKNER","OCONNOR","MCCULLERS","WELTY"]},
+ {l:2,n:"Faulkner novel title words",             w:["SOUND","FURY","ABSALOM","LIGHT"]},
+ {l:3,n:"Southern Gothic narrative tropes",       w:["DECAY","GROTESQUE","HAUNTED","OUTCAST"]},
+ {l:4,n:"Flannery O'Connor title words",          w:["GOOD","VIOLENT","WISE","REVELATION"]}
+]},
+// ── 19 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Harlem Renaissance writers",             w:["HUGHES","HURSTON","CULLEN","TOOMER"]},
+ {l:2,n:"Langston Hughes poem title words",       w:["DREAM","WEARY","MOTHER","HARLEM"]},
+ {l:3,n:"African American literary icons",        w:["MORRISON","BALDWIN","ELLISON","WRIGHT"]},
+ {l:4,n:"Jazz age cultural terms",                w:["BEBOP","BLUES","SWING","SOUL"]}
+]},
+// ── 20 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Science fiction pioneers",               w:["ASIMOV","CLARKE","DICK","HEINLEIN"]},
+ {l:2,n:"Asimov concepts and series words",       w:["ROBOT","FOUNDATION","EMPIRE","PSYCHOHISTORY"]},
+ {l:3,n:"Classic sci-fi novel title words",       w:["DUNE","STRANGER","SOLARIS","RINGWORLD"]},
+ {l:4,n:"Philip K. Dick novel title words",       w:["ANDROID","BLADE","SCANNER","UBIK"]}
+]},
+// ── 21 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Romantic poets",                         w:["KEATS","SHELLEY","BYRON","COLERIDGE"]},
+ {l:2,n:"Keats ode subjects",                     w:["NIGHTINGALE","URN","AUTUMN","MELANCHOLY"]},
+ {l:3,n:"Romantic poem title words",              w:["ENDYMION","KUBLA","CHILDE","CHRISTABEL"]},
+ {l:4,n:"Romantic poetry themes",                 w:["SUBLIME","PASTORAL","RUIN","REVERIE"]}
+]},
+// ── 22 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Victorian Gothic locations",             w:["THORNFIELD","MANDERLEY","MISSELTHWAITE","SATIS"]},
+ {l:2,n:"Dickens novel locations",                w:["BLEAK","DINGLEY","EATANSWILL","CLOISTERHAM"]},
+ {l:3,n:"Famous fictional ships",                 w:["PEQUOD","HISPANIOLA","NARCISSUS","NELLIE"]},
+ {l:4,n:"Famous fictional rooms or spaces",       w:["BAKER","LOWOOD","ROOM","PARLOUR"]}
+]},
+// ── 23 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Frequently banned book authors",         w:["NABOKOV","SALINGER","STEINBECK","MILLER"]},
+ {l:2,n:"Title words of frequently banned books", w:["GRAPES","TROPIC","ULYSSES","LOLITA"]},
+ {l:3,n:"Reasons books have been banned",         w:["PROFANITY","OBSCENITY","BLASPHEMY","SEDITION"]},
+ {l:4,n:"Landmark literary obscenity trials",     w:["LADY","HOWL","NAKED","FOREVER"]}
+]},
+// ── 24 ──────────────────────────────────────
+{c:[
+ {l:1,n:"WWI war poets",                          w:["OWEN","SASSOON","BROOKE","ROSENBERG"]},
+ {l:2,n:"WWII novel title words",                 w:["CATCH","SLAUGHTERHOUSE","NAKED","BELL"]},
+ {l:3,n:"War poetry themes",                      w:["SHELL","TRENCH","FUTILITY","SACRIFICE"]},
+ {l:4,n:"Anti-war classic title words",           w:["FAREWELL","PATHS","JOURNEY","RED"]}
+]},
+// ── 25 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Postcolonial literature authors",        w:["ACHEBE","NGUGI","SOYINKA","DESAI"]},
+ {l:2,n:"Things Fall Apart title and themes",     w:["THINGS","APART","FALL","CLAN"]},
+ {l:3,n:"Postcolonial critical concepts",         w:["HYBRIDITY","DIASPORA","MIMICRY","SUBALTERN"]},
+ {l:4,n:"African novel title words",              w:["ARROW","PETALS","GRAIN","WEEP"]}
+]},
+// ── 26 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Nobel Literature laureates",             w:["MORRISON","MARQUEZ","BECKETT","CAMUS"]},
+ {l:2,n:"Albert Camus works",                     w:["STRANGER","PLAGUE","MYTH","REBEL"]},
+ {l:3,n:"Existentialist philosophical terms",     w:["ABSURD","ANGUISH","DREAD","AUTHENTICITY"]},
+ {l:4,n:"Jean-Paul Sartre title words",           w:["NAUSEA","FLIES","ROADS","BEING"]}
+]},
+// ── 27 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Verse and poetry forms",                 w:["SONNET","HAIKU","VILLANELLE","ODE"]},
+ {l:2,n:"Famous odes and their poets",            w:["KEATS","SHELLEY","HORACE","NERUDA"]},
+ {l:3,n:"Poetic meter and sound terms",           w:["IAMB","CAESURA","SPONDEE","TROCHEE"]},
+ {l:4,n:"Epic and long-form poem title words",    w:["PARADISE","BEOWULF","ILIAD","AENEID"]}
+]},
+// ── 28 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Epistolary novel title words",           w:["FRANKENSTEIN","DRACULA","PAMELA","WALLPAPER"]},
+ {l:2,n:"Novels told via diary or letters",       w:["BRIDGET","FLOWERS","PERSEPOLIS","HARRIET"]},
+ {l:3,n:"Famous unreliable narrators",            w:["STEVENS","HUMBERT","NICK","MARLOWE"]},
+ {l:4,n:"First-person classics' title keywords",  w:["JANE","DAVID","MOBY","GREAT"]}
+]},
+// ── 29 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Virginia Woolf novels",                  w:["LIGHTHOUSE","WAVES","ORLANDO","DALLOWAY"]},
+ {l:2,n:"Stream of consciousness novelists",      w:["JOYCE","FAULKNER","RICHARDSON","PROUST"]},
+ {l:3,n:"Woolf essay and lecture topics",         w:["ROOM","GUINEA","ANGEL","ANDROGYNY"]},
+ {l:4,n:"Modernist literary techniques",          w:["MONTAGE","EPIPHANY","VORTEX","COLLAGE"]}
+]},
+// ── 30 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Color words in famous novel titles",     w:["SCARLET","GOLDEN","PURPLE","ORANGE"]},
+ {l:2,n:"Animal words in famous novel titles",    w:["MOCKINGBIRD","FOX","RABBIT","WHALE"]},
+ {l:3,n:"Number words in famous novel titles",    w:["NINETEEN","FIFTY","ONE","THREE"]},
+ {l:4,n:"Body part words in famous titles",       w:["HEART","HAND","EYES","THROAT"]}
+]},
+// ── 31 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Spy and espionage fiction authors",      w:["LECARRE","FLEMING","DEIGHTON","AMBLER"]},
+ {l:2,n:"James Bond novel title words",           w:["CASINO","GOLDFINGER","THUNDERBALL","MOONRAKER"]},
+ {l:3,n:"Le Carré's recurring characters",        w:["SMILEY","KARLA","LEAMAS","HAYDON"]},
+ {l:4,n:"Spy fiction recurring concepts",         w:["MOLE","HANDLER","ASSET","LEGEND"]}
+]},
+// ── 32 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Fantasy world-building authors",         w:["TOLKIEN","JORDAN","SANDERSON","MARTIN"]},
+ {l:2,n:"Ursula K. Le Guin works",                w:["EARTHSEA","DARKNESS","DISPOSSESSED","LATHE"]},
+ {l:3,n:"Famous fictional maps locations",        w:["WESTEROS","RANDLAND","ROSHAR","ALAGAESIA"]},
+ {l:4,n:"Fantasy fiction narrative tropes",       w:["PROPHECY","QUEST","EXILE","CHOSEN"]}
+]},
+// ── 33 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Authors with famous pen names",          w:["TWAIN","ELIOT","ORWELL","VOLTAIRE"]},
+ {l:2,n:"Their real surnames",                    w:["CLEMENS","EVANS","BLAIR","AROUET"]},
+ {l:3,n:"Author pairs who were also lovers",      w:["SARTRE","BEAUVOIR","MILLAY","BOISSEVAIN"]},
+ {l:4,n:"Literary alter ego or pseudonym words",  w:["CURRER","ACTON","ELLIS","BOZ"]}
+]},
+// ── 34 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Caribbean and Latin American lit icons", w:["WALCOTT","NAIPAUL","JAMES","RHYS"]},
+ {l:2,n:"Derek Walcott poem and play words",      w:["OMEROS","CASTAWAY","DREAM","MIDSUMMER"]},
+ {l:3,n:"Jean Rhys novel title words",            w:["SARGASSO","VOYAGE","WIDE","GOOD"]},
+ {l:4,n:"Postcolonial island settings in lit",    w:["TRINIDAD","DOMINICA","JAMAICA","BARBADOS"]}
+]},
+// ── 35 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Feminist literature icons",              w:["PLATH","ATWOOD","LESSING","WOOLF"]},
+ {l:2,n:"Sylvia Plath works",                     w:["BELL","ARIEL","COLOSSUS","DADDY"]},
+ {l:3,n:"The Handmaid's Tale key words",          w:["GILEAD","OFFRED","COMMANDER","MAYDAY"]},
+ {l:4,n:"Second wave feminist text concepts",     w:["MYSTIQUE","GAZE","MARGIN","PATRIARCHY"]}
+]},
+// ── 36 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Fable and moral tale authors",           w:["AESOP","LAFONTAINE","ORWELL","KIPLING"]},
+ {l:2,n:"Famous Aesop fable animal pairs",        w:["TORTOISE","HARE","GRASSHOPPER","ANT"]},
+ {l:3,n:"Moral lessons in fables",                w:["PRIDE","HASTE","GREED","CUNNING"]},
+ {l:4,n:"Kipling Jungle Book characters",         w:["MOWGLI","BAGHEERA","BALOO","SHERE"]}
+]},
+// ── 37 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Scandinavian literary figures",          w:["IBSEN","STRINDBERG","LAGERLOF","HAMSUN"]},
+ {l:2,n:"Henrik Ibsen play title words",          w:["DOLL","GHOSTS","HEDDA","ENEMY"]},
+ {l:3,n:"Nordic noir authors",                    w:["LARSSON","NESBO","MANKELL","ADLER-OLSEN"]},
+ {l:4,n:"Scandinavian crime fiction settings",    w:["STOCKHOLM","OSLO","MALMO","BERGEN"]}
+]},
+// ── 38 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Japanese literary masters",              w:["MISHIMA","KAWABATA","TANIZAKI","MURAKAMI"]},
+ {l:2,n:"Haruki Murakami novel title words",      w:["NORWEGIAN","WIND","KAFKA","COLORLESS"]},
+ {l:3,n:"Japanese aesthetic and literary terms",  w:["MONO","WABI","SABI","YUGEN"]},
+ {l:4,n:"Nobel Prize winning Japanese authors",   w:["OE","ISHIGURO","KAWABATA","MISHIMA"]}
+]},
+// ── 39 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Indian subcontinent literary icons",     w:["TAGORE","NARAYAN","ROY","GHOSH"]},
+ {l:2,n:"Rabindranath Tagore works",              w:["GITANJALI","GORA","CHITRA","SACRIFICE"]},
+ {l:3,n:"The God of Small Things characters",     w:["AMMU","VELUTHA","ESTHA","RAHEL"]},
+ {l:4,n:"South Asian literary themes",            w:["PARTITION","CASTE","MIGRATION","MONSOON"]}
+]},
+// ── 40 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Classic literature tragic love pairs",   w:["ROMEO","JULIET","HEATHCLIFF","CATHY"]},
+ {l:2,n:"Tragic literary love concepts",          w:["COURTLY","FORBIDDEN","DOOMED","UNREQUITED"]},
+ {l:3,n:"Famous fictional love triangles",        w:["ARTHUR","GUINEVERE","LANCELOT","MORDRED"]},
+ {l:4,n:"Romantic novel conventions",             w:["IMPEDIMENT","MISUNDERSTANDING","REUNION","DECLARATION"]}
+]},
+// ── 41 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Literature's famous detectives",         w:["POIROT","REBUS","MORSE","BRUNETTI"]},
+ {l:2,n:"Hard-boiled detective first names",      w:["PHILIP","SAM","LEVI","MIKE"]},
+ {l:3,n:"Literary detective story elements",      w:["ALIBI","MOTIVE","EVIDENCE","CULPRIT"]},
+ {l:4,n:"Crime fiction subgenres",                w:["COZY","HARDBOILED","NOIR","PROCEDURAL"]}
+]},
+// ── 42 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Satire masters of literature",           w:["SWIFT","VOLTAIRE","TWAIN","WAUGH"]},
+ {l:2,n:"Jonathan Swift works",                   w:["GULLIVER","MODEST","TALE","BATTLE"]},
+ {l:3,n:"Famous literary satirical targets",      w:["CLERGY","PARLIAMENT","ACADEMY","COURT"]},
+ {l:4,n:"Satirical technique terms",              w:["IRONY","PARODY","PASTICHE","BURLESQUE"]}
+]},
+// ── 43 ──────────────────────────────────────
+{c:[
+ {l:1,n:"One-book literary wonders",              w:["LEE","SALINGER","MITCHELL","TURTON"]},
+ {l:2,n:"Their famous novels' key title words",   w:["MOCKINGBIRD","CATCHER","WIND","SEVEN"]}  ,
+ {l:3,n:"Booker Prize winning novel title words", w:["REMAINS","WOLF","ATONEMENT","GHOST"]},
+ {l:4,n:"Pulitzer Prize fiction title words",     w:["GRAPES","BELOVED","ROAD","GOLDFINCH"]}
+]},
+// ── 44 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Picaresque heroes of literature",        w:["QUIXOTE","GIL","MOLL","TOM"]},
+ {l:2,n:"Cervantes Don Quixote elements",         w:["WINDMILL","SANCHO","DULCINEA","ROCINANTE"]},
+ {l:3,n:"Roguish literary character types",       w:["TRICKSTER","ROGUE","VAGABOND","ANTIHERO"]},
+ {l:4,n:"Classic road journey novel title words", w:["ROAD","ADVENTURES","TRAVELS","JOURNEY"]}
+]},
+// ── 45 ──────────────────────────────────────
+{c:[
+ {l:1,n:"American realist novelists",             w:["JAMES","WHARTON","HOWELLS","NORRIS"]},
+ {l:2,n:"Henry James novel title words",          w:["WINGS","GOLDEN","AMBASSADORS","PORTRAIT"]},
+ {l:3,n:"Edith Wharton novel title words",        w:["MIRTH","CUSTOMS","AGE","REEF"]},
+ {l:4,n:"American Gilded Age social concepts",    w:["SOCIETY","PROPRIETY","SCANDAL","INHERITANCE"]}
+]},
+// ── 46 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Modernist poetry movement figures",      w:["ELIOT","POUND","HD","WILLIAMS"]},
+ {l:2,n:"T.S. Eliot poem title words",            w:["WASTELAND","PRUFROCK","HOLLOW","ASH"]},
+ {l:3,n:"Imagist poetry principles",              w:["IMAGE","DIRECT","TREATMENT","HARD"]},
+ {l:4,n:"Famous poetry collections title words",  w:["LEAVES","HOWL","ARIEL","CANTOS"]}
+]},
+// ── 47 ──────────────────────────────────────
+{c:[
+ {l:1,n:"African American literary renaissance",  w:["ELLISON","BALDWIN","REED","BARAKA"]},
+ {l:2,n:"Ralph Ellison and Invisible Man words",  w:["INVISIBLE","BROTHERHOOD","PROLOGUE","BATTLE"]}  ,
+ {l:3,n:"James Baldwin works",                    w:["MOUNTAIN","NOBODY","GIOVANNI","EVIDENCE"]},
+ {l:4,n:"African American narrative themes",      w:["PASSING","WITNESS","MEMORY","RESISTANCE"]}
+]},
+// ── 48 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Australian literary icons",              w:["WHITE","CAREY","WINTON","GRENVILLE"]},
+ {l:2,n:"Patrick White novel title words",        w:["VOSS","EYE","STORM","TWYBORN"]},
+ {l:3,n:"Peter Carey novel title words",          w:["BLISS","ILLYWHACKER","OSCAR","JACK"]},
+ {l:4,n:"Australian frontier literary themes",    w:["CONVICT","OUTBACK","SETTLER","MISSION"]}
+]},
+// ── 49 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Arthurian legend characters",            w:["MERLIN","ARTHUR","MORGANA","PERCIVAL"]},
+ {l:2,n:"Arthurian literary retelling authors",   w:["MALORY","TENNYSON","WHITE","STEWART"]},
+ {l:3,n:"The Once and Future King character words",w:["WART","KAY","GUENEVER","PELLINORE"]},
+ {l:4,n:"Arthurian quest and virtue words",       w:["GRAIL","CHIVALRY","HONOUR","QUEST"]}
+]},
+// ── 50 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Victorian sensation novel authors",      w:["COLLINS","BRADDON","WOOD","OLIPHANT"]},
+ {l:2,n:"Wilkie Collins novel title words",       w:["WHITE","MOONSTONE","WOMAN","ARMADALE"]},
+ {l:3,n:"Victorian sensation fiction themes",     w:["BIGAMY","MADNESS","FORGERY","POISON"]},
+ {l:4,n:"Gothic sensation novel tropes",          w:["ASYLUM","SECRET","DOUBLE","INHERITANCE"]}
+]},
+// ── 51 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Experimental fiction authors",           w:["PYNCHON","DELILLO","GADDIS","BARTH"]},
+ {l:2,n:"Postmodern literary techniques",         w:["METAFICTION","PASTICHE","INTERTEXTUALITY","PARODY"]},
+ {l:3,n:"Don DeLillo novel title words",          w:["WHITE","UNDERWORLD","LIBRA","FALLING"]},
+ {l:4,n:"Thomas Pynchon novel title words",       w:["GRAVITY","RAINBOW","CRYING","MASON"]}
+]},
+// ── 52 ──────────────────────────────────────
+{c:[
+ {l:1,n:"Great comic novels of English lit",      w:["PICKWICK","WOOSTER","BLANDINGS","UKRIDGE"]},
+ {l:2,n:"P.G. Wodehouse characters",              w:["JEEVES","BERTIE","AUNT","BINGO"]},
+ {l:3,n:"British comic literary traditions",      w:["WIT","FARCE","ABSURDIST","SATIRE"]},
+ {l:4,n:"Famous comic novel title words",         w:["HITCHHIKER","COLD","FLATLAND","LUCKY"]}
+]}
+];
+
+// ══════════════════════════════════════════════
+//  GAME ENGINE
+// ══════════════════════════════════════════════
+const CAT_COLORS = ["var(--cat1)","var(--cat2)","var(--cat3)","var(--cat4)"];
+const CAT_EMOJIS = ["🟨","🟦","🟧","⬜"];
+const EPOCH = new Date('2026-05-02T00:00:00');
+
+let puzzle, tiles, selected = [], solvedLevels = [], attempts = 4, gameOver = false;
+let guessHistory = []; // for share
+
+function getTodayPuzzle() {
+  const now = new Date(); now.setHours(0,0,0,0);
+  const day = Math.max(0, Math.floor((now - EPOCH) / 86400000));
+  return PUZZLES[day % PUZZLES.length];
+}
+
+function getDateLabel() {
+  return new Date().toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'});
+}
+
+function loadState() {
+  const key = 'manuscript_' + getDateString();
+  const raw = localStorage.getItem(key);
+  return raw ? JSON.parse(raw) : null;
+}
+
+function saveState(state) {
+  const key = 'manuscript_' + getDateString();
+  localStorage.setItem(key, JSON.stringify(state));
+}
+
+function getDateString() {
+  const d = new Date(); return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+}
+
+function getStreak() {
+  return parseInt(localStorage.getItem('manuscript_streak') || '0');
+}
+
+function updateStreak(won) {
+  const today = getDateString();
+  const last  = localStorage.getItem('manuscript_last_played');
+  let streak  = getStreak();
+  if (last !== today) {
+    const yesterday = new Date(); yesterday.setDate(yesterday.getDate()-1);
+    const yd = `${yesterday.getFullYear()}-${yesterday.getMonth()}-${yesterday.getDate()}`;
+    if (last !== yd) streak = 0; // broken
+    if (won) { streak++; }
+    localStorage.setItem('manuscript_streak', streak);
+    localStorage.setItem('manuscript_last_played', today);
+  }
+  renderStreak();
+}
+
+function renderStreak() {
+  const s = getStreak();
+  document.getElementById('streak-badge').textContent = (s > 0 ? '🔥 ' : '') + s;
+}
+
+// ── subscriber gate ──────────────────────────
+function getPlays() {
+  return parseInt(localStorage.getItem('manuscript_total_plays') || '0');
+}
+function incrementPlays() {
+  localStorage.setItem('manuscript_total_plays', getPlays() + 1);
+}
+function recordSubscribeClick() {
+  localStorage.setItem('manuscript_subscribed', '1');
+}
+function isSubscribed() {
+  return localStorage.getItem('manuscript_subscribed') === '1';
+}
+function checkGate() {
+  if (isSubscribed()) return true;
+  if (getPlays() < 3) return true;
+  const dismissed = parseInt(localStorage.getItem('manuscript_sub_dismissed') || '0');
+  if (dismissed < 1) return true; // give one free pass after dismissal
+  return false; // must subscribe
+}
+
+function openHelp()  { document.getElementById('help-modal').classList.add('open'); }
+function closeHelp() { document.getElementById('help-modal').classList.remove('open'); }
+
+function openSub() {
+  document.getElementById('help-modal').classList.remove('open');
+  document.getElementById('sub-modal').classList.add('open');
+}
+function dismissSub() {
+  const d = parseInt(localStorage.getItem('manuscript_sub_dismissed') || '0');
+  localStorage.setItem('manuscript_sub_dismissed', d + 1);
+  document.getElementById('sub-modal').classList.remove('open');
+}
+
+// close modals on backdrop click
+document.querySelectorAll('.modal-backdrop').forEach(el => {
+  el.addEventListener('click', e => {
+    if (e.target === el) {
+      if (el.id === 'help-modal') closeHelp();
+    }
+  });
+});
+
+// ── INIT ─────────────────────────────────────
+function init() {
+  document.getElementById('date-label').textContent = getDateLabel();
+  renderStreak();
+  puzzle = getTodayPuzzle();
+
+  const saved = loadState();
+  if (saved) {
+    solvedLevels = saved.solvedLevels || [];
+    attempts     = saved.attempts !== undefined ? saved.attempts : 4;
+    guessHistory = saved.guessHistory || [];
+    gameOver     = saved.gameOver || false;
+    tiles        = saved.tiles || getAllItems();
+  } else {
+    solvedLevels = [];
+    attempts     = 4;
+    guessHistory = [];
+    gameOver     = false;
+    tiles        = shuffle_(getAllItems());
+  }
+
+  renderSolvedArea();
+  renderGrid();
+  renderDots();
+
+  if (gameOver) {
+    endGame(false, true); // restore ended state
+  } else if (solvedLevels.length === 4) {
+    endGame(true, true);
+  }
+
+  startCountdown();
+}
+
+function getAllItems() {
+  return puzzle.c.flatMap(cat => cat.w.map(w => ({word: w, level: cat.l})));
+}
+
+// ── RENDERING ────────────────────────────────
+function renderGrid() {
+  const grid = document.getElementById('grid');
+  const solvedWords = new Set(puzzle.c.filter(c => solvedLevels.includes(c.l)).flatMap(c => c.w));
+  const remaining   = tiles.filter(t => !solvedWords.has(t.word));
+  grid.innerHTML = '';
+  remaining.forEach(t => {
+    const el = document.createElement('div');
+    el.className = 'tile' + (selected.find(s => s.word === t.word) ? ' selected' : '');
+    el.textContent = t.word;
+    el.dataset.word = t.word;
+    if (!gameOver) el.addEventListener('click', () => toggleSelect(t, el));
+    grid.appendChild(el);
+  });
+}
+
+function renderSolvedArea() {
+  const area = document.getElementById('solved-area');
+  area.innerHTML = '';
+  solvedLevels.forEach(lv => {
+    const cat = puzzle.c.find(c => c.l === lv);
+    const row = document.createElement('div');
+    row.className = 'solved-row';
+    row.style.background = CAT_COLORS[lv-1];
+    row.innerHTML = `<span class="cat-name" style="color:var(--cat${lv}-text)">${cat.n}</span>
+                     <span class="cat-items" style="color:var(--cat${lv}-text)">${cat.w.join(' · ')}</span>`;
+    area.appendChild(row);
+  });
+}
+
+function renderDots() {
+  const el = document.getElementById('dots');
+  let html = '';
+  for (let i = 0; i < 4; i++) {
+    html += `<span class="dot ${i >= attempts ? 'used' : ''}"></span>`;
+  }
+  el.innerHTML = html;
+}
+
+// ── SELECTION ────────────────────────────────
+function toggleSelect(t, el) {
+  if (gameOver) return;
+  const idx = selected.findIndex(s => s.word === t.word);
+  if (idx >= 0) {
+    selected.splice(idx, 1);
+    el.classList.remove('selected');
+  } else {
+    if (selected.length >= 4) return;
+    selected.push(t);
+    el.classList.add('selected');
+  }
+  document.getElementById('submit-btn').disabled = selected.length !== 4;
+  document.getElementById('deselect-btn').disabled = selected.length === 0;
+}
+
+function deselectAll() {
+  selected = [];
+  document.querySelectorAll('.tile.selected').forEach(el => el.classList.remove('selected'));
+  document.getElementById('submit-btn').disabled = true;
+}
+
+function shuffle_(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i+1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function shuffle() {
+  const solvedWords = new Set(puzzle.c.filter(c => solvedLevels.includes(c.l)).flatMap(c => c.w));
+  const remaining   = tiles.filter(t => !solvedWords.has(t.word));
+  const shuffled    = shuffle_(remaining);
+  tiles = [...puzzle.c.filter(c => solvedLevels.includes(c.l)).flatMap(c => c.w.map(w => ({word:w,level:c.l}))), ...shuffled];
+  renderGrid();
+}
+
+// ── SUBMIT ───────────────────────────────────
+function submitGuess() {
+  if (selected.length !== 4 || gameOver) return;
+
+  const selWords = selected.map(s => s.word);
+  // Check for correct category
+  const matchCat = puzzle.c.find(cat =>
+    !solvedLevels.includes(cat.l) &&
+    cat.w.every(w => selWords.includes(w)) &&
+    selWords.every(w => cat.w.includes(w))
+  );
+
+  // record guess
+  guessHistory.push({words: selWords, correct: !!matchCat, level: matchCat?.l});
+
+  if (matchCat) {
+    // correct
+    document.querySelectorAll('.tile.selected').forEach(el => el.classList.add('pop'));
+    setTimeout(() => {
+      solvedLevels.push(matchCat.l);
+      selected = [];
+      renderSolvedArea();
+      renderGrid();
+      renderDots();
+      setFeedback('');
+      document.getElementById('submit-btn').disabled = true;
+      saveState({solvedLevels, attempts, guessHistory, gameOver, tiles});
+      if (solvedLevels.length === 4) {
+        updateStreak(true);
+        incrementPlays();
+        setTimeout(() => { endGame(true, false); confetti(); }, 400);
+      }
+    }, 320);
+  } else {
+    // wrong
+    attempts--;
+    renderDots();
+
+    // one away?
+    const oneAway = puzzle.c.some(cat =>
+      !solvedLevels.includes(cat.l) &&
+      selWords.filter(w => cat.w.includes(w)).length === 3
+    );
+    if (oneAway) setFeedback('One away…');
+    else setFeedback('Not quite.');
+
+    document.querySelectorAll('.tile.selected').forEach(el => {
+      el.classList.add('shake');
+      el.addEventListener('animationend', () => el.classList.remove('shake'), {once: true});
+    });
+
+    if (attempts <= 0) {
+      saveState({solvedLevels, attempts, guessHistory, gameOver: true, tiles});
+      setTimeout(() => {
+        updateStreak(false);
+        incrementPlays();
+        endGame(false, false);
+      }, 600);
+    } else {
+      saveState({solvedLevels, attempts, guessHistory, gameOver, tiles});
+    }
+    selected = [];
+    setTimeout(() => {
+      document.querySelectorAll('.tile.selected').forEach(el => el.classList.remove('selected'));
+      document.getElementById('submit-btn').disabled = true;
+    }, 100);
+  }
+
+  // check subscriber gate after each completed game
+}
+
+function setFeedback(msg) {
+  const el = document.getElementById('feedback');
+  el.textContent = msg;
+  if (msg) {
+    clearTimeout(el._t);
+    el._t = setTimeout(() => { el.textContent = ''; }, 2200);
+  }
+}
+
+// ── GAME OVER ────────────────────────────────
+function endGame(won, restore) {
+  gameOver = true;
+  document.getElementById('controls').style.display = 'none';
+  document.getElementById('submit-btn').disabled = true;
+  document.getElementById('attempts-row').style.display = 'none';
+  document.getElementById('feedback').textContent = '';
+  document.querySelectorAll('.tile').forEach(el => el.style.cursor = 'default');
+
+  // reveal unsolved categories
+  const unsolved = puzzle.c.filter(c => !solvedLevels.includes(c.l));
+  if (unsolved.length > 0) {
+    const rev = document.getElementById('gameover-reveal');
+    rev.style.display = 'flex';
+    unsolved.forEach(cat => {
+      const row = document.createElement('div');
+      row.className = 'reveal-row';
+      row.style.background = CAT_COLORS[cat.l-1];
+      row.innerHTML = `
+        <div class="rr-left">
+          <span class="rr-name" style="color:var(--cat${cat.l}-text)">${cat.n}</span>
+          <span class="rr-items" style="color:var(--cat${cat.l}-text)">${cat.w.join(' · ')}</span>
+        </div>
+        <span class="rr-check" style="color:var(--cat${cat.l}-text)"></span>`;
+      rev.appendChild(row);
+    });
+    // clear the grid tiles (they're now revealed)
+    document.getElementById('grid').innerHTML = '';
+  }
+
+  if (!restore && !isSubscribed() && getPlays() >= 3) {
+    setTimeout(openSub, 1200);
+  }
+
+  // show mistake history
+  const wrongGuesses = guessHistory.filter(g => !g.correct);
+  if (wrongGuesses.length > 0) {
+    const mh = document.getElementById('mistake-history');
+    mh.style.display = 'flex';
+    const title = document.createElement('div');
+    title.className = 'mh-title';
+    title.textContent = wrongGuesses.length === 1 ? '1 Wrong Guess' : `${wrongGuesses.length} Wrong Guesses`;
+    mh.appendChild(title);
+    wrongGuesses.forEach(g => {
+      const row = document.createElement('div');
+      row.className = 'mh-row';
+      const wordsHtml = g.words.map(w => `<span class="mh-word">${w}</span>`).join('');
+      row.innerHTML = `<div class="mh-words">${wordsHtml}</div><span class="mh-x">✗</span>`;
+      mh.appendChild(row);
+    });
+  }
+
+  // show share
+  document.getElementById('share-area').style.display = 'block';
+  document.getElementById('next-area').style.display = 'block';
+}
+
+// ── SHARE ────────────────────────────────────
+function buildShareText() {
+  const date = getDateLabel();
+  const lines = [`The Manuscript — ${date}`];
+  guessHistory.forEach(g => {
+    const row = g.words.map(() => g.correct ? CAT_EMOJIS[g.level-1] : '🟥').join('');
+    lines.push(row);
+  });
+  lines.push('');
+  lines.push('atlasvalleybooks.com/the-manuscript');
+  return lines.join('\n');
+}
+
+function copyShare() {
+  const text = buildShareText();
+  navigator.clipboard.writeText(text).then(() => {
+    const c = document.getElementById('copy-confirm');
+    c.classList.add('show');
+    setTimeout(() => c.classList.remove('show'), 2000);
+  });
+}
+
+// ── CONFETTI ─────────────────────────────────
+function confetti() {
+  const colors = ['#c9a84c','#d4892a','#5a9daf','#f0e6cc','#ffffff'];
+  for (let i = 0; i < 60; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.background = colors[Math.floor(Math.random() * colors.length)];
+    el.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+    el.style.animationDelay    = (Math.random() * 0.8) + 's';
+    el.style.width = el.style.height = (6 + Math.random() * 8) + 'px';
+    document.body.appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
+  }
+}
+
+// ── COUNTDOWN ────────────────────────────────
+function startCountdown() {
+  function tick() {
+    const now    = new Date();
+    const tmrw   = new Date(now); tmrw.setDate(tmrw.getDate()+1); tmrw.setHours(0,0,0,0);
+    const diff   = tmrw - now;
+    const h      = String(Math.floor(diff/3600000)).padStart(2,'0');
+    const m      = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+    const s      = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+    const cd     = document.getElementById('countdown');
+    if (cd) cd.textContent = `${h}:${m}:${s}`;
+  }
+  tick();
+  setInterval(tick, 1000);
+}
+
+// ── BOOT ─────────────────────────────────────
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
