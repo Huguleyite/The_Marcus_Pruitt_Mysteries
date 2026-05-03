@@ -53,7 +53,9 @@
   .logo {
     font-family: 'Cinzel', serif; font-size: 22px; font-weight: 700;
     letter-spacing: 0.12em; color: var(--gold); text-transform: uppercase;
+    text-decoration: none; cursor: pointer;
   }
+  .logo:hover { opacity: 0.8; }
   .header-right { display: flex; align-items: center; gap: 14px; }
   .streak-badge {
     font-family: 'Cinzel', serif; font-size: 12px; color: var(--gold);
@@ -423,7 +425,7 @@
 <div class="wrap">
 
   <header>
-    <span class="logo">The Redacted</span>
+    <a class="logo" href="index.html" title="Back to atlasvalleybooks.com">The Redacted</a>
     <div class="header-right">
       <span class="streak-badge" id="streak-badge">🔥 0</span>
       <button class="icon-btn" onclick="openHelp()">?</button>

@@ -237,6 +237,20 @@
       font-family: 'Courier New', monospace;
     }
 
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-bottom: 18px;
+      font-family: 'Courier New', monospace;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #3a6a8f;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: #c9a84c; }
+
     /* ── RESPONSIVE: scale grid down on small screens ── */
     @media (max-width: 600px) {
       body { padding: 24px 12px 36px; }
@@ -253,6 +267,8 @@
   </style>
 </head>
 <body>
+
+  <a class="back-link" href="index.html">← atlasvalleybooks.com</a>
 
   <div class="header">
     <div class="series-label">A Marcus Pruitt Mystery · Book One</div>

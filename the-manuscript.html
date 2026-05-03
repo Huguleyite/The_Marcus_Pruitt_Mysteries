@@ -73,7 +73,10 @@
     letter-spacing: 0.12em;
     color: var(--gold);
     text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
   }
+  .logo:hover { opacity: 0.8; }
 
   .header-right { display: flex; align-items: center; gap: 14px; }
 
@@ -603,7 +606,7 @@
 
   <!-- HEADER -->
   <header>
-    <span class="logo">The Manuscript</span>
+    <a class="logo" href="index.html" title="Back to atlasvalleybooks.com">The Manuscript</a>
     <div class="header-right">
       <span class="streak-badge" id="streak-badge">🔥 0</span>
       <button class="icon-btn" onclick="openHelp()" title="How to play">?</button>
