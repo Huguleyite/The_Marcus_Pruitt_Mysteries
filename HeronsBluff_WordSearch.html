@@ -267,8 +267,36 @@ const DIRS = [
 let grid = [];
 let wordPlacements = {};
 let foundWords = new Set();
+let revealedWords = new Set();
 let selectedStart = null;
 let cellElements = [];
+
+const SAVE_KEY = 'heronsbluff_wordsearch_v1';
+
+function saveState() {
+  try {
+    localStorage.setItem(SAVE_KEY, JSON.stringify({
+      grid,
+      wordPlacements,
+      foundWords: [...foundWords],
+      revealedWords: [...revealedWords]
+    }));
+  } catch (e) { /* storage unavailable — fail silently */ }
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (!raw) return false;
+    const s = JSON.parse(raw);
+    if (!s.grid || !s.wordPlacements) return false;
+    grid = s.grid;
+    wordPlacements = s.wordPlacements;
+    foundWords = new Set(s.foundWords || []);
+    revealedWords = new Set(s.revealedWords || []);
+    return true;
+  } catch (e) { return false; }
+}
 
 function initGrid() {
   grid = Array.from({length: ROWS}, () => Array(COLS).fill(null));
@@ -446,6 +474,7 @@ function markFound(word) {
   const wordEl = document.getElementById(`word-${word}`);
   if (wordEl) wordEl.classList.add('found');
   updateProgress();
+  saveState();
 }
 
 function updateProgress() {
@@ -485,27 +514,44 @@ document.getElementById('revealBtn').addEventListener('click', () => {
         cellElements[r][c].classList.add('reveal');
       });
       foundWords.add(word);
+      revealedWords.add(word);
       const wordEl = document.getElementById(`word-${word}`);
       if (wordEl) wordEl.classList.add('found');
     }
   }
   selectedStart = null;
   updateProgress();
+  saveState();
 });
 
 document.getElementById('clearBtn').addEventListener('click', () => {
   foundWords.clear();
+  revealedWords.clear();
   selectedStart = null;
   for (let r = 0; r < ROWS; r++)
     for (let c = 0; c < COLS; c++)
       cellElements[r][c].className = 'cell';
   renderWordList();
   updateProgress();
+  try { localStorage.removeItem(SAVE_KEY); } catch (e) {}
 });
 
-buildPuzzle();
+if (!loadState()) {
+  buildPuzzle();
+  saveState();
+}
 renderGrid();
 renderWordList();
+
+// Restore visual state for already-found words
+for (const word of foundWords) {
+  const cells = wordPlacements[word] || [];
+  const cls = revealedWords.has(word) ? 'reveal' : 'found';
+  cells.forEach(([r, c]) => { cellElements[r][c].classList.add(cls); });
+  const wordEl = document.getElementById(`word-${word}`);
+  if (wordEl) wordEl.classList.add('found');
+}
+
 updateProgress();
 </script>
 </body>
