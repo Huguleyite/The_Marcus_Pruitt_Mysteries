@@ -595,25 +595,129 @@
 
   /* responsive */
   @media (max-width: 400px) {
-    .logo { font-size: 17px; }
     .tile { height: 56px; font-size: 11px; }
     #grid { gap: 4px; }
+  }
+
+  /* ── NAVIGATION ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(5, 8, 15, 0.96);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.18);
+    padding: 0 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    backdrop-filter: blur(10px);
+  }
+  .nav-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: 0.18em;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .nav-logo .pipe { color: var(--text-muted); font-weight: 400; margin: 0 0.2rem; }
+  .nav-logo .sub  { color: #b8a882; font-weight: 400; font-size: 0.9rem; letter-spacing: 0.1em; }
+  .nav-back {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #b8a882;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.25s;
+  }
+  .nav-back:hover { color: var(--gold); }
+  .nav-back svg { width: 14px; height: 14px; }
+
+  /* ── GAME HEADER ── */
+  .game-header {
+    text-align: center;
+    padding-top: 88px;
+    margin-bottom: 1.25rem;
+  }
+  .game-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 0.5rem;
+  }
+  .game-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 900;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.4rem;
+    text-shadow: 0 0 40px rgba(201, 168, 76, 0.2);
+  }
+  .game-subtitle {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+  .game-date {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    color: var(--text-muted);
+    margin-top: 0.6rem;
+    text-transform: uppercase;
+  }
+  .game-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
   }
 </style>
 </head>
 <body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+    </svg>
+    ATLAS VALLEY<span class="pipe"> | </span><span class="sub">Books</span>
+  </a>
+  <a href="index.html#games" class="nav-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+    All Games
+  </a>
+</nav>
+
 <div class="wrap">
 
-  <!-- HEADER -->
-  <header>
-    <a class="logo" href="index.html" title="Back to atlasvalleybooks.com">The Manuscript</a>
-    <div class="header-right">
-      <span class="streak-badge" id="streak-badge">🔥 0</span>
-      <button class="icon-btn" onclick="openHelp()" title="How to play">?</button>
-    </div>
-  </header>
+  <div class="game-header">
+    <div class="game-eyebrow">Daily Puzzle · Atlas Valley</div>
+    <h1 class="game-title">The Manuscript</h1>
+    <p class="game-subtitle">Sixteen words. Four hidden literary connections.</p>
+    <p class="game-date" id="date-label"></p>
+  </div>
 
-  <div class="subheader" id="date-label">Daily Literary Connections</div>
+  <div class="game-meta-row">
+    <span class="streak-badge" id="streak-badge">🔥 0</span>
+    <button class="icon-btn" onclick="openHelp()" title="How to play">?</button>
+  </div>
 
   <div class="diff-legend">
     <div class="diff-pip"><div class="swatch" style="background:var(--cat1)"></div>Gilt (easiest)</div>
