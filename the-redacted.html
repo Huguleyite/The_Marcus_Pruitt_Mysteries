@@ -1346,13 +1346,14 @@ function submitGuess() {
     input.addEventListener('animationend', () => input.classList.remove('shake'), { once: true });
     input.value = '';
 
-    // unmask any letters from the guess that appear in the answer
+    // unmask at most 1 new letter per wrong guess (prevents alphabet-dump exploit)
     const answerUpper = puzzle.a.toUpperCase();
     let newReveals = 0;
     for (const ch of guess) {
       if (answerUpper.includes(ch) && !revealedLetters.has(ch)) {
         revealedLetters.add(ch);
         newReveals++;
+        break; // cap at 1 reveal per guess
       }
     }
 
