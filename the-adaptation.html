@@ -1079,7 +1079,7 @@ function renderFilmstrip() {
     const strip = document.getElementById('filmstrip');
     strip.innerHTML = '';
     const revealed = state.guesses.length + (state.gameOver ? 0 : 0);
-    const shown    = Math.min(revealed + 1, MAX_GUESSES); // +1 for current frame
+    const shown    = state.gameOver ? MAX_GUESSES : Math.min(revealed + 1, MAX_GUESSES);
 
     for (let i = 0; i < MAX_GUESSES; i++) {
         if (i < shown && state.images[i]) {
@@ -1290,7 +1290,7 @@ function share() {
     const movie = MOVIES[state.movieIndex];
     const grid  = state.guesses.map(g => g.correct ? '🟩' : g.skipped ? '⬜' : '🟥').join('');
     const result = state.won ? `${state.guesses.length}/${MAX_GUESSES}` : `X/${MAX_GUESSES}`;
-    const text = `The Adaptation 🎬 — ${formatDate(new Date())}\n${grid} ${result}\n\nAdapted from: ${movie.book} by ${movie.author}\n\natlasvalleybooks.com`;
+    const text = `The Adaptation 🎬 — ${formatDate(new Date())}\n${grid} ${result}\n\natlasvalleybooks.com`;
 
     navigator.clipboard.writeText(text).then(() => {
         const btn = document.getElementById('btn-share');
