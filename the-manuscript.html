@@ -1258,10 +1258,10 @@ function incrementPlays() {
   localStorage.setItem('manuscript_total_plays', getPlays() + 1);
 }
 function recordSubscribeClick() {
-  localStorage.setItem('manuscript_subscribed', '1');
+  localStorage.setItem('atlas_valley_subscribed', '1');
 }
 function isSubscribed() {
-  return localStorage.getItem('manuscript_subscribed') === '1';
+  return localStorage.getItem('atlas_valley_subscribed') === '1';
 }
 function checkGate() {
   if (isSubscribed()) return true;

@@ -1339,8 +1339,8 @@ function updateStreak(didWin) {
 
 function getPlays()   { return parseInt(localStorage.getItem('redacted_plays') || '0'); }
 function bumpPlays()  { localStorage.setItem('redacted_plays', getPlays()+1); }
-function isSubbed()   { return localStorage.getItem('redacted_subbed') === '1'; }
-function recordSubscribe() { localStorage.setItem('redacted_subbed','1'); }
+function isSubbed()   { return localStorage.getItem('atlas_valley_subscribed') === '1'; }
+function recordSubscribe() { localStorage.setItem('atlas_valley_subscribed','1'); }
 
 // ── passage rendering ─────────────────────────────────
 function buildBlocks(answerWord) {
