@@ -910,6 +910,7 @@ const MOVIES = [
     // Biopics & Non-Fiction
     { title: "The Imitation Game",                year: 2014, book: "Alan Turing: The Enigma",            author: "Andrew Hodges",        tmdbId: 205596 },
     { title: "A Beautiful Mind",                  year: 2001, book: "A Beautiful Mind",                   author: "Sylvia Nasar",         tmdbId: 272    },
+    { title: "Steve Jobs",                        year: 2015, book: "Steve Jobs",                         author: "Walter Isaacson",      tmdbId: 264560, altTitles: ["Jobs"] },
     { title: "The Wolf of Wall Street",           year: 2013, book: "The Wolf of Wall Street",            author: "Jordan Belfort",       tmdbId: 106646 },
     { title: "Catch Me If You Can",               year: 2002, book: "Catch Me If You Can",                author: "Frank Abagnale Jr.",   tmdbId: 5765   },
     { title: "Moneyball",                         year: 2011, book: "Moneyball",                          author: "Michael Lewis",        tmdbId: 60308  },
@@ -1178,7 +1179,9 @@ function handleGuess() {
     if (!text) return;
 
     const movie = MOVIES[state.movieIndex];
-    const correct = normalizeTitle(text) === normalizeTitle(movie.title);
+    const norm  = normalizeTitle(text);
+    const correct = norm === normalizeTitle(movie.title)
+        || (movie.altTitles || []).some(alt => norm === normalizeTitle(alt));
 
     state.guesses.push({ text, correct, skipped: false });
 
@@ -1239,7 +1242,8 @@ function showSuggestions(query) {
 
     const q = query.toLowerCase();
     const matches = MOVIES
-        .filter(m => m.title.toLowerCase().includes(q))
+        .filter(m => m.title.toLowerCase().includes(q)
+                  || (m.altTitles || []).some(alt => alt.toLowerCase().includes(q)))
         .slice(0, 8);
 
     if (matches.length === 0) { list.classList.remove('open'); return; }
