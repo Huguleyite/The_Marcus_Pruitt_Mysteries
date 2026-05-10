@@ -980,7 +980,9 @@ async function fetchImages(movie) {
         // include_image_language=null requests only language-neutral backdrops
         // (clean scene shots). Omitting "en" prevents promotional title-card
         // images — which carry the movie name as text — from being returned.
-        const url = `${TMDB_BASE}/${movie.tmdbId}?api_key=${TMDB_API_KEY}&append_to_response=images&include_image_language=null`;
+        // en,null requests both English-tagged and language-neutral backdrops,
+        // giving the filter a larger pool to work with for less-trafficked films.
+        const url = `${TMDB_BASE}/${movie.tmdbId}?api_key=${TMDB_API_KEY}&append_to_response=images&include_image_language=en,null`;
         const res = await fetch(url);
         if (!res.ok) throw new Error(`TMDb returned ${res.status}`);
         const data = await res.json();
@@ -990,16 +992,27 @@ async function fetchImages(movie) {
             state.posterUrl = IMG_BASE_LG + data.poster_path;
         }
 
-        // Backdrops — language-neutral scene shots only, minimum 3 votes so
-        // mis-tagged or low-quality images don't surface.
-        const backdrops = (data.images?.backdrops || [])
-            .filter(b => b.iso_639_1 === null && b.vote_count >= 3)
+        const allBackdrops = data.images?.backdrops || [];
+
+        // Pass 1 — language-neutral scene shots preferred, minimum 1 vote.
+        let backdrops = allBackdrops
+            .filter(b => b.iso_639_1 === null && b.vote_count >= 1)
             .sort((a, b) => b.vote_average - a.vote_average)
             .slice(0, MAX_GUESSES)
             .map(b => IMG_BASE_LG + b.file_path);
 
+        // Pass 2 — if Pass 1 came up empty, accept any backdrop regardless of
+        // language tag. Scene stills with a language code are still scene stills.
+        if (backdrops.length === 0) {
+            backdrops = allBackdrops
+                .filter(b => b.vote_count >= 1)
+                .sort((a, b) => b.vote_average - a.vote_average)
+                .slice(0, MAX_GUESSES)
+                .map(b => IMG_BASE_LG + b.file_path);
+        }
+
         if (backdrops.length === 0 && state.posterUrl) {
-            // Use poster if no backdrops available
+            // Use poster if no backdrops available at all
             return Array(MAX_GUESSES).fill(state.posterUrl);
         }
 
