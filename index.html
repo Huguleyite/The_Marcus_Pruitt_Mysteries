@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Atlas Valley — Author of the Marcus Pruitt Mystery Series. Coastal noir, Southern Gothic mystery fiction set on the Georgia coast. Pre-order Heron's Bluff, available May 5, 2026.">
-    <meta name="keywords" content="Atlas Valley, Heron's Bluff, Marcus Pruitt, coastal noir mystery, Southern Gothic fiction, amateur sleuth, Georgia mystery novel, Black detective fiction, investigative thriller, beach read mystery, small town mystery, African American fiction, legal thriller">
-    <title>Atlas Valley | Author — Heron's Bluff</title>
+    <meta name="description" content="Atlas Valley — Author of the Marcus Pruitt Mystery Series. Coastal noir, Southern Gothic mystery fiction set on the Georgia coast. The Probate Theorem is now available for pre-order. Heron's Bluff, Book One, available now on Amazon.">
+    <meta name="keywords" content="Atlas Valley, Heron's Bluff, The Probate Theorem, Marcus Pruitt, Marcus Pruitt Mysteries, coastal noir mystery, Southern Gothic fiction, amateur sleuth, Georgia mystery novel, Black detective fiction, investigative thriller, Darien Georgia, heirs property, African American fiction, legal thriller">
+    <title>Atlas Valley | The Marcus Pruitt Mysteries</title>
     <!--
     ╔══════════════════════════════════════════════════════════════╗
     ║  ATLAS VALLEY — atlasvalleybooks.com                        ║
@@ -24,6 +24,9 @@
     ║  Puzzles (already committed):                                ║
     ║    HeronsBluff_WordSearch.html                               ║
     ║    HeronsBluff_Crossword.html                                ║
+    ║                                                              ║
+    ║  NOTE: the-adaptation.html decommissioned May 11, 2026.     ║
+    ║    Source archived in the-adaptation.ARCHIVED.html           ║
     ╚══════════════════════════════════════════════════════════════╝
     -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -246,9 +249,6 @@
             max-width: 480px;
         }
 
-        /* Release status area */
-        #release-status { margin-bottom: 1.25rem; }
-
         .available-now {
             color: var(--amber);
             font-family: 'Cinzel', serif;
@@ -268,44 +268,6 @@
         @keyframes pulse {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.35; transform: scale(0.75); }
-        }
-
-        .releasing-label {
-            font-family: 'Cinzel', serif;
-            font-size: 0.62rem;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--text-dim);
-            margin-bottom: 0.6rem;
-        }
-
-        .countdown-display {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.4rem;
-        }
-        .countdown-unit { text-align: center; }
-        .countdown-num {
-            font-family: 'Cinzel', serif;
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--amber);
-            display: block;
-            line-height: 1;
-        }
-        .countdown-label {
-            font-size: 0.55rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--text-dim);
-        }
-        .countdown-sep {
-            color: var(--amber);
-            font-size: 1.6rem;
-            font-weight: 700;
-            line-height: 1;
-            padding-top: 2px;
-            opacity: 0.6;
         }
 
         /* CTA Buttons */
@@ -448,6 +410,186 @@
             color: var(--text-dim);
             opacity: 0.35;
             pointer-events: none;
+        }
+
+        /* ===========================
+           SERIES HERO
+        =========================== */
+        .series-hero-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .series-hero-header { text-align: center; }
+
+        .series-eyebrow {
+            font-family: 'Cinzel', serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.42em;
+            text-transform: uppercase;
+            color: var(--teal-light);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 0.75rem;
+        }
+        .series-eyebrow::before, .series-eyebrow::after {
+            content: '';
+            width: 36px;
+            height: 1px;
+            background: var(--teal-light);
+            opacity: 0.6;
+        }
+
+        .series-headline {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 4.5vw, 4rem);
+            font-weight: 900;
+            color: var(--gold);
+            line-height: 1.05;
+            letter-spacing: 0.01em;
+            text-shadow: 0 0 60px rgba(201, 168, 76, 0.22);
+            margin-bottom: 0.75rem;
+            overflow-wrap: break-word;
+        }
+
+        .series-sub {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            color: var(--text-dim);
+            font-size: 0.92rem;
+            letter-spacing: 0.06em;
+        }
+
+        .series-books-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            width: 100%;
+        }
+
+        .series-book {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 2.5rem 2rem 2rem;
+            border: 1px solid rgba(201, 168, 76, 0.12);
+            background: rgba(201, 168, 76, 0.02);
+            position: relative;
+        }
+        .series-book.featured {
+            border-color: rgba(201, 168, 76, 0.3);
+            background: rgba(201, 168, 76, 0.05);
+        }
+        .series-book.featured::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            opacity: 0.5;
+        }
+
+        .book-num-badge {
+            font-family: 'Cinzel', serif;
+            font-size: 0.58rem;
+            letter-spacing: 0.38em;
+            text-transform: uppercase;
+            color: var(--teal-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .series-cover-wrap {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.75rem;
+        }
+        .series-cover-frame {
+            position: relative;
+            width: 100%;
+            max-width: 200px;
+            aspect-ratio: 0.63;
+            background: linear-gradient(160deg, #0d1a2e 0%, #152810 45%, #2b1a08 100%);
+        }
+        .series-book.featured .series-cover-frame { max-width: 240px; }
+        .series-cover-frame img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 30px rgba(212,137,42,0.1);
+        }
+        .series-cover-frame::before, .series-cover-frame::after {
+            content: '';
+            position: absolute;
+            width: 16px; height: 16px;
+            border-color: var(--gold);
+            border-style: solid;
+            opacity: 0.45;
+            z-index: 2;
+        }
+        .series-cover-frame::before { top: -5px; left: -5px; border-width: 1.5px 0 0 1.5px; }
+        .series-cover-frame::after  { bottom: -5px; right: -5px; border-width: 0 1.5px 1.5px 0; }
+
+        .series-book-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            color: var(--gold);
+            line-height: 1.05;
+            text-shadow: 0 0 30px rgba(201, 168, 76, 0.2);
+            margin-bottom: 0.4rem;
+        }
+        .series-book.featured .series-book-title { font-size: clamp(1.8rem, 2.8vw, 2.6rem); }
+        .series-book.secondary .series-book-title { font-size: clamp(1.5rem, 2.4vw, 2.2rem); }
+
+        .series-book-author {
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.24em;
+            color: var(--parchment-dim);
+            margin-bottom: 0.3rem;
+        }
+
+        .series-book-genre {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            color: var(--text-dim);
+            font-size: 0.82rem;
+            margin-bottom: 1.25rem;
+            letter-spacing: 0.04em;
+        }
+
+        .series-book-blurb {
+            font-size: 0.9rem;
+            line-height: 1.82;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            max-width: 360px;
+        }
+
+        .preorder-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.55rem;
+            margin-bottom: 1.25rem;
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--amber);
         }
 
         /* ===========================
@@ -624,12 +766,9 @@
         =========================== */
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 1.75rem;
             margin-top: 2.5rem;
-        }
-        @media (max-width: 820px) {
-            .games-grid { grid-template-columns: repeat(2, 1fr); }
         }
         .game-card {
             border: 1px solid rgba(201, 168, 76, 0.28);
@@ -880,6 +1019,9 @@
             .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
             .hero-cover { order: -1; }
             .cover-frame { max-width: 260px; }
+            .series-books-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .series-cover-frame,
+            .series-book.featured .series-cover-frame { max-width: 180px; }
             .book-inner { grid-template-columns: 1fr; gap: 2.5rem; }
             .about-grid { grid-template-columns: 1fr; }
             .compass-wrap { display: none; }
@@ -911,9 +1053,9 @@
         ATLAS VALLEY<span class="pipe"> | </span><span class="sub">Books</span>
     </a>
     <ul class="nav-links">
-        <li><a href="#book">The Book</a></li>
+        <li><a href="#book">Book Two</a></li>
+        <li><a href="#book1">Book One</a></li>
         <li><a href="#about">The Author</a></li>
-        <li><a href="#book2">Coming Soon</a></li>
         <li><a href="#games">Games</a></li>
         <li><a href="#extras">Extras</a></li>
     </ul>
@@ -924,9 +1066,9 @@
 
 <div id="mobile-nav">
     <ul>
-        <li><a href="#book"  onclick="closeMobileNav()">The Book</a></li>
+        <li><a href="#book"  onclick="closeMobileNav()">Book Two</a></li>
+        <li><a href="#book1" onclick="closeMobileNav()">Book One</a></li>
         <li><a href="#about" onclick="closeMobileNav()">The Author</a></li>
-        <li><a href="#book2" onclick="closeMobileNav()">Coming Soon</a></li>
         <li><a href="#games" onclick="closeMobileNav()">Games</a></li>
         <li><a href="#extras" onclick="closeMobileNav()">Extras</a></li>
     </ul>
@@ -934,78 +1076,99 @@
 
 
 <!-- ==============================
-     HERO
+     HERO — SERIES SHOWCASE
 ============================== -->
 <section id="hero">
     <span class="coord" style="top:78px; left:22px;">32°05'N  80°56'W</span>
-    <span class="coord" style="bottom:36px; right:22px;">CHART NO. MPM-001</span>
+    <span class="coord" style="bottom:36px; right:22px;">CHART NO. MPM</span>
 
-    <div class="hero-inner">
+    <div class="series-hero-inner">
 
-        <!-- Text side -->
-        <div class="hero-text">
-            <div class="hero-series">#1 in the Marcus Pruitt Mystery Series</div>
-
-            <h1 class="hero-title">Heron's<br>Bluff</h1>
-            <p class="hero-author">by Atlas Valley</p>
-            <p class="hero-genre">A Coastal Noir Mystery</p>
-
-            <p class="hero-synopsis">
-                Marcus Pruitt came to Heron's Bluff for a story. He always does.
-                But in a town where old money controls the waterfront and a rezoning
-                vote has everyone holding their breath, the story has a body in it —
-                and the body didn't get there on its own.
-            </p>
-
-            <!-- Countdown: pre-order until May 5, then Available Now -->
-            <div id="release-status"></div>
-
-            <a href="https://amzn.to/4265sqJ" target="_blank" rel="noopener" class="btn-primary" id="amazon-cta">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-                </svg>
-                <span id="cta-label">Pre-Order on Amazon</span>
-            </a>
+        <!-- Series Header -->
+        <div class="series-hero-header">
+            <div class="series-eyebrow">by Atlas Valley</div>
+            <h1 class="series-headline">The Marcus Pruitt<br>Mysteries</h1>
+            <p class="series-sub">Coastal noir from the Georgia coast</p>
         </div>
 
-        <!-- Cover image side -->
-        <div class="hero-cover">
-            <div class="cover-glow"></div>
-            <div class="cover-frame" id="cover-frame">
-                <!--
-                    ★ COVER IMAGE SETUP ★
-                    Save your cover image as "herons-bluff-cover.jpg" in the same
-                    folder as this index.html, then commit both files to GitHub:
-                        git add herons-bluff-cover.jpg
-                        git commit -m "Add book cover image"
-                        git push
-                    The placeholder below disappears automatically once the image loads.
-                -->
-                <img src="herons-bluff-cover.jpg"
-                     alt="Heron's Bluff by Atlas Valley — Book Cover"
-                     onload="document.getElementById('cover-placeholder').style.display='none';"
-                     onerror="this.style.display='none';">
-                <!-- Placeholder hidden automatically once cover loads -->
-                <div class="cover-placeholder" id="cover-placeholder" style="display:none;">
-                    <div class="cp-title">HERON'S<br>BLUFF</div>
-                    <div class="cp-divider"></div>
-                    <div class="cp-author">ATLAS VALLEY</div>
-                    <div class="cp-series">#1 Marcus Pruitt Mystery</div>
+        <!-- Books Grid -->
+        <div class="series-books-grid">
+
+            <!-- THE PROBATE THEOREM — Featured (Book Two, Pre-Order) -->
+            <div class="series-book featured">
+                <div class="book-num-badge">Marcus Pruitt Mysteries — Book Two</div>
+
+                <div class="series-cover-wrap">
+                    <div class="series-cover-frame">
+                        <img src="the-probate-theorem-cover.jpg"
+                             alt="The Probate Theorem by Atlas Valley — Book Cover"
+                             onerror="this.style.display='none';">
+                    </div>
                 </div>
-            </div>
-        </div>
 
+                <h2 class="series-book-title">The Probate<br>Theorem</h2>
+                <p class="series-book-author">by Atlas Valley</p>
+                <p class="series-book-genre">A Coastal Noir Mystery</p>
+
+                <p class="series-book-blurb">
+                    Marcus Pruitt doesn't stay in one place for long. The Altamaha River delta is waiting — darker than the Atlantic, deeper than it looks, and home to a piece of property that has outlasted every legal challenge for three generations. In Darien, Georgia, some inheritances are worth killing for.
+                </p>
+
+                <div class="preorder-badge">
+                    <div class="pulse-dot"></div>
+                    Pre-Order Now on Amazon
+                </div>
+
+                <a href="https://amzn.to/4dNvxBi" target="_blank" rel="noopener" class="btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    Pre-Order on Amazon
+                </a>
+            </div>
+
+            <!-- HERON'S BLUFF — Secondary (Book One, Available Now) -->
+            <div class="series-book secondary">
+                <div class="book-num-badge">Marcus Pruitt Mysteries — Book One</div>
+
+                <div class="series-cover-wrap">
+                    <div class="series-cover-frame">
+                        <img src="herons-bluff-cover.jpg"
+                             alt="Heron's Bluff by Atlas Valley — Book Cover"
+                             onerror="this.style.display='none';">
+                    </div>
+                </div>
+
+                <h2 class="series-book-title">Heron's<br>Bluff</h2>
+                <p class="series-book-author">by Atlas Valley</p>
+                <p class="series-book-genre">A Coastal Noir Mystery</p>
+
+                <p class="series-book-blurb">
+                    Marcus Pruitt came to Heron's Bluff for a story. In a town where old money controls the waterfront and a rezoning vote has everyone holding their breath, the story has a body in it — and the body didn't get there on its own.
+                </p>
+
+                <div class="available-now" style="margin-bottom:1.25rem; justify-content:center;">
+                    <div class="pulse-dot" style="background:var(--teal-light);"></div>
+                    <span style="color:var(--teal-light); font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase;">Available Now</span>
+                </div>
+
+                <a href="https://amzn.to/4265sqJ" target="_blank" rel="noopener" class="btn-secondary">
+                    Order on Amazon
+                </a>
+            </div>
+
+        </div>
     </div>
 </section>
 
 
 <!-- ==============================
-     ABOUT THE BOOK
+     BOOK TWO — THE PROBATE THEOREM
 ============================== -->
 <section id="book">
     <div class="section-inner">
-        <div class="section-label">The Novel</div>
+        <div class="section-label">Book Two</div>
 
         <div class="book-inner reveal">
 
@@ -1013,47 +1176,49 @@
             <div class="book-details">
                 <div class="detail-card">
                     <div class="detail-label">Title</div>
-                    <div class="detail-value">Heron's Bluff</div>
+                    <div class="detail-value">The Probate Theorem</div>
                 </div>
                 <div class="detail-card">
                     <div class="detail-label">Series</div>
-                    <div class="detail-value">Marcus Pruitt Mysteries — Book One</div>
+                    <div class="detail-value">Marcus Pruitt Mysteries — Book Two</div>
                 </div>
                 <div class="detail-card">
                     <div class="detail-label">Genre</div>
                     <div class="detail-value">Coastal Noir · Southern Gothic</div>
                 </div>
                 <div class="detail-card">
+                    <div class="detail-label">Setting</div>
+                    <div class="detail-value">Darien, Georgia · The Altamaha River Delta</div>
+                </div>
+                <div class="detail-card">
                     <div class="detail-label">Also For Fans Of</div>
-                    <div class="detail-value" style="font-size:0.85rem; line-height:1.6;">Amateur Sleuth &nbsp;·&nbsp; Investigative Thriller<br>Legal Mystery &nbsp;·&nbsp; Small Town Noir<br>African American Fiction</div>
+                    <div class="detail-value" style="font-size:0.85rem; line-height:1.6;">Legal Mystery &nbsp;·&nbsp; Investigative Thriller<br>Heirs' Property &nbsp;·&nbsp; Southern Gothic<br>African American Fiction</div>
                 </div>
                 <div class="detail-card">
                     <div class="detail-label">Author</div>
                     <div class="detail-value">Atlas Valley</div>
                 </div>
-                <a href="https://amzn.to/4265sqJ" target="_blank" rel="noopener"
+                <a href="https://amzn.to/4dNvxBi" target="_blank" rel="noopener"
                    class="btn-primary" style="margin-top:0.5rem; justify-content:center;">
-                    Get Your Copy
+                    Pre-Order Now
                 </a>
             </div>
 
             <!-- Synopsis column -->
             <div class="book-synopsis">
                 <h3>About the Book</h3>
-                <p>Marcus Pruitt came to Heron's Bluff, Georgia for a story. He always does. A forensic chemist turned investigative journalist, he arrives on the Georgia coast to write about heirs' property — the quiet legal mechanism that has been stripping Black coastal families of their land for generations. A week's work. A few interviews. Some bourbon.</p>
+                <p>Marcus Pruitt doesn't stay in one place for long. When a story about heirs' property draws him to Darien, Georgia, he's chasing something familiar — the quiet legal mechanisms that strip coastal families of what their grandparents left them. A week's work. A few interviews. The river light on the Altamaha at dusk.</p>
 
-                <p>Then he finds the alderman dead at the base of a decommissioned lighthouse before sunrise. Everything about the scene is wrong — starting with a chemical smell that has no business being anywhere near salt water.</p>
+                <p>Then someone dies. And the way they died doesn't fit the official version.</p>
 
-                <p>Marcus notices these things. He can't help it. It's the curse of a forensic mind in a town that has been keeping its secrets since before the Civil War.</p>
+                <p>What Marcus finds in Darien reaches back three generations — a forged amendment, a nine-million-dollar marshland parcel, and a cast of local interests with every reason to want the past to stay buried. Celeste Vaughn Monroe, who noticed things in Heron's Bluff that nobody else did, is about to notice them again.</p>
 
-                <p>Old families, old deeds, old money — and a woman named Celeste Vaughn Monroe who seems to know exactly where all of it is buried. Someone in this sun-soaked coastal town is counting on Marcus Pruitt to stay in his lane.</p>
-
-                <p>He won't. <em>The man the killer never sees coming has arrived. And the tide is coming in.</em></p>
+                <p>The man the killer never sees coming is back on the Georgia coast. <em>The river knows everything. Eventually, so will Marcus.</em></p>
 
                 <div class="divider"></div>
 
-                <a href="https://amzn.to/4265sqJ" target="_blank" rel="noopener" class="btn-primary">
-                    Order Now on Amazon
+                <a href="https://amzn.to/4dNvxBi" target="_blank" rel="noopener" class="btn-primary">
+                    Pre-Order on Amazon
                 </a>
             </div>
 
@@ -1123,45 +1288,87 @@
 
 
 <!-- ==============================
-     COMING SOON — BOOK 2
+     BOOK ONE — HERON'S BLUFF
 ============================== -->
-<section id="book2" style="background: var(--bg-deep); border-top: 1px solid rgba(201,168,76,0.1);">
+<section id="book1" style="background: var(--bg-deep); border-top: 1px solid rgba(201,168,76,0.1);">
     <div class="section-inner">
-        <div class="section-label">Coming Soon</div>
-        <div class="reveal" style="display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; max-width:900px; margin:0 auto;">
+        <div class="section-label">Book One</div>
 
-            <div>
-                <p style="font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--teal-light); margin-bottom:0.75rem;">Marcus Pruitt Mysteries — Book Two</p>
-                <h2 style="font-family:'Cinzel',serif; font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:900; color:var(--gold); line-height:1.05; margin-bottom:0.5rem; text-shadow:0 0 30px rgba(201,168,76,0.2);">The Probate<br>Theorem</h2>
-                <p style="font-family:'Cinzel',serif; font-size:0.85rem; letter-spacing:0.2em; color:var(--parchment-dim); margin-bottom:1.5rem;">by Atlas Valley</p>
-                <p style="font-size:1rem; line-height:1.88; color:var(--text); margin-bottom:1.5rem;">Marcus Pruitt doesn't stay in one place for long. The Altamaha River delta is waiting — darker than the Atlantic, deeper than it looks, and home to a piece of property that has outlasted every legal challenge thrown at it for three generations.</p>
-                <p style="font-size:1rem; line-height:1.88; color:var(--text); margin-bottom:2rem;">In Darien, Georgia, where the river knows everything and tells nothing, Marcus is about to discover that some inheritances are worth killing for. <em>The manuscript is written. The wait won't be long.</em></p>
-                <a href="https://atlas-valley.beehiiv.com/subscribe" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:0.6rem; border:1px solid rgba(201,168,76,0.3); padding:0.75rem 1.25rem; font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--parchment-dim); text-decoration:none; transition:border-color 0.25s, color 0.25s;" onmouseover="this.style.borderColor='rgba(201,168,76,0.7)';this.style.color='#c9a84c';" onmouseout="this.style.borderColor='rgba(201,168,76,0.3)';this.style.color='var(--parchment-dim)';">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                    Notify Me on Release
+        <div class="book-inner reveal">
+
+            <!-- Quick-facts column -->
+            <div class="book-details">
+                <div class="detail-card">
+                    <div class="detail-label">Title</div>
+                    <div class="detail-value">Heron's Bluff</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Series</div>
+                    <div class="detail-value">Marcus Pruitt Mysteries — Book One</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Genre</div>
+                    <div class="detail-value">Coastal Noir · Southern Gothic</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Setting</div>
+                    <div class="detail-value">Heron's Bluff, Georgia · The Coastal Marshes</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Also For Fans Of</div>
+                    <div class="detail-value" style="font-size:0.85rem; line-height:1.6;">Amateur Sleuth &nbsp;·&nbsp; Investigative Thriller<br>Legal Mystery &nbsp;·&nbsp; Small Town Noir<br>African American Fiction</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Author</div>
+                    <div class="detail-value">Atlas Valley</div>
+                </div>
+                <a href="https://amzn.to/4265sqJ" target="_blank" rel="noopener"
+                   class="btn-primary" style="margin-top:0.5rem; justify-content:center;">
+                    Get Your Copy
                 </a>
             </div>
 
-            <div style="position:relative;">
-                <div style="position:relative; aspect-ratio:0.63; overflow:hidden; background:linear-gradient(145deg,#06101e 0%,#081a12 60%,#0d0d06 100%); border:1px solid rgba(201,168,76,0.15);">
-                    <img src="the-probate-theorem-cover.jpg"
-                         alt="The Probate Theorem by Atlas Valley — Coming Soon"
-                         style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; box-shadow:0 20px 50px rgba(0,0,0,0.7);"
-                         onerror="this.style.display='none'; document.getElementById('pt-placeholder').style.display='flex';">
-                    <!-- Fallback if cover not yet available -->
-                    <div id="pt-placeholder" style="display:none; position:absolute; inset:0; flex-direction:column; align-items:center; justify-content:center; padding:2rem; text-align:center;">
-                        <div style="position:absolute; inset:0; background:radial-gradient(ellipse at 50% 80%, rgba(61,122,138,0.12) 0%, transparent 60%); pointer-events:none;"></div>
-                        <p style="font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--teal-light); margin-bottom:1rem; position:relative;">Darien, Georgia</p>
-                        <p style="font-family:'Lora',serif; font-style:italic; font-size:0.95rem; color:var(--parchment-dim); line-height:1.8; position:relative; max-width:260px;">"Darien in August was not a town you arrived in so much as a town that absorbed you."</p>
-                        <div style="width:40px; height:1px; background:rgba(201,168,76,0.3); margin:1.25rem auto; position:relative;"></div>
-                        <p style="font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.25em; color:var(--text-dim); text-transform:uppercase; position:relative;">The Altamaha River Awaits</p>
-                    </div>
-                </div>
-                <div style="position:absolute; top:-6px; left:-6px; width:18px; height:18px; border-top:1px solid var(--gold); border-left:1px solid var(--gold); opacity:0.5;"></div>
-                <div style="position:absolute; bottom:-6px; right:-6px; width:18px; height:18px; border-bottom:1px solid var(--gold); border-right:1px solid var(--gold); opacity:0.5;"></div>
+            <!-- Synopsis column -->
+            <div class="book-synopsis">
+                <h3>Where the Series Begins</h3>
+                <p>Marcus Pruitt came to Heron's Bluff, Georgia for a story. He always does. A forensic chemist turned investigative journalist, he arrives on the Georgia coast to write about heirs' property — the quiet legal mechanism that has been stripping Black coastal families of their land for generations. A week's work. A few interviews. Some bourbon.</p>
+
+                <p>Then he finds the alderman dead at the base of a decommissioned lighthouse before sunrise. Everything about the scene is wrong — starting with a chemical smell that has no business being anywhere near salt water.</p>
+
+                <p>Marcus notices these things. He can't help it. It's the curse of a forensic mind in a town that has been keeping its secrets since before the Civil War.</p>
+
+                <p>Old families, old deeds, old money — and a woman named Celeste Vaughn Monroe who seems to know exactly where all of it is buried. Someone in this sun-soaked coastal town is counting on Marcus Pruitt to stay in his lane.</p>
+
+                <p>He won't. <em>The man the killer never sees coming has arrived. And the tide is coming in.</em></p>
+
+                <div class="divider"></div>
+
+                <a href="https://amzn.to/4265sqJ" target="_blank" rel="noopener" class="btn-primary">
+                    Order Now on Amazon
+                </a>
             </div>
 
         </div>
+    </div>
+</section>
+
+
+<!-- ==============================
+     MORE IN THE SERIES
+============================== -->
+<section id="series-ahead" style="background: linear-gradient(to bottom, var(--bg-mid), var(--bg-dark)); border-top: 1px solid rgba(201,168,76,0.08);">
+    <div class="section-inner" style="text-align:center;">
+        <div class="section-label" style="justify-content:center;">The Series Continues</div>
+        <h2 class="section-title reveal" style="text-align:center;">More Marcus Pruitt<br>Is Coming</h2>
+        <p class="reveal" style="font-size:1rem; line-height:1.92; color:var(--text); max-width:660px; margin:0 auto 1.25rem;">Marcus Pruitt's Georgia coast is wider than any single case. Books Three and Four are in production — each one a new county, a new conspiracy, and a new reason to remember that the man the killer never sees coming has been watching the whole time.</p>
+        <p class="reveal" style="font-size:0.9rem; line-height:1.8; color:var(--text-dim); font-style:italic; max-width:480px; margin:0 auto 2.5rem;">Stay close to the water. There's more where this came from.</p>
+        <a href="https://atlas-valley.beehiiv.com/subscribe" target="_blank" rel="noopener" class="btn-secondary reveal">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            Get Notified on New Releases
+        </a>
     </div>
 </section>
 
@@ -1200,19 +1407,6 @@
                     Two new puzzles every day.
                 </p>
                 <a href="the-redacted.html" class="btn-secondary">Play Today's Puzzle</a>
-            </div>
-
-            <!-- The Adaptation -->
-            <div class="game-card reveal">
-                <div class="game-card-eyebrow">Daily Puzzle</div>
-                <h3>The Adaptation</h3>
-                <div class="game-tag">Film Guessing</div>
-                <p>
-                    Six frames from a movie that began as a book.
-                    Name the film before the credits roll.
-                    Every great film has a first chapter.
-                </p>
-                <a href="the-adaptation.html" class="btn-secondary">Play Today's Puzzle</a>
             </div>
 
         </div>
@@ -1331,100 +1525,20 @@
     </div>
     <nav class="footer-links">
         <a href="#hero">Home</a>
-        <a href="#book">The Book</a>
+        <a href="#book">Book Two</a>
+        <a href="#book1">Book One</a>
         <a href="#about">The Author</a>
-        <a href="#book2">Coming Soon</a>
         <a href="#games">Games</a>
         <a href="#extras">Extras</a>
-        <a href="https://amzn.to/4265sqJ" target="_blank" rel="noopener">Amazon</a>
+        <a href="https://amzn.to/4dNvxBi" target="_blank" rel="noopener">Pre-Order</a>
     </nav>
     <p class="footer-copy">&copy; 2026 Atlas Valley. All rights reserved. &nbsp;|&nbsp; atlasvalleybooks.com</p>
 
-    <div style="margin-top:1.5rem; display:flex; flex-direction:column; align-items:center; gap:0.5rem; opacity:0.55;">
-        <a href="https://www.themoviedb.org" target="_blank" rel="noopener" aria-label="The Movie Database (TMDB)" style="display:inline-flex; align-items:center; line-height:1;">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 154 20" height="18" role="img" aria-label="TMDB logo">
-                <defs>
-                    <linearGradient id="tmdb-grad-footer" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%"   stop-color="#90CEA1"/>
-                        <stop offset="50%"  stop-color="#3CBEC9"/>
-                        <stop offset="100%" stop-color="#01B4E4"/>
-                    </linearGradient>
-                </defs>
-                <rect width="154" height="20" rx="3" fill="url(#tmdb-grad-footer)"/>
-                <text x="77" y="14.5" text-anchor="middle"
-                      font-family="'Arial Black','Franklin Gothic Heavy',Impact,sans-serif"
-                      font-weight="900" font-size="11" fill="white" letter-spacing="2">TMDB</text>
-            </svg>
-        </a>
-        <p style="font-family:'Lora',serif; font-size:0.68rem; color:var(--text-dim); font-style:italic; line-height:1.5;">
-            The Adaptation uses the TMDB API but is not endorsed or certified by TMDB.
-        </p>
-    </div>
+
 </footer>
 
 
 <script>
-// ================================
-// RELEASE DATE COUNTDOWN
-// Pre-order mode until May 5, 2026 — then Available Now
-// ================================
-const RELEASE = new Date('2026-05-05T00:00:00');
-
-function pad(n) { return String(n).padStart(2, '0'); }
-
-function updateStatus() {
-    const el       = document.getElementById('release-status');
-    const ctaLabel = document.getElementById('cta-label');
-    if (!el) return;
-    const now  = new Date();
-    const diff = RELEASE - now;
-
-    if (diff <= 0) {
-        // Book is out — flip to Available Now
-        el.innerHTML = `
-            <div class="available-now">
-                <div class="pulse-dot"></div>
-                Available Now
-            </div>`;
-        if (ctaLabel) ctaLabel.textContent = 'Order on Amazon';
-    } else {
-        // Pre-order countdown
-        const days  = Math.floor(diff / 86400000);
-        const hours = Math.floor((diff % 86400000) / 3600000);
-        const mins  = Math.floor((diff % 3600000)  / 60000);
-        const secs  = Math.floor((diff % 60000)    / 1000);
-
-        el.innerHTML = `
-            <p class="releasing-label">Pre-Order Now &nbsp;·&nbsp; Releases May 5, 2026</p>
-            <div class="countdown-display">
-                <div class="countdown-unit">
-                    <span class="countdown-num">${pad(days)}</span>
-                    <span class="countdown-label">Days</span>
-                </div>
-                <span class="countdown-sep">:</span>
-                <div class="countdown-unit">
-                    <span class="countdown-num">${pad(hours)}</span>
-                    <span class="countdown-label">Hrs</span>
-                </div>
-                <span class="countdown-sep">:</span>
-                <div class="countdown-unit">
-                    <span class="countdown-num">${pad(mins)}</span>
-                    <span class="countdown-label">Min</span>
-                </div>
-                <span class="countdown-sep">:</span>
-                <div class="countdown-unit">
-                    <span class="countdown-num">${pad(secs)}</span>
-                    <span class="countdown-label">Sec</span>
-                </div>
-            </div>`;
-        if (ctaLabel) ctaLabel.textContent = 'Pre-Order on Amazon';
-    }
-}
-
-updateStatus();
-setInterval(updateStatus, 1000);
-
-
 // ================================
 // SCROLL REVEAL
 // ================================
