@@ -3,27 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Atlas Valley — Author of the Marcus Pruitt Mystery Series. Coastal noir, Southern Gothic mystery fiction set on the Georgia coast. The Probate Theorem is now available. Heron's Bluff, Book One, available now on Amazon.">
-    <meta name="keywords" content="Atlas Valley, Heron's Bluff, The Probate Theorem, Marcus Pruitt, Marcus Pruitt Mysteries, coastal noir mystery, Southern Gothic fiction, amateur sleuth, Georgia mystery novel, Black detective fiction, investigative thriller, Darien Georgia, heirs property, African American fiction, legal thriller">
-    <title>Atlas Valley | The Marcus Pruitt Mysteries</title>
+    <meta name="description" content="Atlas Valley — author of Ramsgate: A Prelude to Pride and Prejudice and the Marcus Pruitt Mystery Series. Literary fiction, coastal noir, and beyond. From the parlor to the marsh to the stars.">
+    <meta name="keywords" content="Ramsgate Pride and Prejudice prequel, Georgiana Darcy story, Wickham Ramsgate, Jane Austen companion novel, Pride and Prejudice prelude, Regency England historical fiction, Atlas Valley, Heron's Bluff, The Probate Theorem, Marcus Pruitt, Marcus Pruitt Mysteries, coastal noir mystery, Southern Gothic fiction, literary fiction, Black detective fiction, investigative thriller, Georgia mystery novel">
+    <title>Atlas Valley | Books</title>
     <!--
     ╔══════════════════════════════════════════════════════════════╗
     ║  ATLAS VALLEY — atlasvalleybooks.com                        ║
     ║  GitHub Pages site — managed via Claude Code                ║
     ║                                                              ║
     ║  TO PUSH CHANGES TO LIVE SITE (in your terminal):           ║
-    ║    git add index.html                                        ║
-    ║    git commit -m "Update site content"                      ║
+    ║    git add index.html ramsgate-cover.jpg                     ║
+    ║    git commit -m "Update site — Ramsgate leads"             ║
     ║    git push                                                  ║
     ║                                                              ║
-    ║  TO ADD COVER IMAGE:                                         ║
-    ║    git add herons-bluff-cover.jpg                            ║
-    ║    git commit -m "Add book cover image"                      ║
-    ║    git push                                                  ║
-    ║                                                              ║
-    ║  Puzzles (already committed):                                ║
-    ║    HeronsBluff_WordSearch.html                               ║
-    ║    HeronsBluff_Crossword.html                                ║
+    ║  ★ RAMSGATE AMAZON LINK ★                                   ║
+    ║  Search for: href="#ramsgate-order"                         ║
+    ║  Replace # with the affiliate link once KDP is live.        ║
     ║                                                              ║
     ║  NOTE: the-adaptation.html decommissioned May 11, 2026.     ║
     ║    Source archived in the-adaptation.ARCHIVED.html           ║
@@ -164,11 +159,7 @@
             display: flex;
             align-items: center;
             padding: 100px 4rem 4rem;
-            overflow: clip; /* clips glow without disrupting scroll containment */
-        }
-        h1.hero-title {
-            overflow-wrap: break-word;
-            word-break: break-word;
+            overflow: clip;
         }
 
         #hero::before {
@@ -220,8 +211,19 @@
             color: var(--gold);
             line-height: 1.0;
             letter-spacing: 0.01em;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.4rem;
             text-shadow: 0 0 50px rgba(201, 168, 76, 0.25);
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
+        .hero-subtitle {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 1.05rem;
+            color: var(--parchment-dim);
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.04em;
         }
 
         .hero-author {
@@ -245,7 +247,7 @@
             font-size: 1rem;
             line-height: 1.85;
             color: var(--text);
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
             max-width: 480px;
         }
 
@@ -334,7 +336,6 @@
             z-index: 1;
             max-width: 370px;
             width: 100%;
-            /* Prevents collapse when cover image hasn't been committed yet */
             aspect-ratio: 0.63;
             background:
                 linear-gradient(160deg, #0d1a2e 0%, #152810 45%, #2b1a08 100%);
@@ -352,41 +353,6 @@
             box-shadow:
                 0 24px 64px rgba(0, 0, 0, 0.75),
                 0 0  40px rgba(212, 137, 42, 0.12);
-        }
-        /* Fallback shown while cover image is pending */
-        .cover-placeholder {
-            text-align: center;
-            padding: 2rem;
-            pointer-events: none;
-            user-select: none;
-        }
-        .cover-placeholder .cp-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: var(--gold);
-            line-height: 1.1;
-            margin-bottom: 0.75rem;
-            text-shadow: 0 0 30px rgba(201, 168, 76, 0.35);
-        }
-        .cover-placeholder .cp-divider {
-            width: 50px;
-            height: 1px;
-            background: rgba(201, 168, 76, 0.35);
-            margin: 0.75rem auto;
-        }
-        .cover-placeholder .cp-author {
-            font-family: 'Cinzel', serif;
-            font-size: 0.85rem;
-            letter-spacing: 0.22em;
-            color: var(--parchment-dim);
-        }
-        .cover-placeholder .cp-series {
-            font-family: 'Lora', serif;
-            font-style: italic;
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            margin-top: 0.5rem;
         }
         /* Corner bracket decorations */
         .cover-frame::before, .cover-frame::after {
@@ -413,67 +379,14 @@
         }
 
         /* ===========================
-           SERIES HERO
+           SERIES CARDS (Pruitt section)
         =========================== */
-        .series-hero-inner {
-            position: relative;
-            z-index: 1;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3rem;
-        }
-
-        .series-hero-header { text-align: center; }
-
-        .series-eyebrow {
-            font-family: 'Cinzel', serif;
-            font-size: 0.65rem;
-            letter-spacing: 0.42em;
-            text-transform: uppercase;
-            color: var(--teal-light);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 0.75rem;
-        }
-        .series-eyebrow::before, .series-eyebrow::after {
-            content: '';
-            width: 36px;
-            height: 1px;
-            background: var(--teal-light);
-            opacity: 0.6;
-        }
-
-        .series-headline {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.2rem, 4.5vw, 4rem);
-            font-weight: 900;
-            color: var(--gold);
-            line-height: 1.05;
-            letter-spacing: 0.01em;
-            text-shadow: 0 0 60px rgba(201, 168, 76, 0.22);
-            margin-bottom: 0.75rem;
-            overflow-wrap: break-word;
-        }
-
-        .series-sub {
-            font-family: 'Lora', serif;
-            font-style: italic;
-            color: var(--text-dim);
-            font-size: 0.92rem;
-            letter-spacing: 0.06em;
-        }
-
         .series-books-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 2.5rem;
             width: 100%;
+            margin-top: 2.5rem;
         }
 
         .series-book {
@@ -641,9 +554,9 @@
         }
 
         /* ===========================
-           ABOUT THE BOOK
+           BOOK DETAIL (Ramsgate)
         =========================== */
-        #book {
+        #ramsgate-detail {
             background: linear-gradient(to bottom, var(--bg-deep), var(--bg-mid));
             border-top: 1px solid rgba(201, 168, 76, 0.1);
         }
@@ -862,39 +775,6 @@
             font-style: italic;
         }
 
-        /* Commit instructions — remove this block once word search is live */
-        .commit-box {
-            border: 1px dashed rgba(90, 157, 175, 0.35);
-            background: rgba(90, 157, 175, 0.04);
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-        }
-        .commit-box h4 {
-            font-family: 'Cinzel', serif;
-            font-size: 0.7rem;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--teal-light);
-            margin-bottom: 1rem;
-        }
-        .commit-box code {
-            display: block;
-            font-family: 'Courier New', monospace;
-            font-size: 0.8rem;
-            color: var(--parchment-dim);
-            background: rgba(0, 0, 0, 0.35);
-            padding: 0.65rem 1rem;
-            margin-bottom: 0.5rem;
-            border-left: 2px solid var(--teal-light);
-        }
-        .commit-box .note {
-            font-size: 0.78rem;
-            color: var(--text-dim);
-            margin-top: 0.75rem;
-            font-style: italic;
-            line-height: 1.6;
-        }
-
         /* ===========================
            SOCIAL SIDEBAR
         =========================== */
@@ -1029,15 +909,11 @@
             .about-grid { grid-template-columns: 1fr; }
             .compass-wrap { display: none; }
             .extras-layout { grid-template-columns: 1fr; }
-            .ads-sidebar { flex-direction: row; flex-wrap: wrap; }
-            .ad-card { width: calc(50% - 0.55rem); }
             .nav-links { display: none; }
             .hamburger { display: flex; }
         }
         @media (max-width: 520px) {
             h1.hero-title { font-size: 2.6rem; }
-            .ads-sidebar { flex-direction: column; }
-            .ad-card { width: 100%; }
         }
     </style>
 </head>
@@ -1056,8 +932,8 @@
         ATLAS VALLEY<span class="pipe"> | </span><span class="sub">Books</span>
     </a>
     <ul class="nav-links">
-        <li><a href="#book">Book Two</a></li>
-        <li><a href="#book1">Book One</a></li>
+        <li><a href="#ramsgate-detail">Ramsgate</a></li>
+        <li><a href="#pruitt">Pruitt Mysteries</a></li>
         <li><a href="#about">The Author</a></li>
         <li><a href="#games">Games</a></li>
         <li><a href="#extras">Extras</a></li>
@@ -1069,36 +945,160 @@
 
 <div id="mobile-nav">
     <ul>
-        <li><a href="#book"  onclick="closeMobileNav()">Book Two</a></li>
-        <li><a href="#book1" onclick="closeMobileNav()">Book One</a></li>
-        <li><a href="#about" onclick="closeMobileNav()">The Author</a></li>
-        <li><a href="#games" onclick="closeMobileNav()">Games</a></li>
-        <li><a href="#extras" onclick="closeMobileNav()">Extras</a></li>
+        <li><a href="#ramsgate-detail" onclick="closeMobileNav()">Ramsgate</a></li>
+        <li><a href="#pruitt"          onclick="closeMobileNav()">Pruitt Mysteries</a></li>
+        <li><a href="#about"           onclick="closeMobileNav()">The Author</a></li>
+        <li><a href="#games"           onclick="closeMobileNav()">Games</a></li>
+        <li><a href="#extras"          onclick="closeMobileNav()">Extras</a></li>
     </ul>
 </div>
 
 
 <!-- ==============================
-     HERO — SERIES SHOWCASE
+     HERO — RAMSGATE
 ============================== -->
 <section id="hero">
-    <span class="coord" style="top:78px; left:22px;">32°05'N  80°56'W</span>
-    <span class="coord" style="bottom:36px; right:22px;">CHART NO. MPM</span>
+    <span class="coord" style="top:78px; left:22px;">51°20'N  01°25'E</span>
+    <span class="coord" style="bottom:36px; right:22px;">CHART NO. AV-RAM</span>
 
-    <div class="series-hero-inner">
+    <div class="hero-inner">
 
-        <!-- Series Header -->
-        <div class="series-hero-header">
-            <div class="series-eyebrow">by Atlas Valley</div>
-            <h1 class="series-headline">The Marcus Pruitt<br>Mysteries</h1>
-            <p class="series-sub">Coastal noir from the Georgia coast</p>
+        <!-- Left: text -->
+        <div>
+            <div class="hero-series">A Prelude to Pride and Prejudice</div>
+            <h1 class="hero-title">Ramsgate</h1>
+            <p class="hero-subtitle">A Prelude to Pride and Prejudice</p>
+            <p class="hero-author">by Atlas Valley</p>
+            <p class="hero-genre">Literary Fiction · Historical</p>
+
+            <p class="hero-synopsis">
+                Jane Austen gave it three paragraphs. The summer before <em>Pride and Prejudice</em>. A fifteen-year-old girl on the Kentish coast. A man named Wickham who knew exactly what he was doing.
+            </p>
+            <p class="hero-synopsis" style="margin-top:-1rem;">
+                <em>Ramsgate</em> is everything Austen left unwritten — followed, in the same volume, by the novel itself. Read the prelude first. Then read <em>Pride and Prejudice</em>. Nothing looks the same.
+            </p>
+
+            <div class="available-now" style="margin-bottom: 1.75rem;">
+                <div class="pulse-dot"></div>
+                <span>Available Now</span>
+            </div>
+
+            <div style="display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
+                <!-- ★ UPDATE: Replace href="#ramsgate-order" with Amazon affiliate link once KDP listing is live ★ -->
+                <a href="#ramsgate-order" target="_blank" rel="noopener" class="btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    Order on Amazon
+                </a>
+                <a href="ramsgate-pp.html" class="btn-secondary">The Story Behind It</a>
+            </div>
         </div>
 
-        <!-- Books Grid -->
+        <!-- Right: cover -->
+        <div class="hero-cover">
+            <div class="cover-glow"></div>
+            <div class="cover-frame">
+                <img src="ramsgate-cover.jpg"
+                     alt="Ramsgate: A Prelude to Pride and Prejudice by Atlas Valley — Book Cover"
+                     onerror="this.style.display='none';">
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ==============================
+     RAMSGATE — DETAIL
+============================== -->
+<section id="ramsgate-detail">
+    <div class="section-inner">
+        <div class="section-label">Now Available</div>
+
+        <div class="book-inner reveal">
+
+            <!-- Quick-facts column -->
+            <div class="book-details">
+                <div class="detail-card">
+                    <div class="detail-label">Title</div>
+                    <div class="detail-value">Ramsgate: A Prelude to Pride and Prejudice</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Genre</div>
+                    <div class="detail-value">Literary Fiction · Historical</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Setting</div>
+                    <div class="detail-value">Ramsgate, Kent, England · 1811</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Format</div>
+                    <div class="detail-value">Novella + the complete text of <em>Pride and Prejudice</em> — one volume</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Also For Fans Of</div>
+                    <div class="detail-value" style="font-size:0.85rem; line-height:1.6;">Jane Austen &nbsp;·&nbsp; Pride and Prejudice<br>Regency Fiction &nbsp;·&nbsp; Literary Companion Novels<br>Historical Fiction</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Author</div>
+                    <div class="detail-value">Atlas Valley</div>
+                </div>
+                <!-- ★ UPDATE: Replace href="#ramsgate-order" with Amazon affiliate link ★ -->
+                <a href="#ramsgate-order" target="_blank" rel="noopener"
+                   class="btn-primary" style="margin-top:0.5rem; justify-content:center;">
+                    Order Now on Amazon
+                </a>
+                <a href="ramsgate-pp.html"
+                   class="btn-secondary" style="margin-top:0.25rem; justify-content:center;">
+                    The Story Behind It
+                </a>
+            </div>
+
+            <!-- Synopsis column -->
+            <div class="book-synopsis">
+                <h3>About the Book</h3>
+                <p>Every reader of <em>Pride and Prejudice</em> knows the Ramsgate story. Fitzwilliam Darcy's sister — fifteen years old, installed in a rented house on the Kentish coast with a paid companion who was not what she seemed — nearly eloped with George Wickham. Darcy arrived in time. The elopement was prevented. Wickham was dispatched.</p>
+
+                <p>Jane Austen gave it three paragraphs and moved on.</p>
+
+                <p>This is the rest.</p>
+
+                <p>Georgiana Darcy in the summer before the novel begins. The sea. A piano. A man who speaks to her in a register no one has used with her before. She does not know what she is feeling. She knows how the light looks on the water when he stands next to her.</p>
+
+                <p><em>Ramsgate: A Prelude to Pride and Prejudice</em> is a novella followed, in the same volume, by Austen's complete novel. Read <em>Ramsgate</em> first. Then read <em>Pride and Prejudice</em>. The Wickham who arrives at the Meryton ball reads differently. Darcy's letter reads differently. Lydia's elopement reads differently. Georgiana at Pemberley — quiet, careful, watching — reads differently.</p>
+
+                <p>Nothing looks the same twice.</p>
+
+                <div class="divider"></div>
+
+                <!-- ★ UPDATE: Replace href="#ramsgate-order" with Amazon affiliate link ★ -->
+                <a href="#ramsgate-order" target="_blank" rel="noopener" class="btn-primary">
+                    Order on Amazon
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ==============================
+     THE MARCUS PRUITT MYSTERIES
+============================== -->
+<section id="pruitt" style="background: var(--bg-dark); border-top: 1px solid rgba(201,168,76,0.08);">
+    <div class="section-inner">
+        <div class="section-label">Also by Atlas Valley</div>
+        <h2 class="section-title reveal">The Marcus Pruitt Mysteries</h2>
+        <p class="reveal" style="font-size:1rem; line-height:1.85; color:var(--text); max-width:660px; margin-bottom:0;">
+            Coastal noir from the Georgia coast. A forensic journalist who arrives in towns that don't want him — and stays until the truth gets tired of hiding.
+        </p>
+
         <div class="series-books-grid">
 
-            <!-- THE PROBATE THEOREM — Featured (Book Two, Pre-Order) -->
-            <div class="series-book featured">
+            <!-- THE PROBATE THEOREM — Featured (Book Two) -->
+            <div class="series-book featured reveal">
                 <div class="book-num-badge">Marcus Pruitt Mysteries — Book Two</div>
 
                 <div class="series-cover-wrap">
@@ -1131,8 +1131,8 @@
                 </a>
             </div>
 
-            <!-- HERON'S BLUFF — Secondary (Book One, Available Now) -->
-            <div class="series-book secondary">
+            <!-- HERON'S BLUFF — Secondary (Book One) -->
+            <div class="series-book secondary reveal">
                 <div class="book-num-badge">Marcus Pruitt Mysteries — Book One</div>
 
                 <div class="series-cover-wrap">
@@ -1167,73 +1167,9 @@
 
 
 <!-- ==============================
-     BOOK TWO — THE PROBATE THEOREM
-============================== -->
-<section id="book">
-    <div class="section-inner">
-        <div class="section-label">Book Two</div>
-
-        <div class="book-inner reveal">
-
-            <!-- Quick-facts column -->
-            <div class="book-details">
-                <div class="detail-card">
-                    <div class="detail-label">Title</div>
-                    <div class="detail-value">The Probate Theorem</div>
-                </div>
-                <div class="detail-card">
-                    <div class="detail-label">Series</div>
-                    <div class="detail-value">Marcus Pruitt Mysteries — Book Two</div>
-                </div>
-                <div class="detail-card">
-                    <div class="detail-label">Genre</div>
-                    <div class="detail-value">Coastal Noir · Southern Gothic</div>
-                </div>
-                <div class="detail-card">
-                    <div class="detail-label">Setting</div>
-                    <div class="detail-value">Darien, Georgia · The Altamaha River Delta</div>
-                </div>
-                <div class="detail-card">
-                    <div class="detail-label">Also For Fans Of</div>
-                    <div class="detail-value" style="font-size:0.85rem; line-height:1.6;">Legal Mystery &nbsp;·&nbsp; Investigative Thriller<br>Heirs' Property &nbsp;·&nbsp; Southern Gothic<br>African American Fiction</div>
-                </div>
-                <div class="detail-card">
-                    <div class="detail-label">Author</div>
-                    <div class="detail-value">Atlas Valley</div>
-                </div>
-                <a href="https://amzn.to/4uJGSZc" target="_blank" rel="noopener"
-                   class="btn-primary" style="margin-top:0.5rem; justify-content:center;">
-                    Order Now
-                </a>
-            </div>
-
-            <!-- Synopsis column -->
-            <div class="book-synopsis">
-                <h3>About the Book</h3>
-                <p>Marcus Pruitt doesn't stay in one place for long. When a story about heirs' property draws him to Darien, Georgia, he's chasing something familiar — the quiet legal mechanisms that strip coastal families of what their grandparents left them. A week's work. A few interviews. The river light on the Altamaha at dusk.</p>
-
-                <p>Then someone dies. And the way they died doesn't fit the official version.</p>
-
-                <p>What Marcus finds in Darien reaches back three generations — a forged amendment, a nine-million-dollar marshland parcel, and a cast of local interests with every reason to want the past to stay buried. Celeste Vaughn Monroe, who noticed things in Heron's Bluff that nobody else did, is about to notice them again.</p>
-
-                <p>The man the killer never sees coming is back on the Georgia coast. <em>The river knows everything. Eventually, so will Marcus.</em></p>
-
-                <div class="divider"></div>
-
-                <a href="https://amzn.to/4uJGSZc" target="_blank" rel="noopener" class="btn-primary">
-                    Order on Amazon
-                </a>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-
-<!-- ==============================
      ABOUT ATLAS VALLEY
 ============================== -->
-<section id="about">
+<section id="about" style="background: var(--bg-mid); border-top: 1px solid rgba(201,168,76,0.08);">
     <div class="section-inner">
         <div class="section-label">The Author</div>
         <h2 class="section-title">Atlas Valley</h2>
@@ -1242,13 +1178,7 @@
             <div class="about-text">
                 <p>Atlas Valley writes across worlds — and means that in more than one sense.</p>
 
-                <p>The debut novel, <em>Heron's Bluff</em>, announced what careful readers will immediately recognize: a forensic eye, an unhurried wit, and a sense of place so precise you can smell the spartina grass and the diesel from the shrimp boats. The Georgia coast lives in these pages the way it lives in memory — layered, warm, and deeply unwilling to give up its secrets without a fight.</p>
-
-                <p>But coastal noir is only the beginning. Atlas Valley is equally at home in the vast silence between stars — building worlds where spacetime bends at the right frequency, where two ordinary men follow an iron ladder into something that defies every map ever drawn, and the only way home is through.</p>
-
-                <p>There is also a third register: the wild. A world where the boundary between instinct and identity is paper-thin, where the most dangerous thing in the room has nothing to do with shadows, and where love — real, inconvenient, bone-deep love — turns out to be the most preternatural force of all. That series is coming. Soon.</p>
-
-                <p>Three series. Three worlds. One voice — the kind that notices what a room is doing before anyone opens their mouth, then finds exactly the right word for it.</p>
+                <p>There is Ramsgate, where a fifteen-year-old girl on the Kentish coast is about to make the mistake that shadows every corner of <em>Pride and Prejudice</em> — and where Austen's most famous novel becomes, on a second reading, an entirely different book. There is the Georgia coast, where a forensic journalist named Marcus Pruitt arrives in towns that don't want him and stays until the truth gets tired of hiding. There is an iron ladder on a stone wall somewhere between here and there — warm to the touch, smelling of ozone — and two brothers who follow it to a world the maps have never reached. There is a place where the boundary between instinct and identity runs paper-thin, and love turns out to be the most preternatural force in any room.</p>
 
                 <p>The pen name, like the best maps, tells you where you are while reminding you there is still territory left to explore.</p>
 
@@ -1256,6 +1186,8 @@
                     <p>"Every constellation is a story someone told about the dark. The stars just held their positions long enough for the rest of us to catch up."</p>
                     <cite>— Atlas Valley</cite>
                 </blockquote>
+
+                <p style="font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--text-dim); margin-top:2rem;">Wide range. Deep roots.</p>
             </div>
 
             <!-- Animated compass rose -->
@@ -1291,76 +1223,14 @@
 
 
 <!-- ==============================
-     BOOK ONE — HERON'S BLUFF
+     THE SERIES CONTINUES
 ============================== -->
-<section id="book1" style="background: var(--bg-deep); border-top: 1px solid rgba(201,168,76,0.1);">
-    <div class="section-inner">
-        <div class="section-label">Book One</div>
-
-        <div class="book-inner reveal">
-
-            <!-- Quick-facts column -->
-            <div class="book-details">
-                <div class="detail-card">
-                    <div class="detail-label">Title</div>
-                    <div class="detail-value">Heron's Bluff</div>
-                </div>
-                <div class="detail-card">
-                    <div class="detail-label">Series</div>
-                    <div class="detail-value">Marcus Pruitt Mysteries — Book One</div>
-                </div>
-                <div class="detail-card">
-                    <div class="detail-label">Genre</div>
-                    <div class="detail-value">Coastal Noir · Southern Gothic</div>
-                </div>
-                <div class="detail-card">
-                    <div class="detail-label">Setting</div>
-                    <div class="detail-value">Heron's Bluff, Georgia · The Coastal Marshes</div>
-                </div>
-                <div class="detail-card">
-                    <div class="detail-label">Also For Fans Of</div>
-                    <div class="detail-value" style="font-size:0.85rem; line-height:1.6;">Amateur Sleuth &nbsp;·&nbsp; Investigative Thriller<br>Legal Mystery &nbsp;·&nbsp; Small Town Noir<br>African American Fiction</div>
-                </div>
-                <div class="detail-card">
-                    <div class="detail-label">Author</div>
-                    <div class="detail-value">Atlas Valley</div>
-                </div>
-            </div>
-
-            <!-- Synopsis column -->
-            <div class="book-synopsis">
-                <h3>Where the Series Begins</h3>
-                <p>Marcus Pruitt came to Heron's Bluff, Georgia for a story. He always does. A forensic chemist turned investigative journalist, he arrives on the Georgia coast to write about heirs' property — the quiet legal mechanism that has been stripping Black coastal families of their land for generations. A week's work. A few interviews. Some bourbon.</p>
-
-                <p>Then he finds the alderman dead at the base of a decommissioned lighthouse before sunrise. Everything about the scene is wrong — starting with a chemical smell that has no business being anywhere near salt water.</p>
-
-                <p>Marcus notices these things. He can't help it. It's the curse of a forensic mind in a town that has been keeping its secrets since before the Civil War.</p>
-
-                <p>Old families, old deeds, old money — and a woman named Celeste Vaughn Monroe who seems to know exactly where all of it is buried. Someone in this sun-soaked coastal town is counting on Marcus Pruitt to stay in his lane.</p>
-
-                <p>He won't. <em>The man the killer never sees coming has arrived. And the tide is coming in.</em></p>
-
-                <div class="divider"></div>
-
-                <a href="https://amzn.to/4265sqJ" target="_blank" rel="noopener" class="btn-primary">
-                    Order Now on Amazon
-                </a>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-
-<!-- ==============================
-     MORE IN THE SERIES
-============================== -->
-<section id="series-ahead" style="background: linear-gradient(to bottom, var(--bg-mid), var(--bg-dark)); border-top: 1px solid rgba(201,168,76,0.08);">
+<section id="series-ahead" style="background: linear-gradient(to bottom, var(--bg-dark), var(--bg-deep)); border-top: 1px solid rgba(201,168,76,0.08);">
     <div class="section-inner" style="text-align:center;">
-        <div class="section-label" style="justify-content:center;">The Series Continues</div>
-        <h2 class="section-title reveal" style="text-align:center;">More Marcus Pruitt<br>Is Coming</h2>
-        <p class="reveal" style="font-size:1rem; line-height:1.92; color:var(--text); max-width:660px; margin:0 auto 1.25rem;">Marcus Pruitt's Georgia coast is wider than any single case. Books Three and Four are in production — each one a new county, a new conspiracy, and a new reason to remember that the man the killer never sees coming has been watching the whole time.</p>
-        <p class="reveal" style="font-size:0.9rem; line-height:1.8; color:var(--text-dim); font-style:italic; max-width:480px; margin:0 auto 2.5rem;">Stay close to the water. There's more where this came from.</p>
+        <div class="section-label" style="justify-content:center;">More is Coming</div>
+        <h2 class="section-title reveal" style="text-align:center;">The Map Is Still Being Drawn</h2>
+        <p class="reveal" style="font-size:1rem; line-height:1.92; color:var(--text); max-width:660px; margin:0 auto 1.25rem;">The Marcus Pruitt Mysteries continue — each book a new county, a new conspiracy, and a new reason to remember that the man the killer never sees coming has been watching the whole time. Other stories are further along the horizon: a fantasy built on a world's deep memory; a supernatural series where the most dangerous thing in the room is love itself; a thriller set inside a small Southern church that photographs beautifully and keeps things buried. From the parlor to the marsh to the stars.</p>
+        <p class="reveal" style="font-size:0.9rem; line-height:1.8; color:var(--text-dim); font-style:italic; max-width:480px; margin:0 auto 2.5rem;">Stay close. There's more where this came from.</p>
         <a href="https://atlas-valley.beehiiv.com/subscribe" target="_blank" rel="noopener" class="btn-secondary reveal">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
@@ -1375,7 +1245,7 @@
 <!-- ==============================
      LITERARY GAMES
 ============================== -->
-<section id="games">
+<section id="games" style="background: var(--bg-deep); border-top: 1px solid rgba(201,168,76,0.1);">
     <div class="section-inner">
         <div class="section-label">Literary Games</div>
         <h2 class="section-title reveal">Play the World of Heron's Bluff</h2>
@@ -1416,15 +1286,27 @@
 <!-- ==============================
      EXTRAS
 ============================== -->
-<section id="extras">
+<section id="extras" style="background: linear-gradient(to bottom, var(--bg-mid), var(--bg-dark)); border-top: 1px solid rgba(201,168,76,0.08);">
     <div class="section-inner">
         <div class="section-label">Extras</div>
-        <h2 class="section-title reveal">Bonus Content &amp; Promos</h2>
+        <h2 class="section-title reveal">Bonus Content &amp; Extras</h2>
 
         <div class="extras-layout">
 
             <!-- Left column: bonus content -->
             <div class="extras-main">
+
+                <!-- Ramsgate blog link -->
+                <div class="bonus-card reveal">
+                    <h3>The Story Behind Ramsgate</h3>
+                    <p>
+                        What Austen left unwritten — and why filling in that silence
+                        changes everything about how you read the novel.
+                    </p>
+                    <a href="ramsgate-pp.html" class="btn-secondary">
+                        Read the Article
+                    </a>
+                </div>
 
                 <!-- Crossword card -->
                 <div class="bonus-card reveal">
@@ -1445,28 +1327,10 @@
                         Hidden among the marsh grasses, the clues are waiting.
                         Can you track them all down before the tide comes in?
                     </p>
-                    <!--
-                        ★ WORD SEARCH LINK ★
-                        Change "wordsearch.html" to the actual filename of your word search.
-                        Once the file is committed to GitHub, this button goes live automatically.
-                    -->
                     <a href="HeronsBluff_WordSearch.html" class="btn-secondary">
                         Play the Word Search
                     </a>
                 </div>
-
-                <!-- Puzzle files HeronsBluff_WordSearch.html + HeronsBluff_Crossword.html
-                     are already in this folder and ready to commit with:
-                     git add HeronsBluff_WordSearch.html HeronsBluff_Crossword.html
-                     git commit -m "Add puzzles"
-                     git push
-                -->
-
-                <!--
-                    ★ ADD MORE BONUS CONTENT HERE ★
-                    Copy the .bonus-card div above and customize for each new item.
-                    Great for: character guides, chapter samplers, playlists, maps, etc.
-                -->
 
             </div>
 
@@ -1507,7 +1371,7 @@
 ============================== -->
 <footer>
     <div class="footer-logo">ATLAS VALLEY</div>
-    <p class="footer-tagline">"Stories from the edge of the map."</p>
+    <p class="footer-tagline">"From the parlor to the marsh to the stars."</p>
     <div class="footer-social">
         <a href="https://www.facebook.com/profile.php?id=61560796817714" target="_blank" rel="noopener" aria-label="Facebook">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1524,16 +1388,16 @@
     </div>
     <nav class="footer-links">
         <a href="#hero">Home</a>
-        <a href="#book">Book Two</a>
-        <a href="#book1">Book One</a>
+        <a href="#ramsgate-detail">Ramsgate</a>
+        <a href="#pruitt">Pruitt Mysteries</a>
         <a href="#about">The Author</a>
         <a href="#games">Games</a>
         <a href="#extras">Extras</a>
-        <a href="https://amzn.to/4uJGSZc" target="_blank" rel="noopener">Order Now</a>
+        <a href="ramsgate-pp.html">The Story Behind It</a>
+        <!-- ★ UPDATE: Replace href="#ramsgate-order" with Amazon affiliate link ★ -->
+        <a href="#ramsgate-order" target="_blank" rel="noopener">Order Ramsgate</a>
     </nav>
     <p class="footer-copy">&copy; 2026 Atlas Valley. All rights reserved. &nbsp;|&nbsp; atlasvalleybooks.com</p>
-
-
 </footer>
 
 
