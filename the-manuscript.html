@@ -747,7 +747,6 @@
   <div id="controls">
     <button class="ctrl-btn" onclick="shuffle()" id="shuffle-btn">Shuffle</button>
     <button class="ctrl-btn" onclick="deselectAll()" id="deselect-btn">Deselect All</button>
-    <button class="ctrl-btn" onclick="useHint()" id="hint-btn">Hint (2)</button>
     <button class="ctrl-btn primary" onclick="submitGuess()" id="submit-btn" disabled>Submit</button>
   </div>
 
@@ -1090,7 +1089,7 @@ const PUZZLES = [
  {l:1,n:"Japanese literary masters",              w:["MISHIMA","KAWABATA","TANIZAKI","MURAKAMI"]},
  {l:2,n:"Haruki Murakami novel title words",      w:["NORWEGIAN","WIND","KAFKA","COLORLESS"]},
  {l:3,n:"Japanese aesthetic and literary terms",  w:["MONO","WABI","SABI","YUGEN"]},
- {l:4,n:"Japanese literary icons beyond the four",  w:["OE","ISHIGURO","SOSEKI","AKUTAGAWA"]}
+ {l:4,n:"Nobel Prize winning Japanese authors",   w:["OE","ISHIGURO","KAWABATA","MISHIMA"]}
 ]},
 // ── 39 ──────────────────────────────────────
 {c:[
@@ -1199,7 +1198,7 @@ const CAT_COLORS = ["var(--cat1)","var(--cat2)","var(--cat3)","var(--cat4)"];
 const CAT_EMOJIS = ["🟨","🟦","🟧","⬜"];
 const EPOCH = new Date('2026-05-02T00:00:00');
 
-let puzzle, tiles, selected = [], solvedLevels = [], attempts = 5, hints = 2, gameOver = false;
+let puzzle, tiles, selected = [], solvedLevels = [], attempts = 4, gameOver = false;
 let guessHistory = []; // for share
 
 function getTodayPuzzle() {
@@ -1303,15 +1302,13 @@ function init() {
   const saved = loadState();
   if (saved) {
     solvedLevels = saved.solvedLevels || [];
-    attempts     = saved.attempts !== undefined ? saved.attempts : 5;
-    hints        = saved.hints    !== undefined ? saved.hints    : 2;
+    attempts     = saved.attempts !== undefined ? saved.attempts : 4;
     guessHistory = saved.guessHistory || [];
     gameOver     = saved.gameOver || false;
     tiles        = saved.tiles || getAllItems();
   } else {
     solvedLevels = [];
-    attempts     = 5;
-    hints        = 2;
+    attempts     = 4;
     guessHistory = [];
     gameOver     = false;
     tiles        = shuffle_(getAllItems());
@@ -1320,7 +1317,6 @@ function init() {
   renderSolvedArea();
   renderGrid();
   renderDots();
-  renderHintBtn();
 
   if (gameOver) {
     endGame(false, true); // restore ended state
@@ -1368,7 +1364,7 @@ function renderSolvedArea() {
 function renderDots() {
   const el = document.getElementById('dots');
   let html = '';
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 4; i++) {
     html += `<span class="dot ${i >= attempts ? 'used' : ''}"></span>`;
   }
   el.innerHTML = html;
@@ -1439,7 +1435,7 @@ function submitGuess() {
       renderDots();
       setFeedback('');
       document.getElementById('submit-btn').disabled = true;
-      saveState({solvedLevels, attempts, hints, guessHistory, gameOver, tiles});
+      saveState({solvedLevels, attempts, guessHistory, gameOver, tiles});
       if (solvedLevels.length === 4) {
         updateStreak(true);
         incrementPlays();
@@ -1465,14 +1461,14 @@ function submitGuess() {
     });
 
     if (attempts <= 0) {
-      saveState({solvedLevels, attempts, hints, guessHistory, gameOver: true, tiles});
+      saveState({solvedLevels, attempts, guessHistory, gameOver: true, tiles});
       setTimeout(() => {
         updateStreak(false);
         incrementPlays();
         endGame(false, false);
       }, 600);
     } else {
-      saveState({solvedLevels, attempts, hints, guessHistory, gameOver, tiles});
+      saveState({solvedLevels, attempts, guessHistory, gameOver, tiles});
     }
     selected = [];
     setTimeout(() => {
@@ -1490,44 +1486,6 @@ function setFeedback(msg) {
   if (msg) {
     clearTimeout(el._t);
     el._t = setTimeout(() => { el.textContent = ''; }, 2200);
-  }
-}
-
-// ── HINTS ─────────────────────────────────────
-function useHint() {
-  if (hints <= 0 || gameOver) return;
-  const solvedWords = new Set(puzzle.c.filter(c => solvedLevels.includes(c.l)).flatMap(c => c.w));
-  const remaining   = tiles.filter(t => !solvedWords.has(t.word));
-  if (!remaining.length) return;
-  const pick   = remaining[Math.floor(Math.random() * remaining.length)];
-  const cat    = puzzle.c.find(c => c.w.includes(pick.word));
-  const names  = ['Gilt', 'Teal', 'Amber', 'Parchment'];
-  const tileEl = document.querySelector('.tile[data-word="' + pick.word + '"]');
-  if (tileEl) {
-    tileEl.style.background  = CAT_COLORS[cat.l - 1];
-    tileEl.style.borderColor = CAT_COLORS[cat.l - 1];
-    tileEl.style.color       = 'var(--bg-deep)';
-    setTimeout(() => {
-      tileEl.style.background  = '';
-      tileEl.style.borderColor = '';
-      tileEl.style.color       = '';
-    }, 3000);
-  }
-  hints--;
-  renderHintBtn();
-  setFeedback('Hint: "' + pick.word + '" belongs to the ' + names[cat.l - 1] + ' group');
-  saveState({solvedLevels, attempts, hints, guessHistory, gameOver, tiles});
-}
-
-function renderHintBtn() {
-  const btn = document.getElementById('hint-btn');
-  if (!btn) return;
-  if (hints > 0) {
-    btn.textContent = 'Hint (' + hints + ')';
-    btn.disabled    = false;
-  } else {
-    btn.textContent = 'No Hints Left';
-    btn.disabled    = true;
   }
 }
 
