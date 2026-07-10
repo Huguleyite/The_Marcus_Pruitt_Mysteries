@@ -614,6 +614,19 @@
         }
 
         /* ===========================
+           HELIOS VALLEY TIE-IN
+        =========================== */
+        .helios-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        .helios-cover-frame {
+            width: 200px;
+        }
+
+        /* ===========================
            ABOUT ATLAS VALLEY
         =========================== */
         #about {
@@ -906,6 +919,8 @@
             .series-book.featured .series-cover-frame { width: 180px; }
             .book-inner { grid-template-columns: 1fr; gap: 2.5rem; }
             .about-grid { grid-template-columns: 1fr; }
+            .helios-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .helios-grid .helios-cover-wrap { order: -1; }
             .compass-wrap { display: none; }
             .extras-layout { grid-template-columns: 1fr; }
             .nav-links { display: none; }
@@ -933,6 +948,7 @@
     <ul class="nav-links">
         <li><a href="#pruitt">Pruitt Mysteries</a></li>
         <li><a href="#about">The Author</a></li>
+        <li><a href="helios/">Helios Valley</a></li>
         <li><a href="#games">Games</a></li>
         <li><a href="#extras">Extras</a></li>
     </ul>
@@ -945,6 +961,7 @@
     <ul>
         <li><a href="#pruitt"          onclick="closeMobileNav()">Pruitt Mysteries</a></li>
         <li><a href="#about"           onclick="closeMobileNav()">The Author</a></li>
+        <li><a href="helios/"          onclick="closeMobileNav()">Helios Valley</a></li>
         <li><a href="#games"           onclick="closeMobileNav()">Games</a></li>
         <li><a href="#extras"          onclick="closeMobileNav()">Extras</a></li>
     </ul>
@@ -1181,6 +1198,35 @@
 
 
 <!-- ==============================
+     HELIOS VALLEY — SIBLING IMPRINT
+============================== -->
+<section id="helios" style="background: linear-gradient(to bottom, var(--bg-dark), var(--bg-mid)); border-top: 1px solid rgba(201,168,76,0.08);">
+    <div class="section-inner">
+        <div class="section-label">A Sibling Imprint</div>
+
+        <div class="helios-grid reveal">
+            <div>
+                <h2 class="section-title" style="margin-bottom:0.5rem;">Helios Valley</h2>
+                <p class="hero-subtitle" style="margin-bottom:1.25rem;">From the edge of the map, in color.</p>
+                <p style="font-size:1rem; line-height:1.85; color:var(--text); max-width:480px; margin-bottom:1.75rem;">
+                    Not every world Atlas Valley visits stays in ink. Helios Valley is the coloring-book imprint — grayscale worlds, including a few corners of these very novels, waiting for someone to pick up the pencil.
+                </p>
+                <a href="helios/" class="btn-secondary">Visit Helios Valley</a>
+            </div>
+
+            <div class="helios-cover-wrap" style="display:flex; justify-content:center;">
+                <div class="series-cover-frame helios-cover-frame">
+                    <img src="helios/assets/xenobotanica-cover.jpg"
+                         alt="Xenobotanica by Helios Valley — a grayscale alien botanical coloring book, half rendered in color"
+                         onerror="this.style.display='none';">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==============================
      ABOUT ATLAS VALLEY
 ============================== -->
 <section id="about" style="background: var(--bg-mid); border-top: 1px solid rgba(201,168,76,0.08);">
@@ -1404,6 +1450,7 @@
         <a href="#hero">Home</a>
         <a href="#pruitt">Pruitt Mysteries</a>
         <a href="#about">The Author</a>
+        <a href="helios/">Helios Valley</a>
         <a href="#games">Games</a>
         <a href="#extras">Extras</a>
         <a href="https://amzn.to/4a45iEJ" target="_blank" rel="noopener">Order Ramsgate</a>
