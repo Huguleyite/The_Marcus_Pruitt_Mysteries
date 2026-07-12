@@ -15,8 +15,8 @@
     ║                                                                ║
     ║  TO PUSH CHANGES TO LIVE SITE (in your terminal):             ║
     ║    git add helios/                                            ║
-    ║    git commit -m "Restyle Helios Valley — slate bg, scattered║
-    ║                    specimens, split hero"                    ║
+    ║    git commit -m "Add Bonus Downloads section — 3 free       ║
+    ║                    Xenobotanica specimens"                   ║
     ║    git push                                                   ║
     ║                                                                ║
     ║  ★ XENOBOTANICA AMAZON LINK ★  [TBD — insert when live]      ║
@@ -190,6 +190,89 @@
             z-index: 1;
         }
 
+        /* ===== BONUS DOWNLOADS ===== */
+        .bonus {
+            position: relative;
+            overflow: hidden;
+            padding: 0.5rem 2rem 3.5rem;
+            text-align: center;
+        }
+        .bonus-heading {
+            font-family: 'Cinzel', serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            letter-spacing: 0.1em;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+        .bonus-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--muted-text);
+            margin-bottom: 0.9rem;
+        }
+        .bonus-note {
+            font-family: Arial, sans-serif;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--dim-text);
+            max-width: 500px;
+            margin: 0 auto 2rem;
+        }
+        .bonus-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.1rem;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+        .bonus-card {
+            position: relative;
+            z-index: 1;
+            background: var(--indigo-panel);
+            border: 1px dashed var(--slate);
+            border-radius: 6px;
+            padding: 1.1rem 1rem 1.4rem;
+            text-align: center;
+        }
+        .bonus-card img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.9rem;
+            background: var(--paper-gray);
+        }
+        .bonus-name {
+            font-family: 'Cinzel', serif;
+            font-size: 0.82rem;
+            letter-spacing: 0.06em;
+            color: var(--paper-gray);
+            margin-bottom: 0.4rem;
+        }
+        .bonus-desc {
+            font-family: Arial, sans-serif;
+            font-size: 0.72rem;
+            line-height: 1.5;
+            color: var(--dim-text);
+            margin-bottom: 1rem;
+        }
+        .bonus-download {
+            display: inline-block;
+            background: var(--espresso-gold);
+            color: var(--espresso);
+            font-family: Arial, sans-serif;
+            font-size: 0.68rem;
+            font-weight: bold;
+            letter-spacing: 0.08em;
+            padding: 0.55rem 1rem;
+            border-radius: 2px;
+            text-decoration: none;
+        }
+        .bonus-download:hover { filter: brightness(1.08); }
+
         /* ===== COMING SOON ===== */
         .worlds {
             position: relative;
@@ -243,6 +326,7 @@
             .hero-copy { max-width: 100%; margin: 0 auto; }
             nav ul { flex-wrap: wrap; gap: 1rem; }
             footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+            .bonus-grid { grid-template-columns: 1fr; max-width: 320px; }
         }
     </style>
 </head>
@@ -254,6 +338,7 @@
         <nav>
             <ul>
                 <li><a href="#xenobotanica">Xenobotanica</a></li>
+                <li><a href="#bonus-downloads">Bonus Downloads</a></li>
                 <li><span class="soon">Fauna — Soon</span></li>
                 <li><span class="soon">Landscapes — Soon</span></li>
             </ul>
@@ -279,6 +364,32 @@
         <svg class="specimen" width="90" height="130" viewBox="0 0 90 130" style="top:-10px; left:-15px; opacity:0.16; transform:rotate(-12deg);"><g fill="none" stroke="var(--gold)" stroke-width="1.2"><path d="M45 120 C20 100 15 70 30 40 C38 55 40 70 45 90 C50 70 52 55 60 40 C75 70 70 100 45 120Z"/><path d="M45 90 L45 40"/></g></svg>
         <svg class="specimen" width="70" height="70" viewBox="0 0 70 70" style="top:10px; right:10px; opacity:0.14; transform:rotate(6deg);"><g fill="none" stroke="var(--violet)" stroke-width="1.2"><ellipse cx="35" cy="38" rx="22" ry="14"/><path d="M15 34 Q10 20 20 12"/><path d="M55 34 Q60 20 50 12"/><circle cx="35" cy="38" r="4"/></g></svg>
         <p>Xenobotanica is the first world Helios Valley is coloring in. More are already taking shape — including corners of Atlas Valley's own novels, waiting for their own grayscale editions.</p>
+    </section>
+
+    <section class="bonus" id="bonus-downloads">
+        <div class="bonus-heading">BONUS DOWNLOADS</div>
+        <div class="bonus-tagline">Three more specimens, free to take with you.</div>
+        <p class="bonus-note">Not in the book. Print any of these at home, no email required.</p>
+        <div class="bonus-grid">
+            <div class="bonus-card">
+                <img src="assets/bonus/xenobotanica-bonus-simplified-thumb.jpg" alt="A simplified alien moth-flower coloring page, easy lines, good for kids or a quick fill-in">
+                <div class="bonus-name">FOR FIRST-TIME COLORISTS</div>
+                <div class="bonus-desc">A simplified specimen, easy lines, good for kids or a quick fill-in.</div>
+                <a class="bonus-download" href="assets/bonus/xenobotanica-bonus-simplified.jpg" download>DOWNLOAD</a>
+            </div>
+            <div class="bonus-card">
+                <img src="assets/bonus/xenobotanica-bonus-detailed-thumb.jpg" alt="A richly detailed mandala-eye alien flower specimen, matching the density of the book's interior pages">
+                <div class="bonus-name">BOOK-QUALITY DETAIL</div>
+                <div class="bonus-desc">Full intricacy, matching the density of the 50 specimens inside Xenobotanica.</div>
+                <a class="bonus-download" href="assets/bonus/xenobotanica-bonus-detailed.jpg" download>DOWNLOAD</a>
+            </div>
+            <div class="bonus-card">
+                <img src="assets/bonus/xenobotanica-bonus-print-thumb.jpg" alt="A finished grayscale seed pod specimen piece, print-ready as-is">
+                <div class="bonus-name">READY TO FRAME</div>
+                <div class="bonus-desc">A finished specimen piece, print-ready as-is, no coloring needed.</div>
+                <a class="bonus-download" href="assets/bonus/xenobotanica-bonus-print.jpg" download>DOWNLOAD</a>
+            </div>
+        </div>
     </section>
 
     <section class="worlds">
