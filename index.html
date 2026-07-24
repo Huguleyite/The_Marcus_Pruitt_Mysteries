@@ -15,13 +15,16 @@
     ║  GitHub Pages site — managed via Claude Code                ║
     ║                                                              ║
     ║  TO PUSH CHANGES TO LIVE SITE (in your terminal):           ║
-    ║    git add index.html code-red-herring-cover.jpg              ║
-    ║    git commit -m "Add CRH pre-order ribbon + section"        ║
+    ║    git add index.html helios/index.html                     ║
+    ║    git commit -m "Open Helios Valley section, add release   ║
+    ║                    date"                                    ║
     ║    git push                                                  ║
     ║                                                              ║
     ║  ★ YOU'RE ON MUTE — AMAZON LINK ★  https://amzn.to/44hLlH3   ║
     ║  ★ RAMSGATE AMAZON LINK ★  https://amzn.to/4a45iEJ          ║
     ║  ★ CODE RED HERRING — PRE-ORDER LINK ★  https://amzn.to/4wRuffl ║
+    ║  ★ XENOBOTANICA (Helios Valley) — releases July 31, 2026;   ║
+    ║    no Amazon link yet, add when live                        ║
     ║                                                              ║
     ║  NOTE: the-adaptation.html decommissioned May 11, 2026.     ║
     ║    Source archived in the-adaptation.ARCHIVED.html           ║
@@ -961,7 +964,7 @@
     <ul class="nav-links">
         <li><a href="#pruitt">More from Atlas</a></li>
         <li><a href="#about">The Author</a></li>
-        <li><a class="nav-disabled" aria-disabled="true" style="opacity:0.5; cursor:default; pointer-events:none;">Helios Valley (Soon)</a></li>
+        <li><a href="helios/">Helios Valley</a></li>
         <li><a href="#games">Games</a></li>
         <li><a href="#extras">Extras</a></li>
     </ul>
@@ -974,7 +977,7 @@
     <ul>
         <li><a href="#pruitt"          onclick="closeMobileNav()">More from Atlas</a></li>
         <li><a href="#about"           onclick="closeMobileNav()">The Author</a></li>
-        <li><a aria-disabled="true" style="opacity:0.5; cursor:default; pointer-events:none;">Helios Valley (Soon)</a></li>
+        <li><a href="helios/">Helios Valley</a></li>
         <li><a href="#games"           onclick="closeMobileNav()">Games</a></li>
         <li><a href="#extras"          onclick="closeMobileNav()">Extras</a></li>
     </ul>
@@ -1273,7 +1276,11 @@
                 <p style="font-size:1rem; line-height:1.85; color:var(--text); max-width:480px; margin-bottom:1.75rem;">
                     Not every world Atlas Valley visits stays in ink. Helios Valley is the coloring-book imprint — grayscale worlds, including a few corners of these very novels, waiting for someone to pick up the pencil.
                 </p>
-                <span class="btn-secondary" aria-disabled="true" style="opacity:0.5; cursor:default; pointer-events:none;"><!-- Re-enable: <a href="helios/" class="btn-secondary">Visit Helios Valley</a> --> Coming Soon</span>
+                <div class="available-now" style="margin-bottom:1.25rem;">
+                    <div class="pulse-dot" style="background:var(--amber);"></div>
+                    <span style="color:var(--amber);">Xenobotanica Releases July 31, 2026</span>
+                </div>
+                <a href="helios/" class="btn-secondary">Visit Helios Valley</a>
             </div>
 
             <div class="helios-cover-wrap" style="display:flex; justify-content:center;">
@@ -1512,7 +1519,7 @@
         <a href="#hero">Home</a>
         <a href="#pruitt">More from Atlas</a>
         <a href="#about">The Author</a>
-        <a aria-disabled="true" style="opacity:0.5; cursor:default; pointer-events:none;">Helios Valley (Soon)</a>
+        <a href="helios/">Helios Valley</a>
         <a href="#games">Games</a>
         <a href="#extras">Extras</a>
     </nav>

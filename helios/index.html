@@ -18,11 +18,13 @@
     ║                                                                ║
     ║  TO PUSH CHANGES TO LIVE SITE (in your terminal):             ║
     ║    git add helios/                                            ║
-    ║    git commit -m "Add Bonus Downloads section — 3 free       ║
-    ║                    Xenobotanica specimens"                   ║
+    ║    git commit -m "Open Helios Valley section, add release    ║
+    ║                    date"                                     ║
     ║    git push                                                   ║
     ║                                                                ║
-    ║  ★ XENOBOTANICA AMAZON LINK ★  [TBD — insert when live]      ║
+    ║  XENOBOTANICA RELEASES JULY 31, 2026.                        ║
+    ║  ★ XENOBOTANICA AMAZON LINK ★  [TBD — insert when live,      ║
+    ║    swap .release-badge back to the .cta Amazon button]       ║
     ╚══════════════════════════════════════════════════════════════╝
     -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -168,6 +170,33 @@
             box-shadow: 0 4px 14px rgba(43, 29, 19, 0.25);
         }
         .cta:hover { filter: brightness(1.08); }
+        .release-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--espresso-gold);
+            color: var(--espresso);
+            font-family: Arial, sans-serif;
+            font-size: 0.75rem;
+            font-weight: bold;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.75rem 1.6rem;
+            border-radius: 2px;
+            box-shadow: 0 4px 14px rgba(43, 29, 19, 0.25);
+        }
+        .release-badge .pulse-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--espresso);
+            animation: pulse 2s infinite;
+            flex-shrink: 0;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.35; transform: scale(0.75); }
+        }
 
         /* ===== SCATTERED SPECIMENS (unpainted line art) ===== */
         .specimen {
@@ -358,7 +387,8 @@
                 <div class="hero-title">XENOBOTANICA</div>
                 <div class="hero-subtitle">A Grayscale Coloring Book of Alien Botanical Specimens</div>
                 <p class="hero-desc">Fifty specimens from a world that doesn't exist yet, rendered in fine grayscale line. Bring your own color to Helios Valley's first book.</p>
-                <a class="cta" href="#" title="Amazon link to be added at launch">FIND IT ON AMAZON</a>
+                <!-- Swap back to: <a class="cta" href="[AMAZON LINK]">FIND IT ON AMAZON</a> once live July 31, 2026 -->
+                <div class="release-badge"><span class="pulse-dot"></span>Releasing July 31, 2026</div>
             </div>
         </div>
     </section>
