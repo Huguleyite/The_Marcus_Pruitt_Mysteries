@@ -339,6 +339,55 @@
             line-height: 1.5;
             color: var(--dim-text);
         }
+        .world-card.has-image {
+            padding: 1.1rem 1rem 1.4rem;
+        }
+        .world-card.has-image img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 4px;
+            background: var(--paper-gray);
+            margin-bottom: 0.85rem;
+        }
+        .world-headline {
+            font-family: 'Cinzel', serif;
+            font-weight: 900;
+            font-size: 1.15rem;
+            letter-spacing: 0.14em;
+            color: var(--gold);
+            margin-bottom: 0.15rem;
+        }
+        .world-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--ivory);
+            margin-bottom: 0.75rem;
+        }
+        .world-soon-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--espresso-gold);
+            color: var(--espresso);
+            font-family: Arial, sans-serif;
+            font-size: 0.68rem;
+            font-weight: bold;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.55rem 1rem;
+            border-radius: 2px;
+        }
+        .world-soon-badge .pulse-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--espresso);
+            animation: pulse 2s infinite;
+            flex-shrink: 0;
+        }
 
         /* ===== FOOTER ===== */
         footer {
@@ -430,10 +479,11 @@
         <svg class="specimen" width="60" height="60" viewBox="0 0 60 60" style="bottom:10px; right:20px; opacity:0.12; transform:rotate(-6deg);"><g fill="none" stroke="var(--gold)" stroke-width="1.1"><path d="M30 55 C18 45 15 32 22 18 C27 27 28 35 30 45 C32 35 33 27 38 18 C45 32 42 45 30 55Z"/></g></svg>
         <svg class="specimen" width="140" height="110" viewBox="0 0 140 110" style="bottom:-25px; right:-25px; opacity:0.16;"><g fill="none" stroke="var(--teal)" stroke-width="1.3"><path d="M0 100 L30 45 L48 68 L72 25 L100 75 L140 100"/><circle cx="105" cy="30" r="10"/></g></svg>
 
-        <div class="world-card">
-            <svg width="52" height="52" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="20" fill="none" stroke="#7d5ba6" stroke-width="2"/><path d="M20,35 Q30,15 40,35" fill="none" stroke="#7d5ba6" stroke-width="2"/></svg>
-            <div class="world-name">Fauna</div>
-            <div class="world-desc">The next world grows fur, scale, and feather.</div>
+        <div class="world-card has-image">
+            <img src="assets/fauna-teaser.jpg" alt="A grayscale coloring page from Unidentified Fauna Objects — a spiraled shell crowned with a fan of crystalline spikes">
+            <div class="world-headline">U.F.O.</div>
+            <div class="world-subtitle">Unidentified Fauna Objects</div>
+            <div class="world-soon-badge"><span class="pulse-dot"></span>Coming soon</div>
         </div>
         <div class="world-card">
             <svg width="52" height="52" viewBox="0 0 60 60" aria-hidden="true"><path d="M10,45 L25,25 L35,38 L45,20 L55,45 Z" fill="none" stroke="#2f8f8a" stroke-width="2"/></svg>
