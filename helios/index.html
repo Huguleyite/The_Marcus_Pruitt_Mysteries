@@ -6,8 +6,8 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Helios Valley — coloring books built from worlds still being colored in. Starting with Xenobotanica, a grayscale coloring book of alien botanical specimens.">
-    <meta name="keywords" content="Helios Valley, Xenobotanica, alien botanical coloring book, grayscale coloring book, adult coloring book, alien plants, coloring book worlds">
+    <meta name="description" content="Helios Valley — coloring books built from worlds still being colored in. Xenobotanica is out now; U.F.O. (Unidentified Fauna Objects) arrives September 4, 2026; GPS: Galactic Planetary Survey arrives October 2, 2026.">
+    <meta name="keywords" content="Helios Valley, Xenobotanica, UFO Unidentified Fauna Objects, GPS Galactic Planetary Survey, alien botanical coloring book, alien creature coloring book, alien landscape coloring book, grayscale coloring book, adult coloring book, coloring book worlds">
     <title>Helios Valley | Worlds Still Being Colored In</title>
     <!--
     ╔══════════════════════════════════════════════════════════════╗
@@ -18,11 +18,19 @@
     ║                                                                ║
     ║  TO PUSH CHANGES TO LIVE SITE (in your terminal):             ║
     ║    git add helios/                                            ║
-    ║    git commit -m "Open Helios Valley section, add release    ║
-    ║                    date"                                     ║
+    ║    git commit -m "Promote UFO to hero, add UFO bonus         ║
+    ║                    downloads, move Xenobotanica to            ║
+    ║                    Available Now strip"                       ║
     ║    git push                                                   ║
     ║                                                                ║
     ║  XENOBOTANICA — LIVE. Amazon link: amzn.to/4x9NrFf           ║
+    ║  U.F.O. — COMING SEPTEMBER 4, 2026. No Amazon link until      ║
+    ║    at least 9/3/26 (paperback links arrive late) — swap the   ║
+    ║    .release-badge for a real .cta button once it's live.      ║
+    ║  GPS: GALACTIC PLANETARY SURVEY — teaser card only, coming    ║
+    ║    October 2, 2026. Cover cropped from                        ║
+    ║    Print Ready/GPS-Full-Wrap-Cover-v3.png (front panel,       ║
+    ║    rightmost 2587px). No bonus downloads or hero yet.         ║
     ╚══════════════════════════════════════════════════════════════╝
     -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -168,6 +176,10 @@
             box-shadow: 0 4px 14px rgba(43, 29, 19, 0.25);
         }
         .cta:hover { filter: brightness(1.08); }
+        .cta-small {
+            font-size: 0.68rem;
+            padding: 0.55rem 1.2rem;
+        }
         .release-badge {
             display: inline-flex;
             align-items: center;
@@ -200,6 +212,54 @@
         .specimen {
             position: absolute;
             pointer-events: none;
+        }
+
+        /* ===== ALSO AVAILABLE (compact strip for a title bumped out of the hero) ===== */
+        .also-available {
+            padding: 2.25rem 2rem 0.5rem;
+            text-align: center;
+        }
+        .also-available-inner {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            max-width: 640px;
+            margin: 0 auto;
+            background: var(--indigo-panel);
+            border: 1px dashed var(--slate);
+            border-radius: 6px;
+            padding: 1.25rem 1.6rem;
+            text-align: left;
+        }
+        .also-available-inner img {
+            width: 100px;
+            height: auto;
+            border-radius: 3px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+            flex-shrink: 0;
+        }
+        .also-available-label {
+            font-family: Arial, sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--dim-text);
+            margin-bottom: 0.3rem;
+        }
+        .also-available-title {
+            font-family: 'Cinzel', serif;
+            font-weight: 900;
+            font-size: 1.15rem;
+            letter-spacing: 0.1em;
+            color: var(--gold);
+            margin-bottom: 0.35rem;
+        }
+        .also-available-desc {
+            font-family: Arial, sans-serif;
+            font-size: 0.8rem;
+            line-height: 1.55;
+            color: var(--muted-text);
+            margin-bottom: 0.85rem;
         }
 
         /* ===== INTRO STRIP ===== */
@@ -249,7 +309,20 @@
             line-height: 1.6;
             color: var(--dim-text);
             max-width: 500px;
-            margin: 0 auto 2rem;
+            margin: 0 auto 2.5rem;
+        }
+        .bonus-book-group { margin-bottom: 2.75rem; }
+        .bonus-book-group:last-child { margin-bottom: 0; }
+        .bonus-book-heading {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--paper-gray);
+            max-width: 780px;
+            margin: 0 auto 1.2rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid var(--indigo-line);
         }
         .bonus-grid {
             display: grid;
@@ -314,6 +387,10 @@
             max-width: 720px;
             margin: 0 auto;
         }
+        .worlds.single {
+            grid-template-columns: 1fr;
+            max-width: 320px;
+        }
         .world-card {
             position: relative;
             z-index: 1;
@@ -347,6 +424,11 @@
             border-radius: 4px;
             background: var(--paper-gray);
             margin-bottom: 0.85rem;
+        }
+        .world-card.has-image img.no-crop {
+            aspect-ratio: auto;
+            object-fit: initial;
+            height: auto;
         }
         .world-headline {
             font-family: 'Cinzel', serif;
@@ -406,6 +488,7 @@
             nav ul { flex-wrap: wrap; gap: 1rem; }
             footer { flex-direction: column; gap: 0.5rem; text-align: center; }
             .bonus-grid { grid-template-columns: 1fr; max-width: 320px; }
+            .also-available-inner { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
@@ -416,25 +499,37 @@
         <div class="strapline">From the edge of the map, in color.</div>
         <nav>
             <ul>
+                <li><a href="#ufo">U.F.O.</a></li>
                 <li><a href="#xenobotanica">Xenobotanica</a></li>
                 <li><a href="#bonus-downloads">Bonus Downloads</a></li>
-                <li><span class="soon">Fauna — Soon</span></li>
                 <li><span class="soon">Landscapes — Soon</span></li>
             </ul>
         </nav>
         <a class="back-link" href="/">&larr; Atlas Valley</a>
     </header>
 
-    <section class="hero" id="xenobotanica">
+    <section class="hero" id="ufo">
         <div class="hero-image-panel">
-            <img src="assets/xenobotanica-cover.jpg" alt="Xenobotanica book cover — an alien botanical specimen rendered half in grayscale line art, half in painted forest green and ochre">
+            <img src="assets/ufo-cover-web.jpg" alt="U.F.O. book cover — a crystal-crowned alien creature head rendered half in grayscale, half in painted violet and gold">
         </div>
         <div class="hero-copy-panel">
             <div class="hero-copy">
-                <div class="hero-title">XENOBOTANICA</div>
-                <div class="hero-subtitle">A Grayscale Coloring Book of Alien Botanical Specimens</div>
-                <p class="hero-desc">Fifty specimens from a world that doesn't exist yet, rendered in fine grayscale line. Bring your own color to Helios Valley's first book.</p>
-                <a class="cta" href="https://amzn.to/4x9NrFf" target="_blank" rel="noopener">FIND IT ON AMAZON</a>
+                <div class="hero-title">U.F.O.</div>
+                <div class="hero-subtitle">A Grayscale Coloring Book of Unidentified Fauna Objects</div>
+                <p class="hero-desc">Fifty creatures from a world that doesn't exist yet, rendered in fine grayscale. The fauna companion to Xenobotanica — Helios Valley's next world, ready for your color.</p>
+                <div class="release-badge"><span class="pulse-dot"></span>Available September 4, 2026</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="also-available" id="xenobotanica">
+        <div class="also-available-inner">
+            <img src="assets/xenobotanica-cover.jpg" alt="Xenobotanica book cover — an alien botanical specimen rendered half in grayscale line art, half in painted forest green and ochre">
+            <div>
+                <div class="also-available-label">Also Available</div>
+                <div class="also-available-title">XENOBOTANICA</div>
+                <div class="also-available-desc">Fifty specimens of alien botany, rendered in fine grayscale line — the world that started it all.</div>
+                <a class="cta cta-small" href="https://amzn.to/4x9NrFf" target="_blank" rel="noopener">FIND IT ON AMAZON</a>
             </div>
         </div>
     </section>
@@ -442,50 +537,71 @@
     <section class="intro">
         <svg class="specimen" width="90" height="130" viewBox="0 0 90 130" style="top:-10px; left:-15px; opacity:0.16; transform:rotate(-12deg);"><g fill="none" stroke="var(--gold)" stroke-width="1.2"><path d="M45 120 C20 100 15 70 30 40 C38 55 40 70 45 90 C50 70 52 55 60 40 C75 70 70 100 45 120Z"/><path d="M45 90 L45 40"/></g></svg>
         <svg class="specimen" width="70" height="70" viewBox="0 0 70 70" style="top:10px; right:10px; opacity:0.14; transform:rotate(6deg);"><g fill="none" stroke="var(--violet)" stroke-width="1.2"><ellipse cx="35" cy="38" rx="22" ry="14"/><path d="M15 34 Q10 20 20 12"/><path d="M55 34 Q60 20 50 12"/><circle cx="35" cy="38" r="4"/></g></svg>
-        <p>Xenobotanica is the first world Helios Valley is coloring in. More are already taking shape — including corners of Atlas Valley's own novels, waiting for their own grayscale editions.</p>
+        <p>Xenobotanica was the first world Helios Valley colored in. U.F.O. is next — and more are already taking shape, including corners of Atlas Valley's own novels, waiting for their own grayscale editions.</p>
     </section>
 
     <section class="bonus" id="bonus-downloads">
         <div class="bonus-heading">BONUS DOWNLOADS</div>
-        <div class="bonus-tagline">Three more specimens, free to take with you.</div>
-        <p class="bonus-note">Not in the book. Print any of these at home, no email required.</p>
-        <div class="bonus-grid">
-            <div class="bonus-card">
-                <img src="assets/bonus/xenobotanica-bonus-simplified-thumb.jpg" alt="A simplified alien moth-flower coloring page, easy lines, good for kids or a quick fill-in">
-                <div class="bonus-name">FOR FIRST-TIME COLORISTS</div>
-                <div class="bonus-desc">A simplified specimen, easy lines, good for kids or a quick fill-in.</div>
-                <a class="bonus-download" href="assets/bonus/xenobotanica-bonus-simplified.jpg" download>DOWNLOAD</a>
+        <div class="bonus-tagline">Specimens and specimens-to-be, free to take with you.</div>
+        <p class="bonus-note">Not in either book. Print any of these at home, no email required.</p>
+
+        <div class="bonus-book-group">
+            <div class="bonus-book-heading">U.F.O.</div>
+            <div class="bonus-grid">
+                <div class="bonus-card">
+                    <img src="assets/bonus/ufo-bonus-simplified-thumb.jpg" alt="A simplified alien creature coloring page, easy lines, good for kids or a quick fill-in">
+                    <div class="bonus-name">FOR FIRST-TIME COLORISTS</div>
+                    <div class="bonus-desc">A simplified specimen, easy lines, good for kids or a quick fill-in.</div>
+                    <a class="bonus-download" href="assets/bonus/ufo-bonus-simplified.jpg" download>DOWNLOAD</a>
+                </div>
+                <div class="bonus-card">
+                    <img src="assets/bonus/ufo-bonus-detailed-thumb.jpg" alt="A richly detailed alien creature specimen, matching the density of the book's interior pages">
+                    <div class="bonus-name">BOOK-QUALITY DETAIL</div>
+                    <div class="bonus-desc">Full intricacy, matching the density of the 50 specimens inside U.F.O.</div>
+                    <a class="bonus-download" href="assets/bonus/ufo-bonus-detailed.jpg" download>DOWNLOAD</a>
+                </div>
+                <div class="bonus-card">
+                    <img src="assets/bonus/ufo-bonus-print-thumb.jpg" alt="A finished grayscale specimen piece, print-ready as-is">
+                    <div class="bonus-name">READY TO FRAME</div>
+                    <div class="bonus-desc">A finished specimen piece, print-ready as-is, no coloring needed.</div>
+                    <a class="bonus-download" href="assets/bonus/ufo-bonus-print.jpg" download>DOWNLOAD</a>
+                </div>
             </div>
-            <div class="bonus-card">
-                <img src="assets/bonus/xenobotanica-bonus-detailed-thumb.jpg" alt="A richly detailed mandala-eye alien flower specimen, matching the density of the book's interior pages">
-                <div class="bonus-name">BOOK-QUALITY DETAIL</div>
-                <div class="bonus-desc">Full intricacy, matching the density of the 50 specimens inside Xenobotanica.</div>
-                <a class="bonus-download" href="assets/bonus/xenobotanica-bonus-detailed.jpg" download>DOWNLOAD</a>
-            </div>
-            <div class="bonus-card">
-                <img src="assets/bonus/xenobotanica-bonus-print-thumb.jpg" alt="A finished grayscale seed pod specimen piece, print-ready as-is">
-                <div class="bonus-name">READY TO FRAME</div>
-                <div class="bonus-desc">A finished specimen piece, print-ready as-is, no coloring needed.</div>
-                <a class="bonus-download" href="assets/bonus/xenobotanica-bonus-print.jpg" download>DOWNLOAD</a>
+        </div>
+
+        <div class="bonus-book-group">
+            <div class="bonus-book-heading">Xenobotanica</div>
+            <div class="bonus-grid">
+                <div class="bonus-card">
+                    <img src="assets/bonus/xenobotanica-bonus-simplified-thumb.jpg" alt="A simplified alien moth-flower coloring page, easy lines, good for kids or a quick fill-in">
+                    <div class="bonus-name">FOR FIRST-TIME COLORISTS</div>
+                    <div class="bonus-desc">A simplified specimen, easy lines, good for kids or a quick fill-in.</div>
+                    <a class="bonus-download" href="assets/bonus/xenobotanica-bonus-simplified.jpg" download>DOWNLOAD</a>
+                </div>
+                <div class="bonus-card">
+                    <img src="assets/bonus/xenobotanica-bonus-detailed-thumb.jpg" alt="A richly detailed mandala-eye alien flower specimen, matching the density of the book's interior pages">
+                    <div class="bonus-name">BOOK-QUALITY DETAIL</div>
+                    <div class="bonus-desc">Full intricacy, matching the density of the 50 specimens inside Xenobotanica.</div>
+                    <a class="bonus-download" href="assets/bonus/xenobotanica-bonus-detailed.jpg" download>DOWNLOAD</a>
+                </div>
+                <div class="bonus-card">
+                    <img src="assets/bonus/xenobotanica-bonus-print-thumb.jpg" alt="A finished grayscale seed pod specimen piece, print-ready as-is">
+                    <div class="bonus-name">READY TO FRAME</div>
+                    <div class="bonus-desc">A finished specimen piece, print-ready as-is, no coloring needed.</div>
+                    <a class="bonus-download" href="assets/bonus/xenobotanica-bonus-print.jpg" download>DOWNLOAD</a>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="worlds">
-        <svg class="specimen" width="80" height="55" viewBox="0 0 80 55" style="top:20px; left:0px; opacity:0.12;"><g fill="none" stroke="var(--teal)" stroke-width="1.1"><path d="M0 50 L18 22 L30 36 L45 12 L62 40 L80 50"/></g></svg>
-        <svg class="specimen" width="60" height="60" viewBox="0 0 60 60" style="bottom:10px; right:20px; opacity:0.12; transform:rotate(-6deg);"><g fill="none" stroke="var(--gold)" stroke-width="1.1"><path d="M30 55 C18 45 15 32 22 18 C27 27 28 35 30 45 C32 35 33 27 38 18 C45 32 42 45 30 55Z"/></g></svg>
+    <section class="worlds single">
         <svg class="specimen" width="140" height="110" viewBox="0 0 140 110" style="bottom:-25px; right:-25px; opacity:0.16;"><g fill="none" stroke="var(--teal)" stroke-width="1.3"><path d="M0 100 L30 45 L48 68 L72 25 L100 75 L140 100"/><circle cx="105" cy="30" r="10"/></g></svg>
 
         <div class="world-card has-image">
-            <img src="assets/fauna-teaser.jpg" alt="A grayscale coloring page from Unidentified Fauna Objects — a spiraled shell crowned with a fan of crystalline spikes">
-            <div class="world-headline">U.F.O.</div>
-            <div class="world-subtitle">Unidentified Fauna Objects</div>
-            <div class="world-soon-badge"><span class="pulse-dot"></span>Coming soon</div>
-        </div>
-        <div class="world-card">
-            <svg width="52" height="52" viewBox="0 0 60 60" aria-hidden="true"><path d="M10,45 L25,25 L35,38 L45,20 L55,45 Z" fill="none" stroke="#2f8f8a" stroke-width="2"/></svg>
-            <div class="world-name">Landscapes</div>
-            <div class="world-desc">The next world stretches into terrain.</div>
+            <img class="no-crop" src="assets/gps-cover-web.jpg" alt="GPS: Galactic Planetary Survey book cover — an alien desert vista with a ringed planet and cratered moon, rendered half in grayscale line art, half in painted color">
+            <div class="world-headline">GPS</div>
+            <div class="world-subtitle">Galactic Planetary Survey</div>
+            <div class="world-soon-badge"><span class="pulse-dot"></span>Coming October 2, 2026</div>
         </div>
     </section>
 
