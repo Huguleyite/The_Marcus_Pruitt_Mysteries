@@ -6,8 +6,8 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Helios Valley — coloring books built from worlds still being colored in. Xenobotanica is out now; U.F.O. (Unidentified Fauna Objects) arrives September 4, 2026; GPS: Galactic Planetary Survey arrives October 2, 2026.">
-    <meta name="keywords" content="Helios Valley, Xenobotanica, UFO Unidentified Fauna Objects, GPS Galactic Planetary Survey, alien botanical coloring book, alien creature coloring book, alien landscape coloring book, grayscale coloring book, adult coloring book, coloring book worlds">
+    <meta name="description" content="Helios Valley — coloring books built from worlds still being colored in. Xenobotanica and U.F.O. (Unidentified Fauna Objects) are out now, alongside Prey Attention, a hunting coloring book from the Seasons collection. GPS: Galactic Planetary Survey arrives October 2, 2026.">
+    <meta name="keywords" content="Helios Valley, Xenobotanica, UFO Unidentified Fauna Objects, GPS Galactic Planetary Survey, Prey Attention, hunting coloring book, alien botanical coloring book, alien creature coloring book, alien landscape coloring book, grayscale coloring book, adult coloring book, coloring book worlds">
     <title>Helios Valley | Worlds Still Being Colored In</title>
     <!--
     ╔══════════════════════════════════════════════════════════════╗
@@ -205,6 +205,27 @@
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.35; transform: scale(0.75); }
         }
+
+        /* ===== SEASONS COLLECTION (Prey Attention, Crow's Hollow, etc.) —
+           same hero skeleton as the Worlds line above, accent swapped
+           from espresso-gold to forest/ochre so it reads as a separate
+           shelf without a second component system ===== */
+        .season-label {
+            text-align: center;
+            padding: 2rem 1rem 0;
+            font-family: Arial, sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
+            color: var(--ochre);
+        }
+        .season-label::before, .season-label::after { content: '—'; margin: 0 0.6rem; opacity: 0.4; }
+        .hero-image-panel.seasons { background: #1c2418; }
+        .release-badge.seasons { background: var(--ochre); color: var(--ivory); }
+        .release-badge.seasons .pulse-dot { background: var(--ivory); }
+        .hero-title.seasons { color: var(--forest); }
+        .hero-subtitle.seasons { color: #5c4321; }
+        .cta.seasons { background: var(--forest); color: var(--ivory); box-shadow: 0 4px 14px rgba(60, 90, 62, 0.35); }
 
         /* ===== SCATTERED SPECIMENS (unpainted line art) ===== */
         .specimen {
@@ -499,6 +520,7 @@
             <ul>
                 <li><a href="#ufo">U.F.O.</a></li>
                 <li><a href="#xenobotanica">Xenobotanica</a></li>
+                <li><a href="#prey-attention">Prey Attention</a></li>
                 <li><a href="#bonus-downloads">Bonus Downloads</a></li>
                 <li><span class="soon">Landscapes — Soon</span></li>
             </ul>
@@ -512,6 +534,7 @@
         </div>
         <div class="hero-copy-panel">
             <div class="hero-copy">
+                <div class="release-badge"><span class="pulse-dot"></span>New Release</div>
                 <div class="hero-title">U.F.O.</div>
                 <div class="hero-subtitle">A Grayscale Coloring Book of Unidentified Fauna Objects</div>
                 <p class="hero-desc">Fifty creatures from a world that doesn't exist yet, rendered in fine grayscale. The fauna companion to Xenobotanica — Helios Valley's next world, ready for your color.</p>
@@ -600,6 +623,22 @@
             <div class="world-headline">GPS</div>
             <div class="world-subtitle">Galactic Planetary Survey</div>
             <div class="world-soon-badge"><span class="pulse-dot"></span>Coming October 2, 2026</div>
+        </div>
+    </section>
+
+    <div class="season-label">Seasons Collection</div>
+    <section class="hero" id="prey-attention">
+        <div class="hero-image-panel seasons">
+            <img src="assets/prey-attention-cover-web.jpg" alt="Prey Attention book cover — a whitetail deer rendered half in grayscale line art, half in painted autumn forest color">
+        </div>
+        <div class="hero-copy-panel seasons">
+            <div class="hero-copy">
+                <div class="release-badge seasons"><span class="pulse-dot"></span>Just Released</div>
+                <div class="hero-title seasons">Prey Attention</div>
+                <div class="hero-subtitle seasons">A Hunting Coloring Book for Adults — 50 Scenes from Both Sides of the Stalk</div>
+                <p class="hero-desc">Fifty scenes, two points of view. Most pages put you in the hunter's boots — a treestand look-down, a ridge overlook at first light. Every so often, without warning, the perspective flips and you're looking out through the animal's eyes instead. Something out there already noticed you.</p>
+                <a class="cta seasons" href="https://amzn.to/4cAlIpw" target="_blank" rel="noopener">FIND IT ON AMAZON</a>
+            </div>
         </div>
     </section>
 
