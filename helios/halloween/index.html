@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="a">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon-32.png" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crow's Hollow Halloween Coloring Books | Helios Valley</title>
+  <meta name="description" content="Crow's Hollow — a Halloween coloring book collection from Helios Valley. Crow's Hollow After Dark is a gothic edition for adults; Crow's Hollow is a cozy edition for little ones. Free printable bonus pages every week in October.">
+  <meta name="keywords" content="Halloween coloring book, gothic Halloween coloring book, adult Halloween coloring book, kids Halloween coloring book, Crow's Hollow, Crow's Hollow After Dark, werewolf coloring book, spooky coloring pages, free Halloween coloring pages, Helios Valley">
+  <meta property="og:title" content="Crow's Hollow — Halloween Coloring Books">
+  <meta property="og:description" content="A gothic edition for adults and a cozy edition for little ones. Free printable bonus pages all October.">
+  <meta property="og:image" content="https://www.atlasvalleybooks.com/helios/halloween/assets/gothic-cover-web.jpg">
+  <meta property="og:type" content="website">
+  <!--
+  ╔══════════════════════════════════════════════════════════════╗
+  ║  CROW'S HOLLOW — atlasvalleybooks.com/helios/halloween/      ║
+  ║  Halloween landing page, Helios Valley.                      ║
+  ║  Gothic:  amzn.to/4y2jirn      Kids: amzn.to/4zgtLAN         ║
+  ║  Covers: front panels of Gothic Wrap v8 / Kids Wrap v9,      ║
+  ║    bleed trimmed. Hero wolf: Gothic duotone art as alpha.    ║
+  ║  Weekly bonus pages: add a card to #bonus-grid and swap the  ║
+  ║    "next page" card down one slot.                           ║
+  ╚══════════════════════════════════════════════════════════════╝
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Cormorant+Garamond:ital,wght@1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* A · Moonlit Gothic (default) */
+      --bg1: #07090f; --bg2: #12182a; --ink: #e9eef7; --dim: #9aa6bf;
+      --accent: #c9d6ee; --hot: #b3261e; --card: #0e1424; --line: #2a3550;
+      --glow: rgba(160,190,255,.35); --ground: #05060a; --hot-text: #e5483c;
+      --gold: #e8c872; --paper-gray: #eceef2; --dim-text: #8b8f9c; --indigo-line: #343a44;
+    }
+    [data-theme="b"] { /* Pumpkin Dusk */
+      --bg1: #1a0b2e; --bg2: #4a1d5c; --ink: #fff1de; --dim: #e3b88f;
+      --accent: #ff9a2e; --hot: #ff6a00; --card: #2a1240; --line: #7a3a86;
+      --glow: rgba(255,140,30,.4); --ground: #0b0414; --hot-text: #ff8a2e;
+    }
+    [data-theme="c"] { /* Cobweb Cellar */
+      --bg1: #1b100a; --bg2: #2a1a12; --ink: #f3e7cf; --dim: #c4a77d;
+      --accent: #e8c872; --hot: #a3231b; --card: #231610; --line: #5a3d2a;
+      --glow: rgba(232,200,114,.35); --ground: #100803; --hot-text: #d6392d;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg1); }
+    body {
+      background: linear-gradient(180deg, var(--bg1), var(--bg2) 55%, var(--bg1));
+      color: var(--ink);
+      font-family: Georgia, 'Iowan Old Style', serif;
+      overflow-x: hidden;
+      transition: background .4s;
+    }
+    a { color: inherit; }
+
+    /* ===== HEADER (matches /helios/) ===== */
+    header {
+      padding: 1.75rem 2rem 1.1rem;
+      border-bottom: 1px solid var(--indigo-line);
+      text-align: center;
+      position: relative; z-index: 6;
+    }
+    .wordmark { font-family: 'Cinzel', serif; font-weight: 900; font-size: 1.8rem; letter-spacing: .22em; color: var(--gold); text-decoration: none; }
+    .strapline { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 1.05rem; color: var(--dim); margin: .4rem 0 .9rem; }
+    nav ul { list-style: none; display: flex; justify-content: center; gap: 1.75rem; flex-wrap: wrap; font-family: Arial, sans-serif; font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; }
+    nav a { text-decoration: none; color: var(--paper-gray); }
+    nav a.here { color: #ff9a2e; font-weight: bold; }
+    .back-link { display: block; margin-top: .9rem; font-family: Arial, sans-serif; font-size: .68rem; letter-spacing: .08em; color: var(--dim-text); text-decoration: none; }
+    .back-link:hover { color: var(--gold); }
+
+    /* ===== MOOD SWITCH ===== */
+    .mood { display: flex; justify-content: center; align-items: center; gap: .5rem; flex-wrap: wrap; margin-top: 1rem; font-family: Arial, sans-serif; font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--dim-text); }
+    .mood button { background: transparent; color: var(--paper-gray); border: 1px solid var(--line); border-radius: 999px; padding: .45rem .9rem; font: inherit; letter-spacing: .1em; cursor: pointer; transition: all .2s; }
+    .mood button:hover { border-color: var(--accent); }
+    .mood button[aria-pressed="true"] { background: var(--accent); color: #0b0e16; border-color: var(--accent); font-weight: bold; }
+
+    /* ===== HERO ===== */
+    .hero { position: relative; overflow: hidden; text-align: center; padding: 5rem 1.5rem 7rem; min-height: 560px; }
+    .hero-inner { position: relative; z-index: 4; max-width: 760px; margin: 0 auto; }
+    .hero h1 { font-family: 'Cinzel', serif; font-weight: 900; font-size: clamp(2.4rem, 8vw, 5.2rem); letter-spacing: .04em; line-height: 1.05; text-shadow: 0 0 30px var(--glow), 0 4px 0 rgba(0,0,0,.5); animation: flicker 6s infinite; }
+    .hero h1 em { display: block; font-style: normal; font-size: .42em; letter-spacing: .5em; margin-top: .5rem; color: var(--hot-text); text-shadow: 0 0 18px var(--hot); }
+    .hero p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: clamp(1.1rem, 2.6vw, 1.6rem); color: var(--dim); max-width: 600px; margin: 1.3rem auto 0; line-height: 1.4; }
+    @media (min-width: 900px) {
+      .hero { padding-left: 7%; padding-right: 7%; }
+      .hero-inner { margin: 0; text-align: left; max-width: 600px; }
+      .hero h1 { font-size: clamp(2.6rem, 5.4vw, 4.6rem); }
+      .hero p { margin-left: 0; }
+    }
+    .cta { display: inline-block; margin-top: 1.8rem; padding: .85rem 1.8rem; background: var(--hot); color: #fff; text-decoration: none; font-family: Arial, sans-serif; font-weight: bold; font-size: .75rem; letter-spacing: .18em; border-radius: 2px; box-shadow: 0 0 22px var(--hot); }
+    .cta:hover { filter: brightness(1.12); }
+
+    .moon { position: absolute; top: 40px; right: 6%; width: 130px; height: 130px; border-radius: 50%; z-index: 1;
+      background: radial-gradient(circle at 35% 35%, #fffbe8, #e9e2c0 55%, #b8b08a); box-shadow: 0 0 80px 30px rgba(255,248,210,.22); }
+    [data-theme="b"] .moon { width: 180px; height: 180px; top: 30px; right: 5%; background: radial-gradient(circle at 35% 35%, #ffd89a, #ff9a2e 60%, #d9631a); box-shadow: 0 0 110px 40px rgba(255,140,30,.35); }
+    [data-theme="c"] .moon { display: none; }
+
+    .wolf { position: absolute; right: 1%; bottom: 0; width: min(470px, 50vw); z-index: 2; pointer-events: none;
+      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 28%, #000 90%, transparent 100%), linear-gradient(to top, transparent 0, #000 22%);
+      -webkit-mask-composite: source-in; mask-image: linear-gradient(to right, transparent 0, #000 28%, #000 90%, transparent 100%), linear-gradient(to top, transparent 0, #000 22%); mask-composite: intersect;
+      filter: drop-shadow(0 0 14px var(--glow)); opacity: .9; }
+    [data-theme="b"] .wolf { filter: sepia(1) saturate(4) hue-rotate(-12deg) drop-shadow(0 0 14px var(--glow)); }
+    [data-theme="c"] .wolf { filter: sepia(.6) drop-shadow(0 0 12px var(--glow)); opacity: .8; }
+
+    .hills { position: absolute; left: 0; bottom: -1px; width: 100%; height: 110px; z-index: 3; display: block; }
+    .hills path, .hills g { fill: var(--ground); }
+    .fog { position: absolute; left: -10%; bottom: 0; width: 120%; height: 240px; z-index: 1; pointer-events: none;
+      background: radial-gradient(ellipse at 50% 100%, rgba(207,216,236,.55), transparent 72%); animation: drift 14s ease-in-out infinite alternate; }
+    [data-theme="b"] .fog { background: radial-gradient(ellipse at 50% 100%, rgba(255,150,60,.4), transparent 72%); }
+    [data-theme="c"] .fog { background: radial-gradient(ellipse at 50% 100%, rgba(232,200,114,.28), transparent 72%); }
+
+    .web { position: absolute; top: 0; z-index: 5; pointer-events: none; opacity: .3; }
+    .web.l { left: 0; } .web.r { right: 0; transform: scaleX(-1); }
+    [data-theme="b"] .web { opacity: .32; }
+    [data-theme="c"] .web { opacity: .75; width: 260px; height: 260px; }
+    .spider { position: absolute; top: 0; z-index: 5; transform-origin: 50% 0; animation: swing 4s ease-in-out infinite; }
+    .spider i { display: block; width: 1px; background: rgba(205,191,159,.55); margin: 0 auto; }
+    .spider svg { display: block; margin: 0 auto; }
+    .spider.s2 { animation-delay: -1.8s; } .spider.s3 { animation-delay: -3s; }
+    [data-theme="a"] .spider.s2, [data-theme="a"] .spider.s3 { display: none; }
+    .bat { position: absolute; z-index: 3; top: 18%; animation: fly 13s linear infinite; }
+    .bat.b2 { top: 32%; animation-duration: 18s; animation-delay: -7s; }
+    @keyframes fly { from { transform: translateX(-80px); } to { transform: translateX(110vw); } }
+    @keyframes swing { 0%,100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+    @keyframes drift { to { transform: translateX(6%); } }
+    @keyframes flicker { 0%,100% { opacity: 1; } 47% { opacity: .92; } 50% { opacity: .78; } 53% { opacity: .96; } }
+
+    /* ===== SECTIONS ===== */
+    section.block { max-width: 1060px; margin: 0 auto; padding: 4rem 1.5rem; position: relative; z-index: 2; }
+    h2 { font-family: 'Cinzel', serif; font-weight: 700; font-size: .85rem; letter-spacing: .4em; color: var(--accent); text-align: center; margin-bottom: .5rem; text-transform: uppercase; }
+    h2 + .lede { text-align: center; font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 1.3rem; color: var(--dim); margin-bottom: 2.2rem; }
+
+    .books { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; align-items: start; }
+    .book { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 1.4rem; box-shadow: 0 10px 40px rgba(0,0,0,.55), inset 0 0 40px rgba(0,0,0,.35); transition: box-shadow .3s, transform .3s; }
+    .book:hover { box-shadow: 0 10px 50px rgba(0,0,0,.6), 0 0 36px var(--glow); transform: translateY(-3px); }
+    .book img { width: 100%; height: auto; display: block; border-radius: 3px; box-shadow: 0 8px 24px rgba(0,0,0,.65); }
+    .tag { display: inline-block; margin: 1.1rem 0 .6rem; padding: .3rem .7rem; background: var(--hot); color: #fff; font-family: Arial, sans-serif; font-weight: bold; font-size: .62rem; letter-spacing: .2em; border-radius: 2px; text-transform: uppercase; }
+    .tag.kids { background: #e0731a; }
+    .book h3 { font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.4rem; margin-bottom: .2rem; }
+    .book .sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 1.15rem; color: var(--dim); margin-bottom: .7rem; }
+    .book p { font-size: .95rem; line-height: 1.6; opacity: .92; margin-bottom: 1.1rem; }
+    .btn { display: inline-block; padding: .7rem 1.3rem; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; font-family: Arial, sans-serif; font-weight: bold; font-size: .68rem; letter-spacing: .16em; border-radius: 2px; transition: all .2s; }
+    .btn:hover { background: var(--accent); color: #0b0e16; }
+
+    .bonus-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.3rem; }
+    .bn { background: var(--card); border: 1px solid var(--line); border-radius: 4px; padding: .9rem; text-align: center; }
+    .bn img { width: 100%; height: 300px; object-fit: contain; background: #fff; border-radius: 2px; display: block; }
+    .bn .bn-name { font-family: Arial, sans-serif; font-weight: bold; font-size: .66rem; letter-spacing: .2em; color: var(--accent); margin: .9rem 0 .35rem; text-transform: uppercase; }
+    .bn .bn-desc { font-size: .9rem; color: var(--dim); line-height: 1.5; }
+    .bn a.dl { display: inline-block; margin-top: .8rem; font-family: Arial, sans-serif; font-weight: bold; font-size: .68rem; letter-spacing: .15em; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
+    .bn a.dl:hover { color: var(--accent); }
+    .bn.locked .crypt { height: 300px; display: grid; place-items: center; border: 1px dashed var(--line); color: var(--dim); font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 1.15rem; line-height: 1.5; padding: 1rem; }
+    .bonus-note { text-align: center; font-family: Arial, sans-serif; font-size: .8rem; color: var(--dim); margin-top: 1.6rem; }
+
+    .more { text-align: center; }
+    .more .btn { margin: .35rem; }
+
+    footer { border-top: 1px solid var(--indigo-line); padding: 1.25rem 2rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; font-family: Arial, sans-serif; font-size: .7rem; color: var(--dim-text); position: relative; z-index: 2; }
+
+    @media (max-width: 720px) {
+      .moon { right: 6%; top: 10px; }
+      .books { grid-template-columns: 1fr; }
+      .hero { padding: 3.5rem 1.2rem 6rem; }
+      .wolf { right: -20%; width: 90vw; opacity: .2; }
+      .moon { width: 52px; height: 52px; } [data-theme="b"] .moon { width: 70px; height: 70px; }
+      nav ul { gap: 1rem; }
+      footer { flex-direction: column; text-align: center; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a class="wordmark" href="/helios/">HELIOS VALLEY</a>
+    <div class="strapline">From the edge of the map, in color.</div>
+    <nav aria-label="Helios Valley">
+      <ul>
+        <li><a href="/helios/#gps">GPS</a></li>
+        <li><a class="here" href="/helios/halloween/" aria-current="page">Halloween</a></li>
+        <li><a href="/helios/#ufo">U.F.O.</a></li>
+        <li><a href="/helios/#xenobotanica">Xenobotanica</a></li>
+        <li><a href="/helios/#prey-attention">Prey Attention</a></li>
+        <li><a href="/helios/#bonus-downloads">Bonus Downloads</a></li>
+      </ul>
+    </nav>
+    <div class="mood" role="group" aria-label="Page mood">
+      <span>Mood</span>
+      <button type="button" data-t="a" aria-pressed="true">Moonlit</button>
+      <button type="button" data-t="b" aria-pressed="false">Pumpkin Dusk</button>
+      <button type="button" data-t="c" aria-pressed="false">Cobweb Cellar</button>
+    </div>
+    <a class="back-link" href="/helios/">&larr; Helios Valley</a>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hollow-title">
+      <div class="moon" aria-hidden="true"></div>
+      <img class="wolf" src="assets/wolf-lineart.webp" alt="" aria-hidden="true" width="900" height="962">
+      <svg class="web l" width="200" height="200" viewBox="0 0 200 200" fill="none" stroke="#e8e2d0" stroke-width="1" aria-hidden="true"><path d="M0 0L200 0M0 0L180 70M0 0L130 130M0 0L70 180M0 0L0 200"/><path d="M40 0Q30 30 0 40M80 0Q60 60 0 80M120 0Q85 85 0 120M160 0Q110 110 0 160M196 0Q135 135 0 196"/></svg>
+      <svg class="web r" width="200" height="200" viewBox="0 0 200 200" fill="none" stroke="#e8e2d0" stroke-width="1" aria-hidden="true"><path d="M0 0L200 0M0 0L180 70M0 0L130 130M0 0L70 180M0 0L0 200"/><path d="M40 0Q30 30 0 40M80 0Q60 60 0 80M120 0Q85 85 0 120M160 0Q110 110 0 160M196 0Q135 135 0 196"/></svg>
+
+      <div class="spider" style="left:14%" aria-hidden="true"><i style="height:130px"></i><svg width="26" height="22" viewBox="0 0 26 22"><g stroke="#d9d0b6" stroke-width="1.4" fill="none"><path d="M13 11L2 3M13 11L1 9M13 11L2 17M13 11L5 21M13 11L24 3M13 11L25 9M13 11L24 17M13 11L21 21"/></g><ellipse cx="13" cy="12" rx="5" ry="6" fill="#3a3a46"/><circle cx="13" cy="6.5" r="3" fill="#3a3a46"/></svg></div>
+      <div class="spider s2" style="left:80%" aria-hidden="true"><i style="height:70px"></i><svg width="20" height="17" viewBox="0 0 26 22"><g stroke="#d9d0b6" stroke-width="1.6" fill="none"><path d="M13 11L2 3M13 11L1 9M13 11L2 17M13 11L5 21M13 11L24 3M13 11L25 9M13 11L24 17M13 11L21 21"/></g><ellipse cx="13" cy="12" rx="5" ry="6" fill="#3a3a46"/><circle cx="13" cy="6.5" r="3" fill="#3a3a46"/></svg></div>
+      <div class="spider s3" style="left:93%" aria-hidden="true"><i style="height:160px"></i><svg width="30" height="25" viewBox="0 0 26 22"><g stroke="#d9d0b6" stroke-width="1.4" fill="none"><path d="M13 11L2 3M13 11L1 9M13 11L2 17M13 11L5 21M13 11L24 3M13 11L25 9M13 11L24 17M13 11L21 21"/></g><ellipse cx="13" cy="12" rx="5" ry="6" fill="#3a3a46"/><circle cx="13" cy="6.5" r="3" fill="#3a3a46"/></svg></div>
+      <svg class="bat" width="46" height="22" viewBox="0 0 46 22" aria-hidden="true"><path d="M23 12C19 4 10 2 1 6c4 1 6 4 6 8 3-3 6-3 8 0 2-2 5-2 8 0 2-3 5-3 8 0 0-4 2-7 6-8-9-4-18-2-22 6z" fill="#05060a"/></svg>
+      <svg class="bat b2" width="34" height="16" viewBox="0 0 46 22" aria-hidden="true"><path d="M23 12C19 4 10 2 1 6c4 1 6 4 6 8 3-3 6-3 8 0 2-2 5-2 8 0 2-3 5-3 8 0 0-4 2-7 6-8-9-4-18-2-22 6z" fill="#05060a"/></svg>
+
+      <div class="hero-inner">
+        <h1 id="hollow-title">Crow's Hollow<em>AFTER DARK</em></h1>
+        <p>Wolves prowl the candlelit ruins. The ravens are watching. Something stirs beneath the quiet streets &mdash; and every page is waiting for your color.</p>
+        <a class="cta" href="#books">ENTER THE HOLLOW</a>
+      </div>
+
+      <div class="fog" aria-hidden="true"></div>
+      <svg class="hills" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 120V70C150 40 250 80 400 60S650 20 800 55 1050 80 1200 50V120Z"/><g><path d="M90 70l14-50 14 50zM130 72l10-38 10 38zM1020 66l14-52 14 52zM1065 70l10-36 10 36zM260 75l12-34 12 34z"/></g></svg>
+    </section>
+
+    <section class="block" id="books" aria-labelledby="coll-h">
+      <h2 id="coll-h">The Halloween Collection</h2>
+      <p class="lede">Two ways into the Hollow. Pick your level of fright.</p>
+      <div class="books">
+        <article class="book" id="gothic">
+          <img src="assets/gothic-cover-web.jpg" width="800" height="1035" alt="Crow's Hollow After Dark book cover — a werewolf tearing through the page, half in black-and-white line art and half in painted color">
+          <span class="tag">New &middot; Gothic</span>
+          <h3>Crow's Hollow After Dark</h3>
+          <div class="sub">A Gothic Halloween Coloring Book</div>
+          <p>Beyond the tree line, the town of Crow's Hollow keeps its oldest secrets. When the moon rises full, something feral stirs beneath its quiet streets. Wolves prowl candlelit ruins, ravens keep watch over crumbling altars &mdash; dread, not gore, in bold black-and-white line art made for adults.</p>
+          <a class="btn" href="https://amzn.to/4y2jirn" target="_blank" rel="noopener sponsored">FIND IT ON AMAZON</a>
+        </article>
+        <article class="book" id="kids">
+          <img src="assets/kids-cover-web.jpg" width="800" height="800" alt="Crow's Hollow book cover — a boy in a pumpkin costume drumming beside a jack-o'-lantern parade wagon and a friendly ghost, half painted and half line art">
+          <span class="tag kids">New &middot; Kids</span>
+          <h3>Crow's Hollow</h3>
+          <div class="sub">A Cozy Halloween Coloring Book for Little Ones</div>
+          <p>Little Ones' first trip to Crow's Hollow: pumpkin patches, costume parades and porches lit for trick-or-treat, with nothing spookier than a scarecrow's day off. Forty bold, easy scenes, just the right size for small hands and big imaginations.</p>
+          <a class="btn" href="https://amzn.to/4zgtLAN" target="_blank" rel="noopener sponsored">FIND IT ON AMAZON</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="block" id="bonus-downloads" aria-labelledby="bonus-h">
+      <h2 id="bonus-h">Free From the Hollow</h2>
+      <p class="lede">Bonus pages that aren't in either book. Print at home, no email required.</p>
+      <div class="bonus-grid" id="bonus-grid">
+        <div class="bn">
+          <img src="assets/bonus/crows-hollow-gothic-bonus-clown-thumb.jpg" width="520" height="696" alt="Gothic bonus coloring page — a woman with a flashlight slips into an abandoned circus tent where a clown sits waiting in a chair">
+          <div class="bn-name">Gothic &middot; Bonus Page</div>
+          <div class="bn-desc">The tent has been empty for years. Someone forgot to tell the clown.</div>
+          <a class="dl" href="assets/bonus/crows-hollow-gothic-bonus-clown.jpg" download>DOWNLOAD</a>
+        </div>
+        <div class="bn">
+          <img src="assets/bonus/crows-hollow-kids-bonus-witch-thumb.jpg" width="520" height="520" alt="Kids bonus coloring page — a smiling little witch weighing herbs beside a bubbling cauldron and a black cat">
+          <div class="bn-name">Kids &middot; Bonus Page</div>
+          <div class="bn-desc">A very friendly witch and her very helpful cat.</div>
+          <a class="dl" href="assets/bonus/crows-hollow-kids-bonus-witch.png" download>DOWNLOAD</a>
+        </div>
+        <div class="bn locked">
+          <div class="crypt">More pages<br>being unearthed&hellip;</div>
+          <div class="bn-name">Locked in the Crypt</div>
+          <div class="bn-desc">A new bonus page arrives every week in October.</div>
+        </div>
+      </div>
+      <p class="bonus-note">For personal use. Print, color, and share what you make.</p>
+    </section>
+
+    <section class="block more" aria-label="More from Helios Valley">
+      <a class="btn" href="/helios/#gps">NEW: GPS &mdash; GALACTIC PLANETARY SURVEY</a>
+      <a class="btn" href="/helios/">ALL HELIOS VALLEY BOOKS</a>
+    </section>
+  </main>
+
+  <footer>
+    <span>&copy; Helios Valley &nbsp;&middot;&nbsp; part of atlasvalleybooks.com</span>
+    <span>As an Amazon Associate I earn from qualifying purchases.</span>
+  </footer>
+
+  <script>
+    (function () {
+      var root = document.documentElement, btns = document.querySelectorAll('.mood button');
+      function set(t, save) {
+        root.setAttribute('data-theme', t);
+        btns.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-t') === t ? 'true' : 'false'); });
+        if (save) { try { localStorage.setItem('hv-halloween-mood', t); } catch (e) {} }
+      }
+      var saved = null;
+      try { saved = localStorage.getItem('hv-halloween-mood'); } catch (e) {}
+      if (saved === 'a' || saved === 'b' || saved === 'c') set(saved, false);
+      btns.forEach(function (b) { b.addEventListener('click', function () { set(b.getAttribute('data-t'), true); }); });
+    })();
+  </script>
+</body>
+</html>
