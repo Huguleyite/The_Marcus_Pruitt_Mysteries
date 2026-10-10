@@ -7,10 +7,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Crow's Hollow Halloween Coloring Books | Helios Valley</title>
-  <meta name="description" content="Crow's Hollow — a Halloween coloring book collection from Helios Valley. Crow's Hollow After Dark is a gothic edition for adults; Crow's Hollow is a cozy edition for little ones. Free printable bonus pages every week in October.">
+  <meta name="description" content="Crow's Hollow — a Halloween coloring book collection from Helios Valley. Crow's Hollow After Dark is a gothic edition for adults, Crow's Hollow is a detailed cozy edition for all ages, and a second Crow's Hollow is a gentle edition for little ones. Free printable bonus pages every week in October.">
   <meta name="keywords" content="Halloween coloring book, gothic Halloween coloring book, adult Halloween coloring book, kids Halloween coloring book, Crow's Hollow, Crow's Hollow After Dark, werewolf coloring book, spooky coloring pages, free Halloween coloring pages, Helios Valley">
   <meta property="og:title" content="Crow's Hollow — Halloween Coloring Books">
-  <meta property="og:description" content="A gothic edition for adults and a cozy edition for little ones. Free printable bonus pages all October.">
+  <meta property="og:description" content="A gothic edition for adults, a detailed cozy edition and a gentle one for little ones. Free printable bonus pages all October.">
   <meta property="og:image" content="https://www.atlasvalleybooks.com/helios/halloween/assets/gothic-cover-web.jpg">
   <meta property="og:type" content="website">
   <!--
@@ -18,6 +18,8 @@
   ║  CROW'S HOLLOW — atlasvalleybooks.com/helios/halloween/      ║
   ║  Halloween landing page, Helios Valley.                      ║
   ║  Gothic:  amzn.to/4y2jirn      Kids: amzn.to/4zgtLAN         ║
+  ║  Traditional: plain amazon.com/dp/B0HMF7F47D (swap to the    ║
+  ║    new amzn.to link once Associates is re-approved)          ║
   ║  Covers: front panels of Gothic Wrap v8 / Kids Wrap v9,      ║
   ║    bleed trimmed. Hero wolf: Gothic duotone art as alpha.    ║
   ║  Weekly bonus pages: add a card to #bonus-grid and swap the  ║
@@ -132,12 +134,13 @@
     h2 { font-family: 'Cinzel', serif; font-weight: 700; font-size: .85rem; letter-spacing: .4em; color: var(--accent); text-align: center; margin-bottom: .5rem; text-transform: uppercase; }
     h2 + .lede { text-align: center; font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 1.3rem; color: var(--dim); margin-bottom: 2.2rem; }
 
-    .books { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; align-items: start; }
+    .books { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; align-items: start; }
     .book { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 1.4rem; box-shadow: 0 10px 40px rgba(0,0,0,.55), inset 0 0 40px rgba(0,0,0,.35); transition: box-shadow .3s, transform .3s; }
     .book:hover { box-shadow: 0 10px 50px rgba(0,0,0,.6), 0 0 36px var(--glow); transform: translateY(-3px); }
     .book img { width: 100%; height: auto; display: block; border-radius: 3px; box-shadow: 0 8px 24px rgba(0,0,0,.65); }
     .tag { display: inline-block; margin: 1.1rem 0 .6rem; padding: .3rem .7rem; background: var(--hot); color: #fff; font-family: Arial, sans-serif; font-weight: bold; font-size: .62rem; letter-spacing: .2em; border-radius: 2px; text-transform: uppercase; }
     .tag.kids { background: #e0731a; }
+    .tag.trad { background: #6b3fa0; }
     .book h3 { font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.4rem; margin-bottom: .2rem; }
     .book .sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 1.15rem; color: var(--dim); margin-bottom: .7rem; }
     .book p { font-size: .95rem; line-height: 1.6; opacity: .92; margin-bottom: 1.1rem; }
@@ -220,7 +223,7 @@
 
     <section class="block" id="books" aria-labelledby="coll-h">
       <h2 id="coll-h">The Halloween Collection</h2>
-      <p class="lede">Two ways into the Hollow. Pick your level of fright.</p>
+      <p class="lede">Three ways into the Hollow. Pick your level of fright.</p>
       <div class="books">
         <article class="book" id="gothic">
           <img src="assets/gothic-cover-web.jpg" width="800" height="1035" alt="Crow's Hollow After Dark book cover — a werewolf tearing through the page, half in black-and-white line art and half in painted color">
@@ -229,6 +232,14 @@
           <div class="sub">A Gothic Halloween Coloring Book</div>
           <p>Beyond the tree line, the town of Crow's Hollow keeps its oldest secrets. When the moon rises full, something feral stirs beneath its quiet streets. Wolves prowl candlelit ruins, ravens keep watch over crumbling altars &mdash; dread, not gore, in bold black-and-white line art made for adults.</p>
           <a class="btn" href="https://amzn.to/4y2jirn" target="_blank" rel="noopener sponsored">FIND IT ON AMAZON</a>
+        </article>
+        <article class="book" id="traditional">
+          <img src="assets/traditional-cover-web.jpg" width="800" height="1035" alt="Crow's Hollow: A Halloween Coloring Book cover">
+          <span class="tag trad">New &middot; Traditional</span>
+          <h3>Crow's Hollow</h3>
+          <div class="sub">A Halloween Coloring Book</div>
+          <p>Autumn's favorite town, dressed up for its favorite night. Pumpkin patches at golden hour, costume parades down Main Street, cider stands and porches lit for trick-or-treaters. Forty richly detailed scenes for a slow color job, with nothing lurking in the shadows.</p>
+          <a class="btn" href="https://www.amazon.com/dp/B0HMF7F47D" target="_blank" rel="noopener">FIND IT ON AMAZON</a>
         </article>
         <article class="book" id="kids">
           <img src="assets/kids-cover-web.jpg" width="800" height="800" alt="Crow's Hollow book cover — a boy in a pumpkin costume drumming beside a jack-o'-lantern parade wagon and a friendly ghost, half painted and half line art">
@@ -243,7 +254,7 @@
 
     <section class="block" id="bonus-downloads" aria-labelledby="bonus-h">
       <h2 id="bonus-h">Free From the Hollow</h2>
-      <p class="lede">Bonus pages that aren't in either book. Print at home, no email required.</p>
+      <p class="lede">Bonus pages that aren't in any of the books. Print at home, no email required.</p>
       <div class="bonus-grid" id="bonus-grid">
         <div class="bn">
           <img src="assets/bonus/crows-hollow-gothic-bonus-clown-thumb.jpg" width="520" height="696" alt="Gothic bonus coloring page — a woman with a flashlight slips into an abandoned circus tent where a clown sits waiting in a chair">
@@ -256,6 +267,24 @@
           <div class="bn-name">Kids &middot; Bonus Page</div>
           <div class="bn-desc">A very friendly witch and her very helpful cat.</div>
           <a class="dl" href="assets/bonus/crows-hollow-kids-bonus-witch.png" download>DOWNLOAD</a>
+        </div>
+        <div class="bn">
+          <img src="assets/bonus/crows-hollow-gothic-bonus-mirror-thumb.jpg" width="520" height="696" alt="Gothic bonus coloring page — a man in a towel wipes a fogged bathroom mirror and finds a grinning figure staring back">
+          <div class="bn-name">Gothic &middot; Bonus Page</div>
+          <div class="bn-desc">He wiped the steam away. The reflection kept its smile.</div>
+          <a class="dl" href="assets/bonus/crows-hollow-gothic-bonus-mirror.jpg" download>DOWNLOAD</a>
+        </div>
+        <div class="bn">
+          <img src="assets/bonus/crows-hollow-kids-bonus-pie-thumb.jpg" width="520" height="520" alt="Kids bonus coloring page — a smiling little witch holds a steaming pie with a black cat curled up on top beside a gingerbread cooling rack">
+          <div class="bn-name">Kids &middot; Bonus Page</div>
+          <div class="bn-desc">A warm pie, a cozy cat and a very proud baker.</div>
+          <a class="dl" href="assets/bonus/crows-hollow-kids-bonus-pie.png" download>DOWNLOAD</a>
+        </div>
+        <div class="bn">
+          <img src="assets/bonus/crows-hollow-traditional-bonus-dress-thumb.jpg" width="520" height="697" alt="Traditional bonus coloring page — a witch sews a patterned costume at her sewing machine while a cat plays with spools of thread">
+          <div class="bn-name">Traditional &middot; Bonus Page</div>
+          <div class="bn-desc">A half-finished costume, a busy sewing machine and a cat who is not helping.</div>
+          <a class="dl" href="assets/bonus/crows-hollow-traditional-bonus-dress.jpg" download>DOWNLOAD</a>
         </div>
         <div class="bn locked">
           <div class="crypt">More pages<br>being unearthed&hellip;</div>
