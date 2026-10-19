@@ -156,6 +156,16 @@
     .bn.locked .crypt { height: 300px; display: grid; place-items: center; border: 1px dashed var(--line); color: var(--dim); font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 1.15rem; line-height: 1.5; padding: 1rem; }
     .bonus-note { text-align: center; font-family: Arial, sans-serif; font-size: .8rem; color: var(--dim); margin-top: 1.6rem; }
 
+    .btn-row { display: flex; flex-wrap: wrap; gap: .6rem; }
+    .btn.btn-alt { border-color: var(--line); color: var(--ink); }
+    .btn.btn-alt:hover { border-color: var(--accent); background: var(--accent); color: #0b0e16; }
+    .bundle-box { margin: 2.4rem auto 0; max-width: 760px; text-align: center; background: var(--card); border: 2px solid var(--accent); border-radius: 6px; padding: 1.8rem 1.6rem 2rem; box-shadow: 0 0 36px var(--glow), inset 0 0 40px rgba(0,0,0,.35); }
+    .bundle-box .bb-label { font-family: Arial, sans-serif; font-weight: bold; font-size: .68rem; letter-spacing: .3em; text-transform: uppercase; color: var(--hot-text); margin-bottom: .5rem; }
+    .bundle-box .bb-title { font-family: 'Cinzel', serif; font-weight: 900; font-size: clamp(1.3rem, 4vw, 1.7rem); letter-spacing: .08em; color: var(--accent); margin-bottom: .6rem; }
+    .bundle-box p { font-size: .98rem; line-height: 1.55; opacity: .92; max-width: 520px; margin: 0 auto; }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
     .more { text-align: center; }
     .more .btn { margin: .35rem; }
 
@@ -230,7 +240,10 @@
           <h3>Crow's Hollow After Dark</h3>
           <div class="sub">A Gothic Halloween Coloring Book</div>
           <p>Beyond the tree line, the town of Crow's Hollow keeps its oldest secrets. When the moon rises full, something feral stirs beneath its quiet streets. Wolves prowl candlelit ruins, ravens keep watch over crumbling altars &mdash; dread, not gore, in bold black-and-white line art made for adults.</p>
-          <a class="btn" href="https://amzn.to/4y2jirn" target="_blank" rel="noopener sponsored">FIND IT ON AMAZON</a>
+          <div class="btn-row">
+            <a class="btn" href="https://amzn.to/4y2jirn" target="_blank" rel="noopener sponsored">FIND IT ON AMAZON</a>
+            <a class="btn btn-alt" href="https://payhip.com/b/TsGiw" target="_blank" rel="noopener">PRINTABLE PDF ON PAYHIP</a>
+          </div>
         </article>
         <article class="book" id="traditional">
           <img src="assets/traditional-cover-web.jpg" width="800" height="1035" alt="Crow's Hollow: A Halloween Coloring Book cover">
@@ -238,7 +251,10 @@
           <h3>Crow's Hollow</h3>
           <div class="sub">A Halloween Coloring Book</div>
           <p>Autumn's favorite town, dressed up for its favorite night. Pumpkin patches at golden hour, costume parades down Main Street, cider stands and porches lit for trick-or-treaters. Forty richly detailed scenes for a slow color job, with nothing lurking in the shadows.</p>
-          <a class="btn" href="https://amzn.to/3UjTycj" target="_blank" rel="noopener">FIND IT ON AMAZON</a>
+          <div class="btn-row">
+            <a class="btn" href="https://amzn.to/3UjTycj" target="_blank" rel="noopener">FIND IT ON AMAZON</a>
+            <a class="btn btn-alt" href="https://payhip.com/b/mRIFo" target="_blank" rel="noopener">PRINTABLE PDF ON PAYHIP</a>
+          </div>
         </article>
         <article class="book" id="kids">
           <img src="assets/kids-cover-web.jpg" width="800" height="800" alt="Crow's Hollow book cover — a boy in a pumpkin costume drumming beside a jack-o'-lantern parade wagon and a friendly ghost, half painted and half line art">
@@ -246,8 +262,17 @@
           <h3>Crow's Hollow</h3>
           <div class="sub">A Cozy Halloween Coloring Book for Little Ones</div>
           <p>Little Ones' first trip to Crow's Hollow: pumpkin patches, costume parades and porches lit for trick-or-treat, with nothing spookier than a scarecrow's day off. Forty bold, easy scenes, just the right size for small hands and big imaginations.</p>
-          <a class="btn" href="https://amzn.to/4zgtLAN" target="_blank" rel="noopener sponsored">FIND IT ON AMAZON</a>
+          <div class="btn-row">
+            <a class="btn" href="https://amzn.to/4zgtLAN" target="_blank" rel="noopener sponsored">FIND IT ON AMAZON</a>
+            <a class="btn btn-alt" href="https://payhip.com/b/u8hyp" target="_blank" rel="noopener">PRINTABLE PDF ON PAYHIP</a>
+          </div>
         </article>
+      </div>
+      <div class="bundle-box">
+        <div class="bb-label">Bundle &amp; Save</div>
+        <div class="bb-title">THE HALLOWEEN COLLECTION</div>
+        <p>All three Crow's Hollow editions as printable PDFs, for less than buying them one by one.</p>
+        <a class="cta" href="https://payhip.com/b/6lxt7" target="_blank" rel="noopener">GET THE 3-BOOK BUNDLE ON PAYHIP &rarr;</a>
       </div>
     </section>
 
@@ -327,6 +352,7 @@
   <footer>
     <span>&copy; Helios Valley &nbsp;&middot;&nbsp; part of atlasvalleybooks.com</span>
     <span>As an Amazon Associate I earn from qualifying purchases.</span>
+    <span><a href="https://payhip.com/HeliosValley" target="_blank" rel="noopener">Printable PDFs on Payhip</a></span>
   </footer>
 
   <script>

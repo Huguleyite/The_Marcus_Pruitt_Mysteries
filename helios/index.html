@@ -228,6 +228,24 @@
         .hero-subtitle.seasons { color: #5c4321; }
         .cta.seasons { background: var(--forest); color: var(--ivory); box-shadow: 0 4px 14px rgba(60, 90, 62, 0.35); }
 
+        .cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem; margin-top: 1.8rem; }
+        .cta-row .cta { margin-top: 0; }
+        .cta.cta-alt { background: transparent; color: var(--espresso); border: 2px solid var(--espresso-gold); padding: calc(0.75rem - 2px) calc(1.6rem - 2px); box-shadow: none; }
+        .cta.cta-alt:hover { background: var(--espresso-gold); filter: none; }
+        .cta.cta-alt.seasons { background: transparent; color: var(--forest); border-color: var(--forest); box-shadow: none; }
+        .cta.cta-alt.seasons:hover { background: var(--forest); color: var(--ivory); }
+        .cta.cta-small.cta-alt { padding: calc(0.55rem - 2px) calc(1.2rem - 2px); color: var(--gold); border-color: var(--gold); }
+        .cta.cta-small.cta-alt:hover { background: var(--gold); color: var(--indigo-deep); }
+        .bundle-banner { padding: 2.5rem 2rem 0.5rem; }
+        .bundle-inner { max-width: 760px; margin: 0 auto; text-align: center; background: var(--indigo-panel); border: 2px solid var(--gold); border-radius: 6px; padding: 1.9rem 1.8rem 2rem; box-shadow: 0 0 34px rgba(232, 200, 114, 0.22); }
+        .bundle-label { font-family: Arial, sans-serif; font-size: 0.68rem; font-weight: bold; letter-spacing: 0.3em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.5rem; }
+        .bundle-title { font-family: 'Cinzel', serif; font-weight: 900; font-size: 1.6rem; letter-spacing: 0.12em; color: var(--gold); margin-bottom: 0.6rem; }
+        .bundle-desc { font-family: Arial, sans-serif; font-size: 0.92rem; line-height: 1.6; color: var(--paper-gray); max-width: 540px; margin: 0 auto 1.3rem; }
+        .bundle-cta { display: inline-block; background: var(--gold); color: var(--indigo-deep); font-family: Arial, sans-serif; font-weight: bold; font-size: 0.8rem; letter-spacing: 0.1em; padding: 0.95rem 2rem; border-radius: 2px; text-decoration: none; box-shadow: 0 4px 18px rgba(232, 200, 114, 0.35); }
+        .bundle-cta:hover { filter: brightness(1.08); }
+        footer a { color: var(--gold); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
         /* ===== SCATTERED SPECIMENS (unpainted line art) ===== */
         .specimen {
             position: absolute;
@@ -534,6 +552,7 @@
             .hero { grid-template-columns: 1fr; }
             .hero-copy-panel { text-align: center; }
             .hero-copy { max-width: 100%; margin: 0 auto; }
+            .cta-row { justify-content: center; }
             nav ul { flex-wrap: wrap; gap: 1rem; }
             footer { flex-direction: column; gap: 0.5rem; text-align: center; }
             .bonus-grid { grid-template-columns: 1fr; max-width: 320px; }
@@ -571,7 +590,10 @@
                 <div class="hero-title">GPS</div>
                 <div class="hero-subtitle">Galactic Planetary Survey — 50 Alien Landscapes to Color</div>
                 <p class="hero-desc">Four planets. Two moons. One continuous survey. Fifty alien landscapes in fine black-and-white line art — the terrain companion to Xenobotanica and U.F.O., ready for your color.</p>
-                <a class="cta" href="https://amzn.to/4hKTOZQ" target="_blank" rel="noopener sponsored">FIND IT ON AMAZON</a>
+                <div class="cta-row">
+                    <a class="cta" href="https://amzn.to/4hKTOZQ" target="_blank" rel="noopener sponsored">FIND IT ON AMAZON</a>
+                    <a class="cta cta-alt" href="https://payhip.com/b/ANxr5" target="_blank" rel="noopener">PRINTABLE PDF ON PAYHIP</a>
+                </div>
             </div>
         </div>
     </section>
@@ -602,7 +624,10 @@
                 <div class="hero-title">U.F.O.</div>
                 <div class="hero-subtitle">A Grayscale Coloring Book of Unidentified Fauna Objects</div>
                 <p class="hero-desc">Fifty creatures from a world that doesn't exist yet, rendered in fine grayscale. The fauna companion to Xenobotanica — Helios Valley's next world, ready for your color.</p>
-                <a class="cta" href="https://amzn.to/4iR50G9" target="_blank" rel="noopener">FIND IT ON AMAZON</a>
+                <div class="cta-row">
+                    <a class="cta" href="https://amzn.to/4iR50G9" target="_blank" rel="noopener">FIND IT ON AMAZON</a>
+                    <a class="cta cta-alt" href="https://payhip.com/b/ihuv5" target="_blank" rel="noopener">PRINTABLE PDF ON PAYHIP</a>
+                </div>
             </div>
         </div>
     </section>
@@ -614,7 +639,10 @@
                 <div class="also-available-label">Also Available</div>
                 <div class="also-available-title">XENOBOTANICA</div>
                 <div class="also-available-desc">Fifty specimens of alien botany, rendered in fine grayscale line — the world that started it all.</div>
-                <a class="cta cta-small" href="https://amzn.to/4x9NrFf" target="_blank" rel="noopener">FIND IT ON AMAZON</a>
+                <div class="cta-row">
+                    <a class="cta cta-small" href="https://amzn.to/4x9NrFf" target="_blank" rel="noopener">FIND IT ON AMAZON</a>
+                    <a class="cta cta-small cta-alt" href="https://payhip.com/b/4JZfn" target="_blank" rel="noopener">PRINTABLE PDF ON PAYHIP</a>
+                </div>
             </div>
         </div>
     </section>
@@ -623,6 +651,15 @@
         <svg class="specimen" width="90" height="130" viewBox="0 0 90 130" style="top:-10px; left:-15px; opacity:0.16; transform:rotate(-12deg);"><g fill="none" stroke="var(--gold)" stroke-width="1.2"><path d="M45 120 C20 100 15 70 30 40 C38 55 40 70 45 90 C50 70 52 55 60 40 C75 70 70 100 45 120Z"/><path d="M45 90 L45 40"/></g></svg>
         <svg class="specimen" width="70" height="70" viewBox="0 0 70 70" style="top:10px; right:10px; opacity:0.14; transform:rotate(6deg);"><g fill="none" stroke="var(--violet)" stroke-width="1.2"><ellipse cx="35" cy="38" rx="22" ry="14"/><path d="M15 34 Q10 20 20 12"/><path d="M55 34 Q60 20 50 12"/><circle cx="35" cy="38" r="4"/></g></svg>
         <p>Xenobotanica was the first world Helios Valley colored in. U.F.O. is next — and more are already taking shape, including corners of Atlas Valley's own novels, waiting for their own grayscale editions.</p>
+    </section>
+
+    <section class="bundle-banner">
+        <div class="bundle-inner">
+            <div class="bundle-label">Bundle &amp; Save</div>
+            <div class="bundle-title">TERRA INCOGNITA COLLECTION</div>
+            <div class="bundle-desc">Xenobotanica, U.F.O. and GPS together: all three alien-survey coloring books as printable PDFs, for less than buying them one by one.</div>
+            <a class="bundle-cta" href="https://payhip.com/b/0Bn2X" target="_blank" rel="noopener">GET THE 3-BOOK BUNDLE ON PAYHIP &rarr;</a>
+        </div>
     </section>
 
     <div class="season-label">Seasons Collection</div>
@@ -636,7 +673,10 @@
                 <div class="hero-title seasons">Prey Attention</div>
                 <div class="hero-subtitle seasons">A Hunting Coloring Book for Adults — 50 Scenes from Both Sides of the Stalk</div>
                 <p class="hero-desc">Fifty scenes, two points of view. Most pages put you in the hunter's boots — a treestand look-down, a ridge overlook at first light. Every so often, without warning, the perspective flips and you're looking out through the animal's eyes instead. Something out there already noticed you.</p>
-                <a class="cta seasons" href="https://amzn.to/4cAlIpw" target="_blank" rel="noopener">FIND IT ON AMAZON</a>
+                <div class="cta-row">
+                    <a class="cta seasons" href="https://amzn.to/4cAlIpw" target="_blank" rel="noopener">FIND IT ON AMAZON</a>
+                    <a class="cta cta-alt seasons" href="https://payhip.com/b/9UIft" target="_blank" rel="noopener">PRINTABLE PDF ON PAYHIP</a>
+                </div>
             </div>
         </div>
     </section>
@@ -722,6 +762,7 @@
     <footer>
         <span>&copy; Helios Valley</span>
         <span>As an Amazon Associate I earn from qualifying purchases.</span>
+        <span><a href="https://payhip.com/HeliosValley" target="_blank" rel="noopener">Printable PDFs on Payhip</a></span>
         <span>part of atlasvalleybooks.com</span>
     </footer>
 
