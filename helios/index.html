@@ -575,6 +575,19 @@
         .bonus-grid.single { grid-template-columns: minmax(0, 260px); justify-content: center; }
         .bonus-card img.tall { aspect-ratio: 3 / 4; }
         .standalone-note { margin-top: 0.9rem; font-family: Arial, sans-serif; font-size: 0.74rem; letter-spacing: 0.04em; color: #7a6a73; }
+        /* ===== CROW'S HOLLOW (full section, keeps the strip's purple-to-ember coloring) ===== */
+        .hero-image-panel.halloween { background: #1a0b2e; }
+        .hero-copy-panel.halloween { background: linear-gradient(100deg, #1a0b2e 0%, #2a1a12 70%, #3a1a12 100%); border-left: 1px solid #7a3a86; }
+        .release-badge.halloween { background: #ff9a2e; color: #1a0b2e; }
+        .release-badge.halloween .pulse-dot { background: #1a0b2e; }
+        .hero-title.halloween { color: var(--gold); }
+        .hero-subtitle.halloween { color: #ff9a2e; text-shadow: none; }
+        .hero-copy-panel.halloween .hero-desc { color: var(--muted-text); }
+        .cta.halloween { background: #ff9a2e; color: #1a0b2e; box-shadow: 0 4px 14px rgba(255, 140, 30, 0.3); }
+        #elder-omens, #halloween { margin-bottom: 2.5rem; }
+        .hs-covers-lg img { width: 150px; }
+        .hs-covers-lg img + img { width: 140px; margin-left: -28px; margin-top: 30px; }
+        .hs-covers-lg img + img + img { width: 130px; margin-top: 0; }
     </style>
 </head>
 <body>
@@ -584,17 +597,58 @@
         <div class="strapline">From the edge of the map, in color.</div>
         <nav>
             <ul>
+                <li><a class="nav-horror" href="#elder-omens">Elder Omens</a></li>
+                <li><a class="nav-halloween" href="#halloween">Halloween</a></li>
                 <li><a href="#gps">GPS</a></li>
-                <li><a class="nav-halloween" href="/helios/halloween/">Halloween</a></li>
                 <li><a href="#ufo">U.F.O.</a></li>
                 <li><a href="#xenobotanica">Xenobotanica</a></li>
                 <li><a href="#prey-attention">Prey Attention</a></li>
-                <li><a class="nav-horror" href="#elder-omens">Elder Omens</a></li>
                 <li><a href="#bonus-downloads">Bonus Downloads</a></li>
             </ul>
         </nav>
         <a class="back-link" href="/">&larr; Atlas Valley</a>
     </header>
+
+    <div class="season-label" style="color:#a05cc0;">Standalone Horror</div>
+    <section class="hero" id="elder-omens">
+        <div class="hero-image-panel horror">
+            <img src="assets/elder-omens-cover-web.jpg" alt="Elder Omens: A Horror Coloring Book for Adults, front cover">
+        </div>
+        <div class="hero-copy-panel">
+            <div class="hero-copy">
+                <div class="release-badge horror"><span class="pulse-dot"></span>New Release</div>
+                <div class="hero-title horror">Elder Omens</div>
+                <div class="hero-subtitle horror">A Horror Coloring Book for Adults</div>
+                <p class="hero-desc">Every old story carries a warning. Somebody always ignores it. Forty ordinary places, one broken rule, and a creature that is already close. Some come from real folklore, some were invented for this book, and none of them are hiding. Fine-line art for markers, gel pens and colored pencils. Dread, not gore.</p>
+                <div class="pdf-only"><strong>PDF download only</strong>Elder Omens is available only as a printable PDF on Payhip. There is no print edition and it is not on Amazon.</div>
+                <div class="cta-row">
+                    <a class="cta horror" href="https://payhip.com/b/Yv2rD" target="_blank" rel="noopener">GET THE PDF ON PAYHIP</a>
+                </div>
+                <div class="standalone-note">A standalone Helios Valley title. Not part of the Crow's Hollow Halloween collection.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="hero hero-halloween" id="halloween">
+        <div class="hero-image-panel halloween">
+            <span class="hs-covers hs-covers-lg">
+                <img src="halloween/assets/gothic-cover-web.jpg" alt="Crow's Hollow After Dark cover — a gothic Halloween coloring book for adults">
+                <img src="halloween/assets/traditional-cover-web.jpg" alt="Crow's Hollow cover — a detailed, cozy Halloween coloring book">
+                <img src="halloween/assets/kids-cover-web.jpg" alt="Crow's Hollow cover — a cozy Halloween coloring book for little ones">
+            </span>
+        </div>
+        <div class="hero-copy-panel halloween">
+            <div class="hero-copy">
+                <div class="release-badge halloween"><span class="pulse-dot"></span>New for Halloween</div>
+                <div class="hero-title halloween">Crow's Hollow</div>
+                <div class="hero-subtitle halloween">Three Halloween Coloring Books, One Haunted Town</div>
+                <p class="hero-desc">Three editions: gothic for adults, detailed and cozy for all ages, and gentle for little ones. Plus a free bonus page for each, every week in October.</p>
+                <div class="cta-row">
+                    <a class="cta halloween" href="/helios/halloween/">ENTER THE HOLLOW &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section class="hero" id="gps">
         <div class="hero-image-panel">
@@ -602,7 +656,7 @@
         </div>
         <div class="hero-copy-panel">
             <div class="hero-copy">
-                <div class="release-badge"><span class="pulse-dot"></span>New Release</div>
+                <div class="release-badge"><span class="pulse-dot"></span>Out Now</div>
                 <div class="hero-title">GPS</div>
                 <div class="hero-subtitle">Galactic Planetary Survey — 50 Alien Landscapes to Color</div>
                 <p class="hero-desc">Four planets. Two moons. One continuous survey. Fifty alien landscapes in fine black-and-white line art — the terrain companion to Xenobotanica and U.F.O., ready for your color.</p>
@@ -612,22 +666,6 @@
                 </div>
             </div>
         </div>
-    </section>
-
-    <section class="halloween-strip" id="halloween">
-        <a class="halloween-strip-inner" href="/helios/halloween/">
-            <span class="hs-covers">
-                <img src="halloween/assets/gothic-cover-web.jpg" alt="Crow's Hollow After Dark cover — a gothic Halloween coloring book for adults">
-                <img src="halloween/assets/traditional-cover-web.jpg" alt="Crow's Hollow cover — a detailed, cozy Halloween coloring book">
-                <img src="halloween/assets/kids-cover-web.jpg" alt="Crow's Hollow cover — a cozy Halloween coloring book for little ones">
-            </span>
-            <span class="hs-copy">
-                <span class="hs-label">New for Halloween</span>
-                <span class="hs-title">CROW'S HOLLOW</span>
-                <span class="hs-desc">Three editions: gothic for adults, detailed and cozy for all ages, and gentle for little ones — plus a free bonus page for each, every week in October.</span>
-                <span class="hs-cta">ENTER THE HOLLOW &rarr;</span>
-            </span>
-        </a>
     </section>
 
     <section class="hero" id="ufo">
@@ -693,26 +731,6 @@
                     <a class="cta seasons" href="https://amzn.to/4cAlIpw" target="_blank" rel="noopener">FIND IT ON AMAZON</a>
                     <a class="cta cta-alt seasons" href="https://payhip.com/b/9UIft" target="_blank" rel="noopener">PRINTABLE PDF ON PAYHIP</a>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="season-label" style="color:#a05cc0;">Standalone Horror</div>
-    <section class="hero" id="elder-omens">
-        <div class="hero-image-panel horror">
-            <img src="assets/elder-omens-cover-web.jpg" alt="Elder Omens: A Horror Coloring Book for Adults, front cover">
-        </div>
-        <div class="hero-copy-panel">
-            <div class="hero-copy">
-                <div class="release-badge horror"><span class="pulse-dot"></span>Printable PDF Only</div>
-                <div class="hero-title horror">Elder Omens</div>
-                <div class="hero-subtitle horror">A Horror Coloring Book for Adults</div>
-                <p class="hero-desc">Every old story carries a warning. Somebody always ignores it. Forty ordinary places, one broken rule, and a creature that is already close. Some come from real folklore, some were invented for this book, and none of them are hiding. Fine-line art for markers, gel pens and colored pencils. Dread, not gore.</p>
-                <div class="pdf-only"><strong>PDF download only</strong>Elder Omens is available only as a printable PDF on Payhip. There is no print edition and it is not on Amazon.</div>
-                <div class="cta-row">
-                    <a class="cta horror" href="https://payhip.com/b/Yv2rD" target="_blank" rel="noopener">GET THE PDF ON PAYHIP</a>
-                </div>
-                <div class="standalone-note">A standalone Helios Valley title. Not part of the Crow's Hollow Halloween collection.</div>
             </div>
         </div>
     </section>
