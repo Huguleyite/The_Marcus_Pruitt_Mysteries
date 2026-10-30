@@ -84,7 +84,7 @@
         /* ===========================
            NAVIGATION
         =========================== */
-        nav {
+        body > nav {
             position: fixed;
             top: 40px; left: 0; right: 0;
             z-index: 100;
@@ -942,6 +942,7 @@
             .extras-layout { grid-template-columns: 1fr; }
             .nav-links { display: none; }
             .hamburger { display: flex; }
+            body > nav { padding: 0 1.25rem; }
         }
         @media (max-width: 520px) {
             h1.hero-title { font-size: 2.6rem; }
@@ -954,10 +955,10 @@
      PRE-ORDER RIBBON — CODE RED HERRING
 ============================== -->
 <div id="launch-ribbon" style="position:fixed; top:0; left:0; right:0; height:40px; z-index:110; display:flex; align-items:center; justify-content:center; gap:0.75rem; flex-wrap:wrap; background:var(--gold); color:var(--bg-deep); font-family:'Cinzel',serif; font-size:0.68rem; letter-spacing:0.08em; padding:0 1rem; text-align:center;">
-    <span>Two new worlds, out now</span>
-    <a href="https://amzn.to/4iR50G9" target="_blank" rel="noopener" style="color:var(--bg-deep); text-decoration:underline; font-weight:700;">Shop U.F.O. &rarr;</a>
+    <span id="ladderRibbonText">The Ladder releases Friday, November 13</span>
+    <a href="the-ladder/" style="color:var(--bg-deep); text-decoration:underline; font-weight:700;">See the book &rarr;</a>
     <span style="opacity:0.5;">&middot;</span>
-    <a href="https://amzn.to/4cAlIpw" target="_blank" rel="noopener" style="color:var(--bg-deep); text-decoration:underline; font-weight:700;">Shop Prey Attention &rarr;</a>
+    <a href="https://link.amazon/B0dfBrgHz" target="_blank" rel="noopener" style="color:var(--bg-deep); text-decoration:underline; font-weight:700;"><span class="ebook-label">Pre-order the eBook</span> &rarr;</a>
 </div>
 
 <!-- ==============================
@@ -973,6 +974,7 @@
         ATLAS VALLEY<span class="pipe"> | </span><span class="sub">Books</span>
     </a>
     <ul class="nav-links">
+        <li><a href="the-ladder/">The Ladder</a></li>
         <li><a href="#pruitt">More from Atlas</a></li>
         <li><a href="#about">The Author</a></li>
         <li><a href="helios/">Helios Valley</a></li>
@@ -986,6 +988,7 @@
 
 <div id="mobile-nav">
     <ul>
+        <li><a href="the-ladder/">The Ladder</a></li>
         <li><a href="#pruitt"          onclick="closeMobileNav()">More from Atlas</a></li>
         <li><a href="#about"           onclick="closeMobileNav()">The Author</a></li>
         <li><a href="helios/">Helios Valley</a></li>
@@ -999,14 +1002,14 @@
      HERO — CODE RED HERRING (Atlas Valley)
 ============================== -->
 <section id="hero">
-    <span class="coord" style="top:78px; left:22px;">● PRE-ORDER</span>
+    <span class="coord" style="top:78px; left:22px;">● NOW AVAILABLE</span>
     <span class="coord" style="bottom:36px; right:22px;">CHART NO. AV-10</span>
 
     <div class="hero-inner">
 
         <!-- Left: text -->
         <div>
-            <div class="hero-series">Atlas Valley &middot; Releases August 11</div>
+            <div class="hero-series">Atlas Valley &middot; Out Now</div>
             <h1 class="hero-title">Code Red Herring</h1>
             <p class="hero-subtitle">One headset. One overnight shift. Zero backup she can trust.</p>
             <p class="hero-author">by Atlas Valley</p>
@@ -1021,7 +1024,7 @@
 
             <div class="available-now" style="margin-bottom: 1.75rem;">
                 <div class="pulse-dot"></div>
-                <span>Pre-Order Now &middot; Releases August 11</span>
+                <span>Available Now &middot; Released August 11</span>
             </div>
 
             <div style="display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
@@ -1030,7 +1033,7 @@
                         <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
                         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
                     </svg>
-                    Pre-Order on Amazon
+                    Get It on Amazon
                 </a>
                 <a href="#pruitt" class="btn-secondary">More From Atlas Valley</a>
             </div>
@@ -1053,6 +1056,40 @@
 <!-- ==============================
      ALSO AVAILABLE NOW — Xenobotanica (Helios Valley) + YOM (Atlas Valley)
 ============================== -->
+<!-- ==============================
+     LAUNCH BAND: THE LADDER
+============================== -->
+<section id="ladder-launch" style="background: linear-gradient(to bottom, var(--bg-deep), var(--bg-dark)); border-top: 1px solid rgba(201, 168, 76, 0.1);">
+    <style>
+        .ladder-launch-grid { display:grid; grid-template-columns: 220px 1fr; gap:3rem; align-items:center; }
+        .ladder-launch-cover { position:relative; width:220px; aspect-ratio:2115/3375; }
+        .ladder-launch-cover img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; box-shadow:0 20px 50px rgba(0,0,0,.7), 0 0 36px rgba(212,137,42,.2); }
+        .ladder-launch-cover::before, .ladder-launch-cover::after { content:''; position:absolute; width:20px; height:20px; border-color:var(--gold); border-style:solid; opacity:.55; z-index:2; }
+        .ladder-launch-cover::before { top:-7px; left:-7px; border-width:2px 0 0 2px; }
+        .ladder-launch-cover::after { bottom:-7px; right:-7px; border-width:0 2px 2px 0; }
+        .ladder-launch-tag { font-style:italic; color:var(--parchment-dim); font-size:1.05rem; line-height:1.6; margin-bottom:1rem; }
+        .ladder-launch-copy { color:var(--text); line-height:1.8; max-width:560px; margin-bottom:1.4rem; }
+        .ladder-launch-btns { display:flex; gap:.8rem; flex-wrap:wrap; align-items:center; }
+        @media (max-width:720px) { .ladder-launch-grid { grid-template-columns:1fr; justify-items:center; text-align:center; gap:2.2rem; } .ladder-launch-btns { justify-content:center; } }
+    </style>
+    <div class="section-inner" style="padding-top:4rem; padding-bottom:4rem;">
+        <div class="section-label">New Release</div>
+        <div class="ladder-launch-grid">
+            <div class="ladder-launch-cover reveal"><img src="the-ladder/assets/the-ladder-cover.jpg" alt="The Ladder by Atlas Valley, book cover"></div>
+            <div class="reveal">
+                <h2 class="section-title" style="margin-bottom:.5rem;">The Ladder</h2>
+                <p class="ladder-launch-tag">Some doors are built to be opened. This one is bolted to a wall</p>
+                <p class="ladder-launch-copy">An iron ladder appears on a backyard retaining wall and leads nowhere. Eight-year-old Velara climbs it anyway, and her fathers follow her into a world of crystal towers, singing cliffs, and two moons.</p>
+                <div class="available-now" style="margin-bottom:1.2rem;"><div class="pulse-dot"></div><span id="ladderLaunchLine">Releases Friday, November 13</span></div>
+                <div class="ladder-launch-btns">
+                    <a href="the-ladder/" class="btn-primary">Explore The Ladder</a>
+                    <a href="https://link.amazon/B0dfBrgHz" target="_blank" rel="noopener" class="btn-secondary"><span class="ebook-label">Pre-order the eBook</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section id="atlas-valley-updates" style="background: linear-gradient(to bottom, var(--bg-deep), var(--bg-mid)); border-top: 1px solid rgba(201, 168, 76, 0.1);">
     <div class="section-inner">
         <div class="section-label">Also Available Now</div>
@@ -1473,6 +1510,7 @@
     </div>
     <nav class="footer-links">
         <a href="#hero">Home</a>
+        <a href="the-ladder/">The Ladder</a>
         <a href="#pruitt">More from Atlas</a>
         <a href="#about">The Author</a>
         <a href="helios/">Helios Valley</a>
@@ -1511,6 +1549,15 @@ function closeMobileNav() {
 }
 </script>
 
+<script>
+(function(){
+  if (new Date() >= new Date("2026-11-13T00:00:00-05:00")) {
+    var a=document.getElementById("ladderRibbonText"); if(a) a.textContent="The Ladder is out now";
+    var b=document.getElementById("ladderLaunchLine"); if(b) b.textContent="Out now";
+    document.querySelectorAll(".ebook-label").forEach(function(e){e.textContent="Get the eBook";});
+  }
+})();
+</script>
 <script defer src="/seasonal-halloween.js"></script><!-- SEASONAL:halloween -->
 </body>
 </html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Ladder | Atlas Valley</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon-32.png" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="canonical" href="https://atlasvalleybooks.com/the-ladder/">
+<meta property="og:type" content="book">
+<meta property="og:title" content="The Ladder | Atlas Valley">
+<meta property="og:description" content="Some doors are built to be opened. This one is bolted to a wall. Releases Friday, November 13.">
+<meta property="og:url" content="https://atlasvalleybooks.com/the-ladder/">
+<meta property="og:image" content="https://atlasvalleybooks.com/the-ladder/assets/the-ladder-cover.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="The Ladder by Atlas Valley. Some doors are built to be opened. This one is bolted to a wall. Releases Friday, November 13.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Playfair+Display:wght@900&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg-deep:#05080f; --bg-dark:#0a0e1a; --bg-mid:#0f1625; --bg-nav:rgba(5,8,15,0.96);
+        --gold:#c9a84c; --gold-light:#e8c96a; --amber:#d4892a;
+        --parchment:#f0e6cc; --parchment-dim:#b8a882; --text:#ddd5be; --text-dim:#7a6e58;
+        --teal:#3d7a8a; --teal-light:#5a9daf; --grid-line:rgba(201,168,76,0.07);
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth;overflow-x:hidden}
+    body{background:var(--bg-deep);color:var(--text);font-family:'Lora',Georgia,serif;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--grid-line) 1px,transparent 1px);background-size:64px 64px;pointer-events:none;z-index:0}
+    section{position:relative;z-index:1}
+
+    /* NAV (identical to homepage) */
+    nav.top{position:fixed;top:40px;left:0;right:0;z-index:100;background:var(--bg-nav);border-bottom:1px solid rgba(201,168,76,.18);padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:64px;backdrop-filter:blur(10px)}
+    .nav-logo{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;color:var(--gold);text-decoration:none;letter-spacing:.18em;display:flex;align-items:center;gap:.6rem}
+    .nav-logo .pipe{color:var(--text-dim);font-weight:400;margin:0 .2rem}
+    .nav-logo .sub{color:var(--parchment-dim);font-weight:400;font-size:.9rem;letter-spacing:.1em}
+    .nav-links{display:flex;gap:2.25rem;list-style:none}
+    .nav-links a{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--parchment-dim);text-decoration:none;transition:color .25s}
+    .nav-links a:hover,.nav-links a.current{color:var(--gold)}
+    .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px}
+    .hamburger span{display:block;width:24px;height:2px;background:var(--gold);transition:transform .3s ease,opacity .3s ease;transform-origin:center}
+    .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+    .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+    #mobile-nav{display:none;position:fixed;top:104px;left:0;right:0;background:rgba(5,8,15,.98);z-index:99;padding:1.5rem 2rem;border-bottom:1px solid rgba(201,168,76,.15)}
+    #mobile-nav ul{list-style:none;display:flex;flex-direction:column;gap:1.25rem}
+    #mobile-nav a{font-family:'Cinzel',serif;font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;color:var(--parchment-dim);text-decoration:none}
+    #mobile-nav a.current{color:var(--gold)}
+
+    /* HERO */
+    #hero{min-height:100vh;display:flex;align-items:center;padding:140px 4rem 4rem;overflow:clip}
+    #hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 68% 50%,rgba(212,137,42,.12) 0%,transparent 55%),radial-gradient(ellipse at 28% 75%,rgba(61,122,138,.07) 0%,transparent 50%);pointer-events:none}
+    .hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:4rem;align-items:center;max-width:1200px;margin:0 auto;width:100%}
+    .hero-series{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--teal-light);margin-bottom:1.1rem;display:flex;align-items:center;gap:.75rem}
+    .hero-series::before,.hero-series::after{content:'';display:inline-block;width:28px;height:1px;background:var(--teal-light);opacity:.7}
+    h1.hero-title{font-family:'Playfair Display',serif;font-size:clamp(3rem,6vw,5.5rem);font-weight:900;color:var(--parchment);line-height:1;letter-spacing:.01em;margin-bottom:.6rem;text-shadow:0 0 50px rgba(240,230,204,.18)}
+    .hero-subtitle{font-style:italic;font-size:1.15rem;color:var(--parchment-dim);margin-bottom:.8rem;letter-spacing:.03em;line-height:1.5}
+    .hero-author{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:.28em;color:var(--parchment-dim);margin-bottom:.4rem}
+    .hero-genre{font-style:italic;color:var(--text-dim);font-size:.88rem;margin-bottom:1.6rem;letter-spacing:.06em}
+    .hero-synopsis p{font-size:.98rem;line-height:1.8;color:var(--text);margin-bottom:.9rem;max-width:520px}
+    .hero-synopsis p.line{color:var(--parchment);font-style:italic}
+    .available-now{color:var(--amber);font-family:'Cinzel',serif;font-size:.82rem;letter-spacing:.22em;text-transform:uppercase;display:flex;align-items:center;gap:.6rem;margin:1.4rem 0 1.1rem;flex-wrap:wrap}
+    .pulse-dot{width:8px;height:8px;background:var(--amber);border-radius:50%;animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.75)}}
+    .count{color:var(--gold-light)}
+    .btn-primary{display:inline-flex;align-items:center;gap:.65rem;background:var(--gold);color:var(--bg-deep);font-family:'Cinzel',serif;font-size:.8rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;padding:.95rem 2rem;border:2px solid var(--gold);transition:all .3s;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);cursor:pointer}
+    .btn-primary:hover{background:transparent;color:var(--gold)}
+    .btn-primary svg{width:16px;height:16px;flex-shrink:0}
+    .btn-secondary{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--gold);color:var(--gold);background:none;font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;padding:.75rem 1.5rem;transition:all .3s;cursor:pointer}
+    .btn-secondary:hover{background:var(--gold);color:var(--bg-deep)}
+    .paperback-note{margin-top:1.2rem;max-width:520px;border:1px solid rgba(201,168,76,.22);background:rgba(201,168,76,.04);padding:.9rem 1.1rem;font-size:.86rem;line-height:1.6;color:var(--parchment-dim)}
+    .paperback-note strong{font-family:'Cinzel',serif;font-weight:600;letter-spacing:.14em;font-size:.68rem;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:.25rem}
+    .hero-cover{position:relative;display:flex;justify-content:center;align-items:center}
+    .cover-glow{position:absolute;inset:-20%;background:radial-gradient(ellipse,rgba(212,137,42,.22) 0%,transparent 60%);animation:coverglow 4.5s ease-in-out infinite alternate;pointer-events:none}
+    @keyframes coverglow{from{opacity:.55;transform:scale(.94)}to{opacity:1;transform:scale(1.06)}}
+    .cover-frame{position:relative;z-index:1;max-width:400px;width:100%;aspect-ratio:2115/3375}
+    .cover-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;box-shadow:0 24px 64px rgba(0,0,0,.75),0 0 40px rgba(212,137,42,.18)}
+    .cover-frame::before,.cover-frame::after{content:'';position:absolute;width:22px;height:22px;border-color:var(--gold);border-style:solid;opacity:.55;z-index:2}
+    .cover-frame::before{top:-7px;left:-7px;border-width:2px 0 0 2px}
+    .cover-frame::after{bottom:-7px;right:-7px;border-width:0 2px 2px 0}
+
+    /* SECTIONS */
+    .section-inner{max-width:1100px;margin:0 auto;padding:5.5rem 2rem}
+    .section-label{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.42em;text-transform:uppercase;color:var(--teal-light);margin-bottom:.85rem;display:flex;align-items:center;gap:1rem}
+    .section-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,rgba(90,157,175,.4),transparent)}
+    .section-title{font-family:'Cinzel',serif;font-size:clamp(1.7rem,3vw,2.6rem);font-weight:700;color:var(--gold);margin-bottom:1rem;line-height:1.2}
+    .section-lead{color:var(--parchment-dim);font-style:italic;margin-bottom:2rem;max-width:620px;line-height:1.7}
+
+    /* INSIDE THE BOOK */
+    .inside-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+    .inside-card{border:1px solid rgba(201,168,76,.18);background:rgba(201,168,76,.025);padding:1.5rem 1.6rem;line-height:1.7;color:var(--parchment);position:relative}
+    .inside-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--gold),transparent)}
+
+    /* MAP */
+    .map-frame{position:relative;width:100%;aspect-ratio:2752/1536;border:1px solid rgba(201,168,76,.28);overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.6)}
+    .map-frame img{display:block;width:100%;height:100%;object-fit:cover}
+    .pin{position:absolute;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;background:#f2984a;border:2px solid #fff3e0;cursor:pointer;padding:0;animation:ping 2.6s ease-in-out infinite}
+    .pin::after{content:'';position:absolute;inset:-12px}
+    .pin:hover,.pin.active,.pin:focus-visible{background:#ffb877;outline:2px solid var(--gold-light);outline-offset:3px}
+    @keyframes ping{0%{box-shadow:0 0 0 0 rgba(242,152,74,.5)}70%{box-shadow:0 0 0 14px rgba(242,152,74,0)}100%{box-shadow:0 0 0 0 rgba(242,152,74,0)}}
+    .lore-panel{margin-top:1rem;background:var(--bg-mid);border:1px solid rgba(201,168,76,.18);padding:1.1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;min-height:92px}
+    .lore-title{font-family:'Cinzel',serif;font-size:1.05rem;color:var(--gold);margin-bottom:.3rem;letter-spacing:.06em}
+    .lore-body{font-size:.92rem;line-height:1.65;color:var(--text)}
+    .lore-hint{color:var(--text-dim);font-style:italic}
+    #viewImageBtn{display:none;flex:0 0 auto;white-space:nowrap}
+    #viewImageBtn.show{display:inline-flex}
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,8,15,.9);z-index:200;align-items:center;justify-content:center;padding:30px}
+    .modal-overlay.open{display:flex}
+    .modal-card{max-width:900px;width:100%;background:var(--bg-mid);border:1px solid rgba(201,168,76,.28);box-shadow:0 30px 80px rgba(0,0,0,.6)}
+    .modal-card img{display:block;width:100%;height:auto}
+    .modal-footer{padding:1rem 1.4rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .modal-title{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold);letter-spacing:.06em}
+
+    /* CTA band */
+    .cta-band{text-align:center;padding:4.5rem 2rem;background:linear-gradient(to bottom,var(--bg-dark),var(--bg-deep));border-top:1px solid rgba(201,168,76,.1)}
+    .cta-band h2{font-family:'Cinzel',serif;color:var(--gold);font-size:clamp(1.5rem,3vw,2.2rem);margin-bottom:.8rem}
+    .cta-band p{color:var(--parchment-dim);font-style:italic;margin-bottom:1.6rem}
+
+    /* FOOTER */
+    footer{background:var(--bg-deep);border-top:1px solid rgba(201,168,76,.14);padding:3.5rem 2rem;text-align:center;position:relative;z-index:1}
+    .footer-logo{font-family:'Cinzel',serif;font-size:1.25rem;font-weight:700;color:var(--gold);letter-spacing:.22em;margin-bottom:1.5rem}
+    .footer-links{display:flex;justify-content:center;flex-wrap:wrap;gap:2rem;margin-bottom:2rem}
+    .footer-links a{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--text-dim);text-decoration:none}
+    .footer-links a:hover,.footer-links a.current{color:var(--gold)}
+    .footer-copy{font-size:.72rem;color:var(--text-dim);opacity:.45}
+
+    .reveal{opacity:0;transform:translateY(22px);transition:opacity .75s ease,transform .75s ease}
+    .reveal.visible{opacity:1;transform:none}
+
+    @media (max-width:900px){
+        nav.top{padding:0 1.25rem}
+        .nav-links{display:none}.hamburger{display:flex}
+        #hero{padding:130px 1.5rem 3rem;min-height:0}
+        .hero-inner{grid-template-columns:1fr;gap:2.5rem}
+        .hero-cover{order:-1}.cover-frame{max-width:270px}
+        .inside-grid{grid-template-columns:1fr}
+        .section-inner{padding:4rem 1.25rem}
+        .lore-panel{flex-direction:column;align-items:flex-start}
+        .pin{width:28px;height:28px;margin:-14px 0 0 -14px}
+    }
+</style>
+</head>
+<body>
+
+<!-- Launch ribbon (same slot as the homepage ribbon) -->
+<div id="launch-ribbon" style="position:fixed;top:0;left:0;right:0;height:40px;z-index:110;display:flex;align-items:center;justify-content:center;gap:.75rem;flex-wrap:wrap;background:var(--gold);color:var(--bg-deep);font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.08em;padding:0 1rem;text-align:center;">
+    <span id="ribbonText">The Ladder releases Friday, November 13</span>
+    <a href="https://link.amazon/B0dfBrgHz" target="_blank" rel="noopener" style="color:var(--bg-deep);text-decoration:underline;font-weight:700;"><span class="ebook-label">Pre-order the eBook</span> &rarr;</a>
+</div>
+
+<nav class="top">
+    <a href="/" class="nav-logo">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+        ATLAS VALLEY<span class="pipe"> | </span><span class="sub">Books</span>
+    </a>
+    <ul class="nav-links">
+        <li><a href="/the-ladder/" class="current">The Ladder</a></li>
+        <li><a href="/#pruitt">More from Atlas</a></li>
+        <li><a href="/#about">The Author</a></li>
+        <li><a href="/helios/">Helios Valley</a></li>
+        <li><a href="/#games">Games</a></li>
+        <li><a href="/#extras">Extras</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger-btn" aria-label="Open menu" onclick="toggleMobileNav()"><span></span><span></span><span></span></button>
+</nav>
+
+<div id="mobile-nav">
+    <ul>
+        <li><a href="/the-ladder/" class="current" onclick="closeMobileNav()">The Ladder</a></li>
+        <li><a href="/#pruitt">More from Atlas</a></li>
+        <li><a href="/#about">The Author</a></li>
+        <li><a href="/helios/">Helios Valley</a></li>
+        <li><a href="/#games">Games</a></li>
+        <li><a href="/#extras">Extras</a></li>
+    </ul>
+</div>
+
+<section id="hero">
+    <div class="hero-inner">
+        <div>
+            <div class="hero-series">New Release</div>
+            <h1 class="hero-title">The Ladder</h1>
+            <p class="hero-subtitle">Some doors are built to be opened. This one is bolted to a wall</p>
+            <p class="hero-author">ATLAS VALLEY</p>
+            <p class="hero-genre">Literary Science Fiction</p>
+
+            <div class="hero-synopsis">
+                <p>One Saturday, an iron ladder appears on the Harlow family&rsquo;s backyard retaining wall. It rises a single foot above the stone and leads nowhere.</p>
+                <p class="line">Eight-year-old Velara climbs it anyway.</p>
+                <p>Her fathers, the brothers Elias and Declan Harlow, follow her over the top and into Vel Anor, a world of crystal towers, singing cliffs, and two moons beneath a binary sun. Elias is a linguist who reads seven languages, and not one of them is spoken here. Declan, a soldier by training, knows how to hold a line, but there is no line to hold.</p>
+                <p>With the help of Naevara, a Veth archivist who keeps the memory of an entire people, the brothers begin to learn the rules of a planet that has been expecting them. Every answer has a price. The ladder keeps its own schedule. And the road home may not lead back to the life they left.</p>
+                <p class="line">Some doors only open for those who are needed.</p>
+            </div>
+
+            <div class="available-now"><div class="pulse-dot"></div><span id="releaseLine">Releases Friday, November 13</span><span class="count" id="countdown"></span></div>
+
+            <div style="display:flex;gap:.8rem;flex-wrap:wrap;align-items:center">
+                <a href="https://link.amazon/B0dfBrgHz" target="_blank" rel="noopener" class="btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                    <span class="ebook-label">Pre-order the eBook</span> on Amazon
+                </a>
+                <a href="#map" class="btn-secondary">Explore Vel Anor</a>
+            </div>
+
+            <div class="paperback-note">
+                <strong>Paperback</strong>
+                The paperback&rsquo;s Amazon page goes live after the book releases on November 13. Check back here for the link.
+            </div>
+        </div>
+
+        <div class="hero-cover">
+            <div class="cover-glow"></div>
+            <div class="cover-frame"><img src="assets/the-ladder-cover.jpg" alt="The Ladder by Atlas Valley, book cover"></div>
+        </div>
+    </div>
+</section>
+
+<section id="inside" style="background:linear-gradient(to bottom,var(--bg-deep),var(--bg-mid));border-top:1px solid rgba(201,168,76,.1)">
+    <div class="section-inner">
+        <div class="section-label">Inside the Book</div>
+        <h2 class="section-title reveal">What Waits on the Other Side</h2>
+        <div class="inside-grid">
+            <div class="inside-card reveal">Two fathers, one daughter, and no easy answers about who a child belongs to.</div>
+            <div class="inside-card reveal">First contact told in color, tone, and silence, where understanding is earned, not translated.</div>
+            <div class="inside-card reveal">Quiet wonder, real danger. For readers of Arrival, Annihilation, and Becky Chambers.</div>
+            <div class="inside-card reveal">A civilization that keeps its dead in stone, in song, and in the record.</div>
+        </div>
+    </div>
+</section>
+
+<section id="map" style="background:var(--bg-dark);border-top:1px solid rgba(201,168,76,.08)">
+    <div class="section-inner">
+        <div class="section-label">Explore the World</div>
+        <h2 class="section-title reveal">Vel Anor</h2>
+        <p class="section-lead">The world of The Ladder. Click a marker to explore.</p>
+
+        <div class="map-frame" id="mapFrame">
+            <img src="assets/vel-anor-map.jpg" alt="Illustrated map of Vel Anor">
+            <button class="pin" style="left:38.5%;top:56%" data-id="crystal" aria-label="Crystal city"></button>
+            <button class="pin" style="left:71.2%;top:32.6%" data-id="cliffs" aria-label="Singing cliffs"></button>
+            <button class="pin" style="left:87.9%;top:28.6%" data-id="sargasso" aria-label="The sargasso"></button>
+            <button class="pin" style="left:78.5%;top:62.5%" data-id="bonesea" aria-label="The bone sea"></button>
+            <button class="pin" style="left:16%;top:39%" data-id="basins" aria-label="Lowland basins"></button>
+            <button class="pin" style="left:60.3%;top:82%" data-id="rift" aria-label="Volcanic rift"></button>
+        </div>
+
+        <div class="lore-panel">
+            <div>
+                <p class="lore-title" id="loreTitle">Select a location</p>
+                <p class="lore-body" id="loreBody"><span class="lore-hint">Six places from the novel are marked on the map above.</span></p>
+            </div>
+            <button class="btn-secondary" id="viewImageBtn">View image &#8599;</button>
+        </div>
+    </div>
+</section>
+
+<section class="cta-band">
+    <h2>Step Through</h2>
+    <p>The Ladder releases Friday, November 13.</p>
+    <a href="https://link.amazon/B0dfBrgHz" target="_blank" rel="noopener" class="btn-primary"><span class="ebook-label">Pre-order the eBook</span> on Amazon</a>
+</section>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal-card">
+        <img id="modalImage" src="" alt="">
+        <div class="modal-footer">
+            <p class="modal-title" id="modalTitle"></p>
+            <div style="display:flex;gap:.6rem;align-items:center">
+                <a class="btn-secondary" id="modalDownload" href="" download>Download &#10515;</a>
+                <button class="btn-secondary" id="modalClose">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-logo">ATLAS VALLEY</div>
+    <nav class="footer-links">
+        <a href="/">Home</a>
+        <a href="/the-ladder/" class="current">The Ladder</a>
+        <a href="/#pruitt">More from Atlas</a>
+        <a href="/#about">The Author</a>
+        <a href="/helios/">Helios Valley</a>
+        <a href="/#games">Games</a>
+        <a href="/#extras">Extras</a>
+    </nav>
+    <p class="footer-copy">&copy; 2026 Atlas Valley. All rights reserved. &nbsp;|&nbsp; atlasvalleybooks.com</p>
+</footer>
+
+<script>
+const loreData = {
+  crystal:  ["Crystal city", "Home of the Arch-Tenders, built within ancient crystal columns on the obsidian plain. The ground here cracks open with plasma-vent geysers without warning.", "assets/crystal-city.jpg"],
+  cliffs:   ["Singing cliffs", "Cliff faces that hum with arch-frequency resonance. Splitwing raptors ride the thermals here, hunting by the harmonic.", "assets/singing-cliffs.jpg"],
+  sargasso: ["The sargasso", "Floating mineral islands drifting through the Still, a windless zone. Colliding islands cause catastrophic ‘grindings.’ Home to the Keth scholars and their two-thousand-year Long Thought.", "assets/the-sargasso.jpg"],
+  bonesea:  ["The bone sea", "A cold, viscous white sea harvested by the Bone-Fishers for the bones of ancient animals no one has ever named.", "assets/the-bone-sea.jpg"],
+  basins:   ["Lowland basins", "Periodically swept by the Biological Tide, a vast swarm of tiny organisms that moves as one. It dissolves small organic matter in seconds, and it has learned to avoid the ridges.", "assets/lowland-basins.jpg"],
+  rift:     ["Volcanic rift", "Where the habitable world gives way to permanent wasteland. Home to the Ember-Walkers, indifferent even to the world splitting open around them.", "assets/volcanic-rift.jpg"]
+};
+const viewBtn = document.getElementById("viewImageBtn");
+document.querySelectorAll(".pin").forEach(pin => pin.addEventListener("click", () => {
+  const d = loreData[pin.dataset.id];
+  document.getElementById("loreTitle").textContent = d[0];
+  document.getElementById("loreBody").textContent = d[1];
+  viewBtn.classList.add("show"); viewBtn.dataset.id = pin.dataset.id;
+  document.querySelectorAll(".pin").forEach(p => p.classList.remove("active"));
+  pin.classList.add("active");
+}));
+const overlay = document.getElementById("modalOverlay");
+function openModal(id){const d=loreData[id];const i=document.getElementById("modalImage");i.src=d[2];i.alt=d[0];
+  document.getElementById("modalTitle").textContent=d[0];const a=document.getElementById("modalDownload");a.href=d[2];
+  a.setAttribute("download","Vel Anor - "+d[0]+".jpg");overlay.classList.add("open");}
+function closeModal(){overlay.classList.remove("open");}
+viewBtn.addEventListener("click",()=>openModal(viewBtn.dataset.id));
+document.getElementById("modalClose").addEventListener("click",closeModal);
+overlay.addEventListener("click",e=>{if(e.target===overlay)closeModal();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
+
+// Release-day switch: Nov 13, 2026, 12:00 AM Eastern (EST)
+const RELEASE = new Date("2026-11-13T00:00:00-05:00");
+function tick(){
+  const ms = RELEASE - new Date();
+  const line = document.getElementById("releaseLine"), cd = document.getElementById("countdown"), rb = document.getElementById("ribbonText");
+  if (ms > 0){
+    const days = Math.ceil(ms/86400000);
+    cd.textContent = "· " + days + (days===1 ? " day to go" : " days to go");
+  } else {
+    line.textContent = "Out now"; cd.textContent = ""; rb.textContent = "The Ladder is out now"; document.querySelectorAll(".ebook-label").forEach(function(e){e.textContent="Get the eBook";});
+  }
+}
+tick();
+function toggleMobileNav(){const n=document.getElementById("mobile-nav"),b=document.getElementById("hamburger-btn");const o=n.style.display==="block";n.style.display=o?"none":"block";b.classList.toggle("open",!o);}
+function closeMobileNav(){document.getElementById("mobile-nav").style.display="none";document.getElementById("hamburger-btn").classList.remove("open");}
+const obs = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible");}),{threshold:.1});
+document.querySelectorAll(".reveal").forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
