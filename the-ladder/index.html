@@ -326,6 +326,55 @@
     </div>
 </div>
 
+<!-- ══ FREE EXTRAS: decode the gift (Glyph Lock + Beehiiv). Remove this whole section to retire it. ══ -->
+<section id="ladder-extras" style="background:linear-gradient(to bottom,var(--bg-mid),var(--bg-dark));border-top:1px solid rgba(201,168,76,.1)">
+    <style>
+        #ladder-extras .lx-lede{color:var(--parchment-dim);font-style:italic;max-width:42rem;margin-bottom:2.2rem;line-height:1.7}
+        #ladder-extras .lx-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:2.4rem;align-items:center}
+        #ladder-extras .lx-shot{margin:0;border:1px solid rgba(201,168,76,.28);border-radius:6px;overflow:hidden;background:var(--bg-deep);box-shadow:0 18px 40px rgba(0,0,0,.5)}
+        #ladder-extras .lx-shot img{display:block;width:100%;height:auto}
+        #ladder-extras .lx-shot figcaption{padding:.8rem 1rem;font-size:.82rem;font-style:italic;color:var(--parchment-dim);border-top:1px solid rgba(201,168,76,.18)}
+        #ladder-extras .lx-steps{list-style:none;counter-reset:lx;display:grid;gap:1.3rem}
+        #ladder-extras .lx-steps li{counter-increment:lx;position:relative;padding-left:3.1rem;color:var(--text);line-height:1.6;font-size:.95rem}
+        #ladder-extras .lx-steps li::before{content:counter(lx);position:absolute;left:0;top:-.1rem;width:2.1rem;height:2.1rem;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;font-family:'Cinzel',serif;font-size:.85rem;color:var(--gold)}
+        #ladder-extras .lx-steps b{display:block;font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-light);margin-bottom:.25rem}
+        #ladder-extras .lx-btnrow{display:block;margin-top:.9rem}
+        #ladder-extras .lx-sign{margin-top:3rem;padding-top:2.2rem;border-top:1px solid rgba(201,168,76,.14);display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center}
+        #ladder-extras .lx-sign h3{font-family:'Cinzel',serif;color:var(--gold);font-size:1.15rem;letter-spacing:.08em;margin-bottom:.5rem}
+        #ladder-extras .lx-sign p{color:var(--parchment-dim);font-style:italic;line-height:1.6;font-size:.92rem}
+        #ladder-extras .lx-form{background:var(--parchment);border:1px solid var(--gold);border-radius:6px;padding:10px;min-height:66px;max-width:440px}
+        @media(max-width:820px){#ladder-extras .lx-grid,#ladder-extras .lx-sign{grid-template-columns:1fr;gap:1.6rem}#ladder-extras .lx-form{max-width:none}}
+    </style>
+    <div class="section-inner">
+        <div class="section-label">Free Extras</div>
+        <h2 class="section-title reveal veth-title">Decode the Gift</h2>
+        <p class="lx-lede reveal">The people of The Ladder write in Veth. Read one line of it and a free wallpaper is yours.</p>
+        <div class="lx-grid">
+            <figure class="lx-shot reveal">
+                <img src="assets/extras/not-yet-wallpaper.webp" width="1400" height="788" loading="lazy" alt="A dark wallpaper carrying one line from the prologue of The Ladder, written in gold Veth script">
+                <figcaption>One line from the prologue, written in Veth. Can you read it?</figcaption>
+            </figure>
+            <ol class="lx-steps reveal">
+                <li><b>Study the line</b>Every glyph is a letter. You won&rsquo;t know them yet. That is the puzzle.</li>
+                <li><b>Play Glyph Lock</b>A free daily puzzle that teaches the script as you solve it. Your codex fills in as you go.
+                    <span class="lx-btnrow"><a class="btn-primary" href="https://www.pocketplayroom.com/glyph-lock/?p=register&amp;utm_source=atlasvalleybooks&amp;utm_medium=site&amp;utm_campaign=ladder-extras&amp;utm_content=extras-section" target="_blank" rel="noopener">Play Glyph Lock</a></span></li>
+                <li><b>Unlock the gift</b>Decode the line and &ldquo;Fire in Glass&rdquo; is yours, sized for your phone and your desktop.</li>
+            </ol>
+        </div>
+        <div class="lx-sign reveal">
+            <div>
+                <h3>Want the next gift first?</h3>
+                <p>Join the Atlas Valley list. New extras, release news, and nothing else.</p>
+            </div>
+            <div class="lx-form" id="lxBee"></div>
+        </div>
+    </div>
+    <script>
+    (function(){var m=document.getElementById("lxBee");if(!m)return;
+     try{var s=document.createElement("script");s.async=true;s.src="https://subscribe-forms.beehiiv.com/v3/loader.js";s.setAttribute("data-beehiiv-form","853b1ef5-d4ee-460e-8d63-12f6586bbe34");m.appendChild(s)}catch(e){}})();
+    </script>
+</section>
+
 <section class="cta-band">
     <h2 class="veth-title">Step Through</h2>
     <p>The Ladder releases Friday, November 13.</p>
