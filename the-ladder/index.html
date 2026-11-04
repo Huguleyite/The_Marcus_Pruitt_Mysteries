@@ -219,7 +219,7 @@
 <section id="inside" style="background:linear-gradient(to bottom,var(--bg-deep),var(--bg-mid));border-top:1px solid rgba(201,168,76,.1)">
     <div class="section-inner">
         <div class="section-label">Inside the Book</div>
-        <h2 class="section-title reveal">What Waits on the Other Side</h2>
+        <h2 class="section-title reveal veth-title">What Waits on the Other Side</h2>
         <div class="inside-grid">
             <div class="inside-card reveal">Two fathers, one daughter, and no easy answers about who a child belongs to.</div>
             <div class="inside-card reveal">First contact told in color, tone, and silence, where understanding is earned, not translated.</div>
@@ -232,7 +232,7 @@
 <section id="map" style="background:var(--bg-dark);border-top:1px solid rgba(201,168,76,.08)">
     <div class="section-inner">
         <div class="section-label">Explore the World</div>
-        <h2 class="section-title reveal">Vel Anor</h2>
+        <h2 class="section-title reveal veth-title">Vel Anor</h2>
         <p class="section-lead">The world of The Ladder. Click a marker to explore.</p>
 
         <div class="map-frame" id="mapFrame">
@@ -290,7 +290,7 @@
     </style>
     <div class="section-inner">
         <div class="section-label reveal">The People</div>
-        <h2 class="section-title reveal">Meet the Characters</h2>
+        <h2 class="section-title reveal veth-title">Meet the Characters</h2>
         <p class="section-lead reveal">Four people at the start of the story. Select a face to learn more.</p>
         <div class="chars-grid">
             <button class="char fade reveal" data-char="velara" aria-label="Velara Harlow, open details">
@@ -307,7 +307,7 @@
             </button>
             <button class="char fade reveal" data-char="naevara" aria-label="Naevara, open details">
                 <span class="char-stage"><span class="char-float"><span class="char-tilt"><img src="assets/chars/naevara.webp" alt="Naevara of the Veth" loading="lazy"></span></span></span>
-                <span class="char-name">Naevara</span><span class="char-role">Archivist of the Memory Court</span><span class="char-more">Meet her</span>
+                <span class="char-name">Naevara</span><span class="char-veth" data-veth="NAEVARA"></span><span class="char-role">Archivist of the Memory Court</span><span class="char-more">Meet her</span>
             </button>
         </div>
     </div>
@@ -317,7 +317,7 @@
         <div class="char-modal-body">
             <img id="charModalImg" src="" alt="">
             <div>
-                <div class="char-modal-name" id="charModalName"></div>
+                <div class="char-modal-name" id="charModalName"></div><div id="charModalVeth"></div>
                 <div class="char-modal-role" id="charModalRole"></div>
                 <p class="char-modal-text" id="charModalText"></p>
             </div>
@@ -327,7 +327,7 @@
 </div>
 
 <section class="cta-band">
-    <h2>Step Through</h2>
+    <h2 class="veth-title">Step Through</h2>
     <p>The Ladder releases Friday, November 13.</p>
     <a href="https://link.amazon/B0dfBrgHz" target="_blank" rel="noopener" class="btn-primary"><span class="ebook-label">Pre-order the eBook</span> on Amazon</a>
 </section>
@@ -346,7 +346,7 @@
 </div>
 
 <footer>
-    <div class="footer-logo">ATLAS VALLEY</div>
+    <div class="footer-logo veth-title">ATLAS VALLEY</div>
     <nav class="footer-links">
         <a href="/">Home</a>
         <a href="/the-ladder/" class="current">The Ladder</a>
@@ -417,6 +417,7 @@ document.querySelectorAll(".reveal").forEach(el=>obs.observe(el));
   function open(k,el){var d=DATA[k];last=el;
     document.getElementById("charModalImg").src=d.img;document.getElementById("charModalImg").alt=d.n;
     document.getElementById("charModalName").textContent=d.n;document.getElementById("charModalRole").textContent=d.r;document.getElementById("charModalText").textContent=d.t;
+    var vv=document.getElementById("charModalVeth");vv.textContent="";vv.className="";if(k==="naevara"&&window.VethTitles)VethTitles.spell(vv,"NAEVARA");
     m.classList.add("open");document.getElementById("charModalClose").focus();}
   function close(){m.classList.remove("open");if(last)last.focus();}
   document.querySelectorAll(".char").forEach(function(c){
@@ -433,5 +434,100 @@ document.querySelectorAll(".reveal").forEach(el=>obs.observe(el));
 })();
 </script>
 
+<script>
+/*! Veth section titles for atlasvalleybooks.com/the-ladder
+   Titles render in Veth script; hover / focus / tap resolves them to English, glyph by glyph.
+   Real text stays in the page for readers, search engines and screen readers.
+   Usage: add class "veth-title" to any heading (the book title is NOT one of them) and include this snippet once. */
+(function(){
+var G={"A":["M20,4 L20,56","M20,58.6 L20,58.7","M20,48 C27,48 35,43 37,33","M20,48 C13,48 5,43 3,33"],"E":["M20,4 L20,56","M20,58.6 L20,58.7","M20,32 C13,32 5,27 3,17"],"I":["M20,4 L20,56","M20,58.6 L20,58.7","M20,12 C27,12 35,17 37,27","M20,12 C13,12 5,17 3,27"],"O":["M20,4 L20,56","M20,58.6 L20,58.7","M20,19.5 A8.5,10.5 0 1,0 20.01,19.5"],"U":["M20,4 L20,56","M20,58.6 L20,58.7","M20,28 C27,28 35,33 37,43"],"P":["M20,4 L20,56","M20,58.6 L20,58.7","M14,38 L4,38 L4,52 L14,52"],"B":["M20,4 L20,56","M20,58.6 L20,58.7","M26,38 L36,38 L36,52 L26,52"],"T":["M20,4 L20,56","M20,58.6 L20,58.7","M14,23 L4,23 L4,37 L14,37"],"D":["M20,4 L20,56","M20,58.6 L20,58.7","M26,23 L36,23 L36,37 L26,37"],"K":["M20,4 L20,56","M20,58.6 L20,58.7","M14,8 L4,8 L4,22 L14,22"],"G":["M20,4 L20,56","M20,58.6 L20,58.7","M26,8 L36,8 L36,22 L26,22"],"F":["M20,4 L20,56","M20,58.6 L20,58.7","M5,48 C11,37 16,37 20,45 C24,53 29,53 35,42"],"V":["M20,4 L20,56","M20,58.6 L20,58.7","M5,48 C11,37 16,37 20,45 C24,53 29,53 35,42","M11,56 L11,56.1","M29,56 L29,56.1"],"S":["M20,4 L20,56","M20,58.6 L20,58.7","M5,33 C11,22 16,22 20,30 C24,38 29,38 35,27"],"H":["M20,4 L20,56","M20,58.6 L20,58.7","M5,18 C11,7 16,7 20,15 C24,23 29,23 35,12"],"M":["M20,4 L20,56","M20,58.6 L20,58.7","M20,37 C32,34 38,46 31,52 C27,55 22,51 25,48"],"N":["M20,4 L20,56","M20,58.6 L20,58.7","M20,22 C32,19 38,31 31,37 C27,40 22,36 25,33"],"L":["M20,4 L20,56","M20,58.6 L20,58.7","M20,22 C8,19 2,31 9,37 C13,40 18,36 15,33"],"R":["M20,4 L20,56","M20,58.6 L20,58.7","M20,7 C8,4 2,16 9,22 C13,25 18,21 15,18"],"Y":["M20,4 L20,56","M20,58.6 L20,58.7","M20,12 C27,12 35,17 37,27","M20,12 C13,12 5,17 3,27","M11,47 L11,47.1"],"W":["M20,4 L20,56","M20,58.6 L20,58.7","M20,28 C27,28 35,33 37,43","M11,47 L11,47.1"],"C":["M20,4 L20,56","M20,58.6 L20,58.7","M14,8 L4,8 L4,22 L14,22","M11,47 L11,47.1"],"X":["M20,4 L20,56","M20,58.6 L20,58.7","M14,8 L4,8 L4,22 L14,22","M5,41 C11,30 16,30 20,38 C24,46 29,46 35,35"],"#":["M20,4 L20,56","M20,58.6 L20,58.7","M5,26 C11,15 16,15 20,23 C24,31 29,31 35,20","M5,40 C11,29 16,29 20,37 C24,45 29,45 35,34"]};
+var CSS='\
+.veth-title{cursor:default}\
+.vt-spell{display:block;line-height:0;margin-top:.45rem;min-height:1.15rem}.vt-spell svg{display:inline-block;height:1.15rem;width:auto;margin:0 .09rem;overflow:visible;filter:drop-shadow(0 0 .25rem rgba(255,215,122,.35))}.vt-spell .vt-gap{display:inline-block;width:.6rem}\
+.veth-title .vt-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}\
+.vt-stack{display:grid;position:relative;overflow:clip;overflow-clip-margin:.35em;vertical-align:top}\
+.vt-stack>.vt-veth,.vt-stack>.vt-en{grid-area:1/1;display:flex;flex-wrap:wrap;align-items:center;column-gap:.42em;row-gap:.08em;justify-content:var(--vt-j,flex-start)}\
+.vt-w{display:inline-flex;align-items:center;white-space:nowrap}\
+.vt-veth{min-height:1.2em}\
+.vt-veth .vt-w{gap:.14em;height:1em}\
+.vt-veth svg{height:.88em;width:auto;overflow:visible;display:block;opacity:1;transform:none;filter:drop-shadow(0 0 0 rgba(255,215,122,0));transition:opacity .38s ease,transform .55s cubic-bezier(.3,.7,.2,1),filter .55s ease;transition-delay:calc(var(--p)*.55s)}\
+.vt-en .vt-c{display:inline-block;opacity:0;transform:translateY(.3em) scale(1.35);filter:blur(5px);color:#fff1c2;text-shadow:0 0 .55em rgba(255,206,110,.95);transition:opacity .4s ease,transform .6s cubic-bezier(.2,.8,.2,1),filter .5s ease,color .9s ease .15s,text-shadow .9s ease .15s;transition-delay:calc(var(--p)*.55s + .16s)}\
+.vt-en .vt-c.vt-sp{width:0}\
+.vt-on .vt-veth svg{opacity:0;transform:translateY(-.2em) scale(.62);filter:blur(3px) drop-shadow(0 0 .3em rgba(255,215,122,.95))}\
+.vt-on .vt-en .vt-c{opacity:1;transform:none;filter:none;color:inherit;text-shadow:0 0 0 rgba(255,206,110,0)}\
+.vt-hint .vt-veth svg{animation:vt-glint 2.4s ease-in-out 1;animation-delay:calc(var(--p)*1.2s)}\
+@keyframes vt-glint{0%,100%{filter:drop-shadow(0 0 0 rgba(255,215,122,0))}40%{filter:drop-shadow(0 0 .35em rgba(255,215,122,.9))}}\
+.vt-tip{display:block;margin-top:.55rem;font-family:Cinzel,serif;font-size:.6rem;letter-spacing:.34em;text-transform:uppercase;color:#5a9daf;opacity:.85;transition:opacity .6s}\
+.vt-tip.vt-gone{opacity:0}\
+@media (prefers-reduced-motion:reduce){.vt-veth svg,.vt-en .vt-c{transition:opacity .2s;transition-delay:0s!important;transform:none!important;filter:none!important}.vt-hint .vt-veth svg{animation:none}}';
+function tok(t){return t.toUpperCase().replace(/TH/g,'#')}
+function glyph(ch){
+  var d=G[ch];if(!d)return null;
+  var s=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  s.setAttribute('viewBox','-2 0 44 60');s.setAttribute('aria-hidden','true');s.setAttribute('focusable','false');
+  d.forEach(function(p){var e=document.createElementNS('http://www.w3.org/2000/svg','path');
+    e.setAttribute('d',p);e.setAttribute('fill','none');e.setAttribute('stroke','url(#vt-gold)');
+    e.setAttribute('stroke-width','3.6');e.setAttribute('stroke-linecap','round');e.setAttribute('stroke-linejoin','round');s.appendChild(e)});
+  return s;
+}
+function defs(){
+  if(document.getElementById('vt-defs'))return;
+  var w=document.createElement('div');w.id='vt-defs';w.setAttribute('aria-hidden','true');w.style.cssText='position:absolute;width:0;height:0;overflow:hidden';
+  w.innerHTML='<svg width="0" height="0"><defs><linearGradient id="vt-gold" gradientUnits="userSpaceOnUse" x1="0" y1="4" x2="0" y2="56"><stop offset="0" stop-color="#fff3c8"/><stop offset=".38" stop-color="#ecc56c"/><stop offset=".72" stop-color="#c8932e"/><stop offset="1" stop-color="#8a5f1c"/></linearGradient></defs></svg>';
+  document.body.appendChild(w);
+  var st=document.createElement('style');st.textContent=CSS;document.head.appendChild(st);
+}
+function spell(el,word){
+  defs();el.textContent='';el.classList.add('vt-spell');el.setAttribute('aria-hidden','true');
+  tok(word).split('').forEach(function(ch){if(ch===' '){var g=document.createElement('span');g.className='vt-gap';el.appendChild(g);return}var s=glyph(ch);if(s)el.appendChild(s)});
+}
+function build(el){
+  var ta=getComputedStyle(el).textAlign;var text=el.textContent.replace(/\s+/g,' ').trim();
+  var sr=document.createElement('span');sr.className='vt-sr';sr.textContent=text;
+  var stack=document.createElement('span');stack.className='vt-stack';stack.setAttribute('aria-hidden','true');
+  var vl=document.createElement('span');vl.className='vt-veth';
+  var el2=document.createElement('span');el2.className='vt-en';
+  var words=text.split(' ');
+  var gc=0,total=0;
+  words.forEach(function(w){total+=tok(w).replace(/[^A-Z#]/g,'').length});
+  var ec=0,etotal=text.replace(/[^A-Za-z]/g,'').length||1;
+  words.forEach(function(w){
+    var vw=document.createElement('span');vw.className='vt-w';
+    tok(w).split('').forEach(function(ch){var g=glyph(ch);if(!g)return;g.style.setProperty('--p',(gc/Math.max(total-1,1)).toFixed(3));gc++;vw.appendChild(g)});
+    vl.appendChild(vw);
+    var ew=document.createElement('span');ew.className='vt-w';
+    w.split('').forEach(function(ch){var c=document.createElement('span');c.className='vt-c';c.textContent=ch;
+      c.style.setProperty('--p',(ec/Math.max(etotal-1,1)).toFixed(3));if(/[A-Za-z]/.test(ch))ec++;ew.appendChild(c)});
+    el2.appendChild(ew);
+  });
+  stack.appendChild(vl);stack.appendChild(el2);
+  stack.style.setProperty('--vt-j',ta==='center'?'center':(ta==='right'||ta==='end')?'flex-end':'flex-start');
+  el.textContent='';el.appendChild(sr);el.appendChild(stack);
+  return stack;
+}
+function init(sel){
+  defs();
+  var els=[].slice.call(document.querySelectorAll(sel||'.veth-title'));
+  var touch=window.matchMedia&&matchMedia('(hover:none)').matches;
+  var tipDone=false;
+  els.forEach(function(el,i){
+    build(el);el.setAttribute('tabindex','0');el.setAttribute('role','heading');
+    function on(){el.classList.add('vt-on');if(!tipDone){tipDone=true;[].forEach.call(document.querySelectorAll('.vt-tip'),function(t){t.classList.add('vt-gone')})}}
+    function off(){el.classList.remove('vt-on')}
+    if(!touch){el.addEventListener('mouseenter',on);el.addEventListener('mouseleave',off)}
+    else el.addEventListener('click',function(){el.classList.contains('vt-on')?off():on()});
+    el.addEventListener('focus',on);el.addEventListener('blur',off);
+    if(i===0){var tip=document.createElement('span');tip.className='vt-tip';tip.setAttribute('aria-hidden','true');tip.textContent=touch?'Tap to translate':'Hover to translate';el.insertAdjacentElement('afterend',tip)}
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){el.classList.add('vt-hint');setTimeout(function(){el.classList.remove('vt-hint')},3800);io.disconnect()}})},{threshold:.6});io.observe(el);
+    }
+  });
+}
+window.VethTitles={init:init,spell:spell};
+function initSpell(){[].forEach.call(document.querySelectorAll('[data-veth]'),function(e){spell(e,e.getAttribute('data-veth'))})}
+if(document.readyState!=='loading')initSpell();else document.addEventListener('DOMContentLoaded',initSpell);
+if(document.readyState!=='loading')init('.veth-title');else document.addEventListener('DOMContentLoaded',function(){init('.veth-title')});
+})();
+</script>
 </body>
 </html>
